@@ -67,6 +67,14 @@
 - **Date**: 2026-09-19
 - **Status**: active
 
+### AD-009
+- **Decision**: `preco_interno` não é segredo para a recepcionista. A RLS de `servicos` continua `select using (true)`; esconder o preço na tela do agendamento é só UX.
+- **Reason**: Resposta do usuário na revisão de segurança de 2026-11-12. Evita mexer em RLS e criar view para uma regra que não protege nada de valor.
+- **Trade-off**: Quem tem sessão de recepcionista lê o preço interno via API do Supabase; aceito.
+- **Scope**: Feature `hardening` em diante.
+- **Date**: 2026-11-12
+- **Status**: active
+
 ## Handoff
 
 - **Feature**: petmanager-completo — **COMPLETA** (41/41 tasks, `validation.md` = PASS com 3 lacunas de verificação documentadas)
