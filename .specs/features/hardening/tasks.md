@@ -309,14 +309,16 @@ T20 → T21 → T22 → T23
 - Skill: `mastering-typescript`
 
 **Done when**:
-- [ ] Unit: input válido devolve `data` com texto aparado; inválido devolve `Dados inválidos. <mensagem>`
-- [ ] Gate quick passa
+- [x] Unit: input válido devolve `data` com texto aparado; inválido devolve `Dados inválidos. <mensagem>`
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(validacao): helper zod com mensagem padrao`
 
+
+**Status**: Done
 ---
 
 ### T10: exigirSessao e exigirDono
