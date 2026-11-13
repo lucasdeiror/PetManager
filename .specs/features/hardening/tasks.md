@@ -409,14 +409,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: data malformada gera um único erro `Dados inválidos.`; sem Supabase
-- [ ] Gate quick passa
+- [x] Unit: data malformada gera um único erro `Dados inválidos.`; sem Supabase
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(vacinas): valida entrada com zod`
 
+
+**Status**: Done
 ---
 
 ### T14: Zod + dono em estoque
