@@ -64,14 +64,14 @@ T1 → T4
 **Requirement**: FUS-01, FUS-02, FUS-03
 
 **Done when**:
-- [ ] 17:00 local grava `...T17:00:00-03:00`; com fuso na entrada vira `Data e hora inválidas`
+- [x] 17:00 local grava `...T17:00:00-03:00`; com fuso na entrada vira `Data e hora inválidas`
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `fix(agenda): grava horario no fuso de sao paulo`
 
-**Status**: Pending
+**Status**: Done
 
 ---
 

@@ -46,7 +46,7 @@ describe("criarAgendamento", () => {
     expect(result.error).toBeUndefined();
     expect(result.id).toBe(10);
     expect(insertAgendamento).toHaveBeenCalledWith(
-      expect.objectContaining({ pet_id: 1, data_hora: "2026-09-21T10:00:00" }),
+      expect.objectContaining({ pet_id: 1, data_hora: "2026-09-21T10:00:00-03:00" }),
     );
   });
 

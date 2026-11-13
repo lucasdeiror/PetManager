@@ -47,6 +47,16 @@ describe("agenda: entrada validada (ENT-01, ENT-02)", () => {
 
     expect(result).toEqual({ error: "Dados inválidos. Data e hora inválidas" });
   });
+
+  it.each(["2026-09-21T10:00:00Z", "2026-09-21T10:00:00-03:00", "2026-09-21"])(
+    "data/hora com fuso ou sem hora (%s) → rejeitada sem tocar no banco (FUS-03)",
+    async (dataHora) => {
+      const result = await criarAgendamento({ petId: 1, servicoIds: [1], dataHora });
+
+      expect(result).toEqual({ error: "Dados inválidos. Data e hora inválidas" });
+      expect(createClient).not.toHaveBeenCalled();
+    },
+  );
 });
 
 describe("agenda: sessão no servidor (SEG-02)", () => {

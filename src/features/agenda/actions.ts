@@ -5,6 +5,7 @@ import { createClient } from "../../shared/supabase/server";
 import { validar } from "../../shared/validacao/validar";
 import { exigirSessao } from "../auth/queries";
 import { getHorarios } from "../horario-funcionamento/queries";
+import { instanteSP } from "../../shared/data/fuso";
 
 interface CriarAgendamentoInput {
   petId: number;
@@ -18,7 +19,11 @@ interface CriarAgendamentoResult {
 }
 
 const idSchema = z.number().int().positive();
-const dataHoraSchema = z.string().refine((v) => !Number.isNaN(Date.parse(v)), "Data e hora inválidas");
+// Horário local de Brasília, sem fuso: o offset é aplicado no servidor (FUS-01/03).
+const dataHoraSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/, "Data e hora inválidas")
+  .refine((v) => !Number.isNaN(Date.parse(v)), "Data e hora inválidas");
 
 const criarAgendamentoSchema = z.object({
   petId: idSchema,
@@ -33,9 +38,10 @@ const editarAgendamentoSchema = z.object({
   dataHora: dataHoraSchema.optional(),
 });
 
-function extrairDiaEHora(dataHoraIso: string): { diaSemana: number; hora: string } {
-  const data = new Date(dataHoraIso);
-  return { diaSemana: data.getDay(), hora: data.toTimeString().slice(0, 5) };
+/** Lê da própria string local, para não depender do fuso do servidor (FUS-02). */
+function extrairDiaEHora(dataHoraLocal: string): { diaSemana: number; hora: string } {
+  const [ano, mes, dia] = dataHoraLocal.slice(0, 10).split("-").map(Number);
+  return { diaSemana: new Date(Date.UTC(ano, mes - 1, dia)).getUTCDay(), hora: dataHoraLocal.slice(11, 16) };
 }
 
 /**
@@ -71,7 +77,7 @@ export async function criarAgendamento(input: CriarAgendamentoInput): Promise<Cr
 
   const { data: agendamento, error } = await supabase
     .from("agendamentos")
-    .insert({ pet_id: petId, data_hora: dataHora, criado_por: user?.id ?? null })
+    .insert({ pet_id: petId, data_hora: instanteSP(dataHora), criado_por: user?.id ?? null })
     .select("id")
     .single();
 
@@ -131,7 +137,7 @@ export async function editarAgendamento(input: EditarAgendamentoInput): Promise<
 
   const updates: Record<string, unknown> = {};
   if (petId !== undefined) updates.pet_id = petId;
-  if (dataHora !== undefined) updates.data_hora = dataHora;
+  if (dataHora !== undefined) updates.data_hora = instanteSP(dataHora);
 
   if (Object.keys(updates).length > 0) {
     const { error } = await supabase.from("agendamentos").update(updates).eq("id", id);
