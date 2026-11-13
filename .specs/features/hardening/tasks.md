@@ -257,14 +257,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: o filtro é aplicado na query
-- [ ] Teste db: venda estornada não aparece em `getVendas` nem no total do relatório
-- [ ] Gate full passa
+- [x] Unit: o filtro é aplicado na query
+- [x] Teste db: venda estornada não aparece em `getVendas` nem no total do relatório
+- [x] Gate full passa
 
 **Tests**: integration (db)
 **Gate**: full
 
 **Commit**: `fix(vendas): listagem e relatorio ignoram vendas estornadas`
+
+**Status**: Done
 
 ---
 

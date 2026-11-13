@@ -74,6 +74,7 @@ export async function getVendas(filtro: GetVendasFiltro = {}): Promise<Venda[]> 
     .select(
       "id, tipo, quantidade, valor_total, criado_em, produtos ( nome ), agendamentos ( agendamento_servicos ( servicos ( nome ) ) )",
     )
+    .is("estornada_em", null)
     .order("criado_em", { ascending: false });
 
   if (filtro.tipo) {
