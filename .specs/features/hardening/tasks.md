@@ -384,14 +384,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: `nome: 123`, `porte: "gigante"`, telefone inválido, nome de 256 chars → `Dados inválidos.` sem Supabase
-- [ ] Gate quick passa
+- [x] Unit: `nome: 123`, `porte: "gigante"`, telefone inválido, nome de 256 chars → `Dados inválidos.` sem Supabase
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(pets): valida entrada com zod`
 
+
+**Status**: Done
 ---
 
 ### T13: Zod + sessão em vacinas
