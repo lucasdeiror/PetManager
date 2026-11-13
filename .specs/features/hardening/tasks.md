@@ -459,14 +459,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: recepcionista bloqueada; quantidade inválida sem chamar RPC
-- [ ] Gate quick passa
+- [x] Unit: recepcionista bloqueada; quantidade inválida sem chamar RPC
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(vendas): valida entrada e exige papel dono`
 
+
+**Status**: Done
 ---
 
 ### T16: Zod + dono em serviços

@@ -3,6 +3,8 @@ import { registrarVendaProduto } from "../actions";
 
 const rpc = vi.fn();
 
+vi.mock("../../auth/queries", () => ({ exigirDono: vi.fn(async () => ({})) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ rpc })),
 }));
