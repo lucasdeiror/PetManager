@@ -9,6 +9,7 @@ function makeBuilder() {
   builder.select = vi.fn(chain);
   builder.order = vi.fn(chain);
   builder.eq = vi.fn(chain);
+  builder.is = vi.fn(chain);
   builder.gte = vi.fn(chain);
   builder.lt = vi.fn(chain);
   builder.then = (resolve: (value: unknown) => unknown) => resolve(result);
@@ -106,5 +107,14 @@ describe("getVendas", () => {
     expect(vendas).toEqual([
       { id: 1, tipo: "produto", itemNome: "Ração", quantidade: 1, valorTotal: 10, criadoEm: "2026-09-10T12:00:00Z" },
     ]);
+  });
+
+  it("ignora vendas estornadas: filtra estornada_em is null na query (IDP-07)", async () => {
+    result = { data: [] };
+
+    await getVendas();
+
+    const builder = from.mock.results[0].value as { is: ReturnType<typeof vi.fn> };
+    expect(builder.is).toHaveBeenCalledWith("estornada_em", null);
   });
 });

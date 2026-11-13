@@ -12,6 +12,8 @@ const insert = vi.fn();
 
 const from = vi.fn(() => ({ select, update, insert }));
 
+vi.mock("../../auth/queries", () => ({ exigirDono: vi.fn(async () => ({})) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
 }));

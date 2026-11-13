@@ -1,28 +1,33 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("tela de estoque", () => {
-  test("sem sessão, /estoque redireciona para /login", async ({ page }) => {
-    await page.goto("/estoque");
-    await expect(page).toHaveURL(/\/login$/);
+  test.describe("sem sessão", () => {
+    test.use({ storageState: { cookies: [], origins: [] } });
+    test("/estoque redireciona para /login", async ({ page }) => {
+      await page.goto("/estoque");
+      await expect(page).toHaveURL(/\/login$/);
+    });
   });
 
   test("cadastro de produto + entrada de estoque + alerta de estoque baixo", async ({ page }) => {
     await page.goto("/estoque");
+    const nome = `Ração premium ${Date.now()}`;
 
-    await page.getByLabel("Nome").fill("Ração premium");
+    await page.getByLabel("Nome").fill(nome);
     await page.getByLabel("Categoria").fill("Alimentos");
     await page.getByLabel("Preço unitário (R$)").fill("89.90");
     await page.getByLabel("Estoque mínimo").fill("5");
     await page.getByLabel("Saldo inicial").fill("2");
     await page.getByRole("button", { name: "Cadastrar produto" }).click();
 
-    await expect(page.getByText("Ração premium")).toBeVisible();
-    await expect(page.getByText("Estoque baixo")).toBeVisible();
+    const item = page.getByRole("listitem").filter({ hasText: nome });
+    await expect(item).toBeVisible();
+    await expect(item.getByText("Estoque baixo")).toBeVisible();
 
-    await page.getByLabel("Entrada").fill("10");
-    await page.getByRole("button", { name: "Registrar" }).click();
+    await item.getByLabel("Entrada").fill("10");
+    await item.getByRole("button", { name: "Registrar" }).click();
 
-    await expect(page.getByText("12 un.")).toBeVisible();
+    await expect(item.getByText("12 un.")).toBeVisible();
   });
 
   // NOTA: "recepcionista não vê o menu nem acessa a rota diretamente"

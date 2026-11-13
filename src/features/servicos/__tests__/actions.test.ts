@@ -6,6 +6,8 @@ const select = vi.fn(() => ({ single }));
 const insert = vi.fn(() => ({ select }));
 const from = vi.fn(() => ({ insert }));
 
+vi.mock("../../auth/queries", () => ({ exigirDono: vi.fn(async () => ({})) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
 }));
@@ -27,14 +29,14 @@ describe("criarServico", () => {
   it("rejeita preço negativo", async () => {
     const result = await criarServico({ nome: "Banho", precoInterno: -10 });
 
-    expect(result.error).toBe("O preço deve ser um número válido e não pode ser negativo.");
+    expect(result.error).toBe("Dados inválidos. O preço deve ser um número válido e não pode ser negativo.");
     expect(from).not.toHaveBeenCalled();
   });
 
   it("rejeita preço não numérico (NaN)", async () => {
     const result = await criarServico({ nome: "Banho", precoInterno: NaN });
 
-    expect(result.error).toBe("O preço deve ser um número válido e não pode ser negativo.");
+    expect(result.error).toBe("Dados inválidos. O preço deve ser um número válido e não pode ser negativo.");
     expect(from).not.toHaveBeenCalled();
   });
 });

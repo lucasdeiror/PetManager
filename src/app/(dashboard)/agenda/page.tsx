@@ -1,3 +1,4 @@
+import { hojeEmSaoPaulo } from "../../../shared/data/hoje";
 import { AgendaCalendario } from "../../../features/agenda/components/AgendaCalendario";
 import { getAgendamentosPorDia } from "../../../features/agenda/queries";
 import { getPets } from "../../../features/pets/queries";
@@ -5,17 +6,13 @@ import { getServicosParaAgendamento } from "../../../features/servicos/queries";
 import { AgendamentoAcoes } from "./agendamento-acoes";
 import { CriarAgendamentoForm } from "./criar-agendamento-form";
 
-function hoje(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
 export default async function AgendaPage({
   searchParams,
 }: {
   searchParams: Promise<{ data?: string }>;
 }) {
   const { data } = await searchParams;
-  const dia = data ?? hoje();
+  const dia = data ?? hojeEmSaoPaulo();
 
   const [pets, servicos, agendamentosDoDia] = await Promise.all([
     getPets(),

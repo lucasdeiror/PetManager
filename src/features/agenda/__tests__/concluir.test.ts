@@ -3,6 +3,8 @@ import { concluirAgendamento } from "../actions";
 
 const rpc = vi.fn();
 
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ rpc })),
 }));
@@ -39,5 +41,14 @@ describe("concluirAgendamento", () => {
     const result = await concluirAgendamento(1);
 
     expect(result.error).toBe("Este agendamento já foi concluído.");
+  });
+
+  it("agendamento fora de agendado devolve 'Agendamento não está agendado' (IDP-02)", async () => {
+    rpc.mockResolvedValue({ data: null, error: { message: "Agendamento não está agendado" } });
+
+    const result = await concluirAgendamento(1);
+
+    expect(result.error).toBe("Agendamento não está agendado");
+    expect(result.vendaId).toBeUndefined();
   });
 });

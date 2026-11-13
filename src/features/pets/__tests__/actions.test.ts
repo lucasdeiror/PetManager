@@ -6,6 +6,8 @@ const select = vi.fn(() => ({ single }));
 const insert = vi.fn(() => ({ select }));
 const from = vi.fn(() => ({ insert }));
 
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
 }));
@@ -38,7 +40,7 @@ describe("criarTutor", () => {
 
     const result = await criarTutor({ nome: nomeLongo, telefone: "(79) 99999-9999" });
 
-    expect(result.error).toBe("O nome não pode ter mais de 255 caracteres.");
+    expect(result.error).toBe("Dados inválidos. O nome não pode ter mais de 255 caracteres.");
     expect(from).not.toHaveBeenCalled();
   });
 });

@@ -1,6 +1,14 @@
 "use server";
 
+import { z } from "zod";
 import { createClient } from "../../shared/supabase/server";
+import { validar } from "../../shared/validacao/validar";
+import { exigirDono } from "../auth/queries";
+
+const registrarVendaProdutoSchema = z.object({
+  produtoId: z.number().int().positive(),
+  quantidade: z.number().int("Informe uma quantidade válida (maior que zero).").positive("Informe uma quantidade válida (maior que zero)."),
+});
 
 interface RegistrarVendaProdutoResult {
   error?: string;
@@ -14,9 +22,15 @@ interface RegistrarVendaProdutoResult {
  * (VEN-02, VEN-03).
  */
 export async function registrarVendaProduto(
-  produtoId: number,
-  quantidade: number,
+  produtoIdEntrada: number,
+  quantidadeEntrada: number,
 ): Promise<RegistrarVendaProdutoResult> {
+  const validado = validar(registrarVendaProdutoSchema, { produtoId: produtoIdEntrada, quantidade: quantidadeEntrada });
+  if ("error" in validado) return validado;
+  const dono = await exigirDono();
+  if (dono.error) return dono;
+  const { produtoId, quantidade } = validado.data;
+
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc("registrar_venda_produto", {

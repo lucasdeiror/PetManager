@@ -67,13 +67,22 @@
 - **Date**: 2026-09-19
 - **Status**: active
 
+### AD-009
+- **Decision**: `preco_interno` não é segredo para a recepcionista. A RLS de `servicos` continua `select using (true)`; esconder o preço na tela do agendamento é só UX.
+- **Reason**: Resposta do usuário na revisão de segurança de 2026-11-12. Evita mexer em RLS e criar view para uma regra que não protege nada de valor.
+- **Trade-off**: Quem tem sessão de recepcionista lê o preço interno via API do Supabase; aceito.
+- **Scope**: Feature `hardening` em diante.
+- **Date**: 2026-11-12
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: petmanager-completo — **COMPLETA** (41/41 tasks, `validation.md` = PASS com 3 lacunas de verificação documentadas)
+- **Feature**: hardening — **COMPLETA** (23/23 tasks, `validation.md` = PASS na iteração 2; a iteração 1 reprovou por 4 lacunas de teste, fechadas em `1059424`)
 - **Phase / Task**: encerrada
-- **Completed**: T1-T41
+- **Completed**: T1-T23 + fix de filtros (`90bae10`) + fix do verificador (`1059424`)
 - **In-progress**: none
-- **Next step**: fechar as lacunas fora do sandbox: (1) `npx playwright install --with-deps && npm run test:e2e`; (2) seedar contas de teste dono/recepcionista no Supabase Auth e cobrir os cenários com sessão real; (3) teste de RLS por papel com queries reais. Depois: migrar `middleware` -> `proxy` (aviso de depreciação do Next 16), paginação nas listas e revogar os tokens GitHub compartilhados no chat.
-- **Blockers**: nenhum bloqueio de código; só as verificações acima, que exigem ambiente com rede liberada
-- **Uncommitted files**: none (após o PR de fechamento)
-- **Branch**: main
+- **Next step**: (1) decisão do usuário sobre T24 (registrarEntrada não atômico, `src/features/estoque/actions.ts:86-96`) e T25 (`criarAgendamento` usa fuso do servidor); (2) publicar: `gh pr create` foi bloqueado pela política de permissões, então tudo está só na `main` local; (3) aplicar migrations 0009-0011 na nuvem só com ok explícito, desligar o signup no painel (README) e rodar `get_advisors`.
+- **Observações sem bloqueio**: ENT-03 sem caso explícito de `porte` inválido; CAD-03 só por leitura; IDP-05 afirma `estornada_por` não nulo, não o id; `/login` não redireciona quem já está logado.
+- **Testes**: unit 172 · db 24 (`npm run test:db`, exige `npx supabase start`) · e2e 36 (Chrome local + Supabase local)
+- **Uncommitted files**: `.idea/` (fora do git)
+- **Branch**: main (local, à frente do remoto)

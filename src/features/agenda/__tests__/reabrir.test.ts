@@ -10,6 +10,8 @@ const update = vi.fn(() => ({ eq: eqUpdate }));
 
 const from = vi.fn(() => ({ select, update }));
 
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
 }));

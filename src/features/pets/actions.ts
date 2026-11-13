@@ -1,7 +1,10 @@
 "use server";
 
+import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { createClient } from "../../shared/supabase/server";
+import { validar } from "../../shared/validacao/validar";
+import { exigirSessao } from "../auth/queries";
 
 interface CriarTutorInput {
   nome: string;
@@ -14,6 +17,29 @@ interface CriarTutorResult {
 }
 
 const NOME_MAX_LENGTH = 255;
+
+const nomeSchema = z
+  .string()
+  .trim()
+  .min(1, "Informe o nome.")
+  .max(NOME_MAX_LENGTH, `O nome não pode ter mais de ${NOME_MAX_LENGTH} caracteres.`);
+
+const criarTutorSchema = z.object({
+  nome: nomeSchema,
+  telefone: z
+    .string()
+    .refine(
+      (t) => parsePhoneNumberFromString(t, "BR")?.isValid() === true,
+      "Informe um telefone válido no formato brasileiro, com DDD (ex.: (79) 99999-9999).",
+    ),
+});
+
+const criarPetSchema = z.object({
+  tutorId: z.number().int().positive(),
+  nome: nomeSchema,
+  raca: z.string().trim(),
+  porte: z.enum(["pequeno", "medio", "grande"]),
+});
 
 type Porte = "pequeno" | "medio" | "grande";
 
@@ -35,10 +61,12 @@ interface CriarPetResult {
  * erro Postgres `23503`) — aqui só traduzimos pra uma mensagem
  * amigável em vez de vazar o erro cru do banco.
  */
-export async function criarPet({ tutorId, nome, raca, porte }: CriarPetInput): Promise<CriarPetResult> {
-  if (nome.length > NOME_MAX_LENGTH) {
-    return { error: `O nome não pode ter mais de ${NOME_MAX_LENGTH} caracteres.` };
-  }
+export async function criarPet(input: CriarPetInput): Promise<CriarPetResult> {
+  const validado = validar(criarPetSchema, input);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const { tutorId, nome, raca, porte } = validado.data;
 
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -64,17 +92,13 @@ export async function criarPet({ tutorId, nome, raca, porte }: CriarPetInput): P
  * (CAD-04). O telefone é salvo já normalizado em formato E.164
  * (`+55DDXXXXXXXXX`), consistente independente de como foi digitado.
  */
-export async function criarTutor({ nome, telefone }: CriarTutorInput): Promise<CriarTutorResult> {
-  if (nome.length > NOME_MAX_LENGTH) {
-    return { error: `O nome não pode ter mais de ${NOME_MAX_LENGTH} caracteres.` };
-  }
-
-  const phone = parsePhoneNumberFromString(telefone, "BR");
-  if (!phone || !phone.isValid()) {
-    return {
-      error: "Informe um telefone válido no formato brasileiro, com DDD (ex.: (79) 99999-9999).",
-    };
-  }
+export async function criarTutor(input: CriarTutorInput): Promise<CriarTutorResult> {
+  const validado = validar(criarTutorSchema, input);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const { nome, telefone } = validado.data;
+  const phone = parsePhoneNumberFromString(telefone, "BR")!; // validado pelo schema
 
   const supabase = await createClient();
   const { data, error } = await supabase

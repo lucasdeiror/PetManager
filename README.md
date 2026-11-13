@@ -31,6 +31,7 @@ próprio deploy.
 - [Decisões de arquitetura](#-decisões-de-arquitetura)
 - [Status do desenvolvimento](#-status-do-desenvolvimento)
 - [Como rodar o projeto](#-como-rodar-o-projeto)
+- [Deploy (runbook)](#-deploy-runbook)
 - [Testes](#-testes)
 - [Fluxo de contribuição](#-fluxo-de-contribuição)
 - [Documentação (specs)](#-documentação-specs)
@@ -356,6 +357,28 @@ npm run dev
 Acesse `http://localhost:3000`.
 
 ---
+
+## 🛫 Deploy (runbook)
+
+Cada petshop tem o próprio projeto Supabase e o próprio deploy. Em cada um:
+
+1. **Feche o cadastro público.** No painel do Supabase, vá em
+   Authentication → Sign In / Providers e desligue **Allow new users to
+   sign up**. Sem isso, qualquer pessoa cria conta pela API. Localmente isso
+   já vem de `enable_signup = false` em `supabase/config.toml`.
+2. **Crie os usuários por convite.** Em Authentication → Users, use
+   **Invite user** para dono e recepcionista. Depois do primeiro acesso,
+   defina o papel de cada um em `profiles.role` (`dono` ou
+   `recepcionista`; o padrão é `recepcionista`).
+3. **Rode os testes de banco antes de subir.** Precisa do Docker:
+
+   ```bash
+   npx supabase start
+   npm run test:db
+   ```
+
+   `test:db` recria o banco local com `supabase db reset`, então não aponte
+   para nada que tenha dados.
 
 ## 🧪 Testes
 

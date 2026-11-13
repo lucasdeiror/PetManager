@@ -6,12 +6,16 @@ const update = vi.fn(() => ({ eq: eqUpdate }));
 const eqDelete = vi.fn();
 const del = vi.fn(() => ({ eq: eqDelete }));
 const insertServicos = vi.fn();
+const single = vi.fn();
+const select = vi.fn(() => ({ eq: () => ({ single }) }));
 
 const from = vi.fn((table: string) => {
-  if (table === "agendamentos") return { update };
+  if (table === "agendamentos") return { update, select };
   if (table === "agendamento_servicos") return { delete: del, insert: insertServicos };
   throw new Error(`tabela inesperada: ${table}`);
 });
+
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
 
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
@@ -20,6 +24,7 @@ vi.mock("../../../shared/supabase/server", () => ({
 describe("editarAgendamento", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    single.mockResolvedValue({ data: { status: "agendado" }, error: null });
     eqUpdate.mockResolvedValue({ error: null });
     eqDelete.mockResolvedValue({ error: null });
     insertServicos.mockResolvedValue({ error: null });
@@ -45,6 +50,26 @@ describe("editarAgendamento", () => {
   });
 });
 
+describe("editarAgendamento com status diferente de agendado (MAQ-03)", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    eqUpdate.mockResolvedValue({ error: null });
+    eqDelete.mockResolvedValue({ error: null });
+    insertServicos.mockResolvedValue({ error: null });
+  });
+
+  it.each(["concluido", "cancelado"])("recusa editar agendamento %s sem alterar nada", async (status) => {
+    single.mockResolvedValue({ data: { status }, error: null });
+
+    const result = await editarAgendamento({ id: 7, petId: 2, servicoIds: [3] });
+
+    expect(result.error).toBe("Só é possível editar agendamentos agendados");
+    expect(update).not.toHaveBeenCalled();
+    expect(del).not.toHaveBeenCalled();
+    expect(insertServicos).not.toHaveBeenCalled();
+  });
+});
+
 describe("cancelarAgendamento", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -58,5 +83,13 @@ describe("cancelarAgendamento", () => {
     expect(update).toHaveBeenCalledWith({ status: "cancelado" });
     expect(eqUpdate).toHaveBeenCalledWith("id", 7);
     expect(del).not.toHaveBeenCalled();
+  });
+
+  it("agendamento concluído: devolve a mensagem de reabrir antes de cancelar (MAQ-02)", async () => {
+    eqUpdate.mockResolvedValue({ error: { message: "Reabra o agendamento antes de cancelar" } });
+
+    const result = await cancelarAgendamento(7);
+
+    expect(result.error).toBe("Reabra o agendamento antes de cancelar");
   });
 });

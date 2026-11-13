@@ -1,7 +1,15 @@
 "use server";
 
+import { z } from "zod";
 import { getRelatorioMensal } from "./queries";
+import { validar } from "../../shared/validacao/validar";
+import { exigirDono } from "../auth/queries";
 import { renderRelatorioPdf } from "../../shared/pdf/relatorio-pdf";
+
+const gerarRelatorioPdfSchema = z.object({
+  ano: z.number().int().positive(),
+  mes: z.number().int().min(1).max(12),
+});
 
 interface GerarRelatorioPdfResult {
   error?: string;
@@ -19,7 +27,13 @@ interface GerarRelatorioPdfResult {
  * lança, pra tela do relatório continuar funcionando normalmente
  * mesmo se o PDF falhar (REL-07).
  */
-export async function gerarRelatorioPdf(ano: number, mes: number): Promise<GerarRelatorioPdfResult> {
+export async function gerarRelatorioPdf(anoEntrada: number, mesEntrada: number): Promise<GerarRelatorioPdfResult> {
+  const validado = validar(gerarRelatorioPdfSchema, { ano: anoEntrada, mes: mesEntrada });
+  if ("error" in validado) return validado;
+  const dono = await exigirDono();
+  if (dono.error) return dono;
+  const { ano, mes } = validado.data;
+
   try {
     const dados = await getRelatorioMensal(ano, mes);
     const buffer = await renderRelatorioPdf(dados);

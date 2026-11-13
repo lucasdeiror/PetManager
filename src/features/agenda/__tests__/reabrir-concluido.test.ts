@@ -3,6 +3,8 @@ import { reabrirAgendamentoConcluido } from "../actions";
 
 const rpc = vi.fn();
 
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ rpc })),
 }));
@@ -38,5 +40,13 @@ describe("reabrirAgendamentoConcluido", () => {
     const result = await reabrirAgendamentoConcluido(999);
 
     expect(result.error).toBe("Agendamento não encontrado.");
+  });
+
+  it("agendamento fora de concluído devolve 'Agendamento não está concluído' (IDP-06)", async () => {
+    rpc.mockResolvedValue({ data: null, error: { message: "Agendamento não está concluído" } });
+
+    const result = await reabrirAgendamentoConcluido(1);
+
+    expect(result.error).toBe("Agendamento não está concluído");
   });
 });

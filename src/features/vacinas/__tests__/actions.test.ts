@@ -22,6 +22,8 @@ const from = vi.fn((table: string) => {
   throw new Error(`tabela inesperada: ${table}`);
 });
 
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
 }));

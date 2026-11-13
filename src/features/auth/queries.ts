@@ -26,3 +26,18 @@ export async function getCurrentUserRole(): Promise<UserRole | null> {
 
   return (profile?.role as UserRole | undefined) ?? null;
 }
+
+/** SEG-02: barra chamada sem sessão antes de qualquer escrita. */
+export async function exigirSessao(): Promise<{ error?: string; role?: UserRole }> {
+  const role = await getCurrentUserRole();
+  if (!role) return { error: "Sessão expirada. Entre novamente." };
+  return { role };
+}
+
+/** SEG-01: só o dono passa; recepcionista recebe erro no servidor. */
+export async function exigirDono(): Promise<{ error?: string }> {
+  const { error, role } = await exigirSessao();
+  if (error) return { error };
+  if (role !== "dono") return { error: "Ação permitida só ao dono." };
+  return {};
+}

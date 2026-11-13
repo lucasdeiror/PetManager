@@ -1,27 +1,36 @@
 import { test, expect } from "@playwright/test";
 
+// Horário único por execução (o banco local acumula dados entre rodadas).
+function horaUnica(): string {
+  const h = String(10 + Math.floor(Math.random() * 12)).padStart(2, "0");
+  const m = String(Math.floor(Math.random() * 60)).padStart(2, "0");
+  return `${h}:${m}`;
+}
+
 test.describe("tela de agenda - fluxo completo de estados", () => {
   test("criar, editar, cancelar, reabrir, concluir e efeito em Vendas", async ({ page }) => {
     await page.goto("/agenda");
+    const hora = horaUnica();
+    const horaNova = horaUnica();
 
     // Criar
     await page.getByLabel("Pet").selectOption({ index: 1 });
-    await page.getByLabel("Horário").fill("10:00");
+    await page.getByLabel("Horário").fill(hora);
     await page.getByRole("checkbox").first().check();
     await page.getByRole("button", { name: "Criar agendamento" }).click();
 
-    const item = page.locator('[data-status]', { hasText: "10:00" }).first();
+    const item = page.locator('[data-status]', { hasText: hora }).first();
     await expect(item).toBeVisible();
     await expect(item).toHaveAttribute("data-status", "agendado");
 
     // Editar
     await item.getByRole("button", { name: "Editar" }).click();
-    await item.locator('input[type="time"]').fill("11:00");
+    await item.locator('input[type="time"]').fill(horaNova);
     await item.getByRole("button", { name: "Salvar" }).click();
-    await expect(page.locator('[data-status]', { hasText: "11:00" })).toBeVisible();
+    await expect(page.locator('[data-status]', { hasText: horaNova })).toBeVisible();
 
     // Cancelar
-    const itemEditado = page.locator('[data-status]', { hasText: "11:00" }).first();
+    const itemEditado = page.locator('[data-status]', { hasText: horaNova }).first();
     await itemEditado.getByRole("button", { name: "Cancelar" }).click();
     await expect(itemEditado).toHaveAttribute("data-status", "cancelado");
 
@@ -41,10 +50,17 @@ test.describe("tela de agenda - fluxo completo de estados", () => {
     await page.goto("/agenda");
 
     await page.getByLabel("Pet").selectOption({ index: 1 });
-    await page.getByLabel("Horário").fill("14:00");
+    await page.getByLabel("Horário").fill(horaUnica());
     await page.getByRole("checkbox").first().check();
 
-    const botao = page.getByRole("button", { name: "Criar agendamento" });
+    // Atrasa a Server Action (POST) para o estado "pendente" ser observável: no banco local ela termina em ms.
+    await page.route("**/agenda*", async (route) => {
+      if (route.request().method() === "POST") await new Promise((r) => setTimeout(r, 1500));
+      await route.continue();
+    });
+
+    // O rótulo muda para "Salvando..." enquanto pendente, então o seletor aceita os dois.
+    const botao = page.getByRole("button", { name: /Criar agendamento|Salvando/ });
     await botao.click();
 
     await expect(botao).toBeDisabled();

@@ -101,3 +101,19 @@ describe("getVacinas", () => {
     expect(vacinas.map((v) => v.id)).toEqual([2]);
   });
 });
+
+describe("getVacinas: hoje no fuso de Brasília (DAT-01)", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("às 22:30 de Brasília, retorno previsto para hoje ainda está em dia", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-11-13T01:30:00Z")); // 2026-11-12 22:30 em Brasília
+    result = { data: [{ ...ROWS[0], data_retorno_prevista: "2026-11-12" }] };
+
+    const [vacina] = await getVacinas();
+
+    expect(vacina.status).toBe("em-dia");
+  });
+});

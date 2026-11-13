@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 4,
+  "next_id": 7,
   "lessons": [
     {
       "id": "L-001",
@@ -58,6 +58,60 @@
       ],
       "created": "2026-09-20T22:40:45Z",
       "last_seen": "2026-09-20T22:40:45Z"
+    },
+    {
+      "id": "L-004",
+      "key": "surviving_mutant::teste de helper compartilhado nao prova a fiacao afirme tambem no ponto de uso o resultado dependente do helper ex status calculado com relogio fixo",
+      "text": "Teste de helper compartilhado nao prova a fiacao: afirme tambem, no ponto de uso, o resultado dependente do helper (ex.: status calculado com relogio fixo).",
+      "signal": "surviving_mutant",
+      "scope": "tests",
+      "status": "candidate",
+      "features": [
+        "hardening"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "M9 src/features/vacinas/queries.ts:73 (DAT-01) (tests)"
+      ],
+      "created": "2026-11-13T03:23:22Z",
+      "last_seen": "2026-11-13T03:23:22Z"
+    },
+    {
+      "id": "L-005",
+      "key": "ac_gap::ac dependente de papel sessao autenticada nao fica coberto por comentario de nota escreva o teste com sessao real ou marque o ac como nao coberto",
+      "text": "AC dependente de papel/sessao autenticada nao fica coberto por comentario de nota: escreva o teste com sessao real ou marque o AC como nao coberto.",
+      "signal": "ac_gap",
+      "scope": "e2e",
+      "status": "candidate",
+      "features": [
+        "hardening"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "ROT-02 e2e/proxy.spec.ts:30 (comentario sem teste) (e2e)"
+      ],
+      "created": "2026-11-13T03:23:22Z",
+      "last_seen": "2026-11-13T03:23:22Z"
+    },
+    {
+      "id": "L-006",
+      "key": "surviving_mutant::toequal ignora chaves undefined use tostrictequal ao afirmar o formato exato de um resultado data ou error",
+      "text": "toEqual ignora chaves undefined: use toStrictEqual ao afirmar o formato exato de um resultado { data } ou { error }.",
+      "signal": "surviving_mutant",
+      "scope": "tests",
+      "status": "candidate",
+      "features": [
+        "hardening"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "M6 src/shared/validacao/validar.ts:11 (validar.test.ts:19) (tests)"
+      ],
+      "created": "2026-11-13T03:23:22Z",
+      "last_seen": "2026-11-13T03:23:22Z"
     }
   ]
 }
