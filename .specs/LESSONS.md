@@ -32,6 +32,24 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: supabase advisors (concluir_agendamento, T28)
 - last seen: 2026-09-20T22:40:45Z
 
+### L-004 - Teste de helper compartilhado nao prova a fiacao: afirme tambem, no ponto de uso, o resultado dependente do helper (ex.: status calculado com relogio fixo).
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `tests` · harmful: 0
+- features: hardening
+- evidence: M9 src/features/vacinas/queries.ts:73 (DAT-01) (tests)
+- last seen: 2026-11-13T03:23:22Z
+
+### L-005 - AC dependente de papel/sessao autenticada nao fica coberto por comentario de nota: escreva o teste com sessao real ou marque o AC como nao coberto.
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `e2e` · harmful: 0
+- features: hardening
+- evidence: ROT-02 e2e/proxy.spec.ts:30 (comentario sem teste) (e2e)
+- last seen: 2026-11-13T03:23:22Z
+
+### L-006 - toEqual ignora chaves undefined: use toStrictEqual ao afirmar o formato exato de um resultado { data } ou { error }.
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `tests` · harmful: 0
+- features: hardening
+- evidence: M6 src/shared/validacao/validar.ts:11 (validar.test.ts:19) (tests)
+- last seen: 2026-11-13T03:23:22Z
+
 ## Quarantined (failed when applied - ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.
