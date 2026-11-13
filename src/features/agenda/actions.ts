@@ -94,6 +94,19 @@ export async function editarAgendamento({
 }: EditarAgendamentoInput): Promise<EditarAgendamentoResult> {
   const supabase = await createClient();
 
+  const { data: atual, error: fetchError } = await supabase
+    .from("agendamentos")
+    .select("status")
+    .eq("id", id)
+    .single();
+
+  if (fetchError || !atual) {
+    return { error: "Agendamento não encontrado." };
+  }
+  if (atual.status !== "agendado") {
+    return { error: "Só é possível editar agendamentos agendados" };
+  }
+
   const updates: Record<string, unknown> = {};
   if (petId !== undefined) updates.pet_id = petId;
   if (dataHora !== undefined) updates.data_hora = dataHora;
@@ -135,6 +148,9 @@ export async function cancelarAgendamento(id: number): Promise<CancelarAgendamen
   const { error } = await supabase.from("agendamentos").update({ status: "cancelado" }).eq("id", id);
 
   if (error) {
+    if (error.message.includes("Reabra o agendamento antes de cancelar")) {
+      return { error: "Reabra o agendamento antes de cancelar" };
+    }
     return { error: "Não foi possível cancelar o agendamento. Tente novamente." };
   }
 
@@ -199,7 +215,10 @@ export async function concluirAgendamento(id: number): Promise<ConcluirAgendamen
     if (error.message.includes("Agendamento não encontrado")) {
       return { error: "Agendamento não encontrado." };
     }
-    if (error.message.includes("vendas_agendamento_unique") || error.code === "23505") {
+    if (error.message.includes("Agendamento não está agendado")) {
+      return { error: "Agendamento não está agendado" };
+    }
+    if (error.code === "23505") {
       return { error: "Este agendamento já foi concluído." };
     }
     return { error: "Não foi possível concluir o agendamento. Tente novamente." };
@@ -213,8 +232,8 @@ interface ReabrirAgendamentoConcluidoResult {
 }
 
 /**
- * Reabre um agendamento concluído, removendo a venda associada
- * (idempotente — nenhum erro se já não houver venda) via a função
+ * Reabre um agendamento concluído, estornando a venda associada
+ * (nunca apaga; o trigger de status marca estornada_em) via a função
  * Postgres transacional `reabrir_agendamento_concluido` (migration
  * 0007). Existe pra AGD-08 nunca deixar o faturamento inflado.
  */
@@ -228,6 +247,9 @@ export async function reabrirAgendamentoConcluido(id: number): Promise<ReabrirAg
   if (error) {
     if (error.message.includes("Agendamento não encontrado")) {
       return { error: "Agendamento não encontrado." };
+    }
+    if (error.message.includes("Agendamento não está concluído")) {
+      return { error: "Agendamento não está concluído" };
     }
     return { error: "Não foi possível reabrir o agendamento. Tente novamente." };
   }

@@ -3,8 +3,8 @@ import { clienteAdmin } from "./db-sessao";
 /** Cria tutor + pet + agendamento (status agendado) com serviços de preços dados. */
 export async function criarAgendamento(precos: number[] = [30, 20]): Promise<number> {
   const admin = clienteAdmin();
-  const ok = <T>(r: { data: T | null; error: unknown }): T => {
-    if (r.error || r.data === null) throw r.error ?? new Error("sem dados");
+  const ok = <T>(r: { data: T; error: unknown }): NonNullable<T> => {
+    if (r.error || r.data == null) throw r.error ?? new Error("sem dados");
     return r.data;
   };
   const tutor = ok(await admin.from("tutores").insert({ nome: "Ana", telefone: "+5579999990000" }).select("id").single());

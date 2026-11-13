@@ -39,4 +39,12 @@ describe("reabrirAgendamentoConcluido", () => {
 
     expect(result.error).toBe("Agendamento não encontrado.");
   });
+
+  it("agendamento fora de concluído devolve 'Agendamento não está concluído' (IDP-06)", async () => {
+    rpc.mockResolvedValue({ data: null, error: { message: "Agendamento não está concluído" } });
+
+    const result = await reabrirAgendamentoConcluido(1);
+
+    expect(result.error).toBe("Agendamento não está concluído");
+  });
 });

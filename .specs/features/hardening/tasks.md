@@ -283,14 +283,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: editar agendamento `concluido`/`cancelado` → `Só é possível editar agendamentos agendados`, sem `update`
-- [ ] Unit: cada mensagem nova do banco vira a mensagem do spec
-- [ ] Gate full passa
+- [x] Unit: editar agendamento `concluido`/`cancelado` → `Só é possível editar agendamentos agendados`, sem `update`
+- [x] Unit: cada mensagem nova do banco vira a mensagem do spec
+- [x] Gate full passa
 
 **Tests**: unit
 **Gate**: full
 
 **Commit**: `fix(agenda): actions respeitam transicoes de status`
+
+**Status**: Done
 
 ---
 
