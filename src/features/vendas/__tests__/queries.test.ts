@@ -74,8 +74,8 @@ describe("getVendas", () => {
 
     const builder = from.mock.results[0].value;
     expect(builder.eq).toHaveBeenCalledWith("tipo", "produto");
-    expect(builder.gte).toHaveBeenCalledWith("criado_em", "2026-09-01");
-    expect(builder.lt).toHaveBeenCalledWith("criado_em", "2026-10-01");
+    expect(builder.gte).toHaveBeenCalledWith("criado_em", "2026-09-01T00:00:00-03:00");
+    expect(builder.lt).toHaveBeenCalledWith("criado_em", "2026-10-01T00:00:00-03:00");
   });
 
   it("combina busca por item com filtro de tipo", async () => {

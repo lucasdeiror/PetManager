@@ -97,18 +97,18 @@ T1 → T4
 
 ### T4: Relatório, vendas e vacinas no fuso de Aracaju
 
-**What**: `limitesDoMes` com `T00:00:00-03:00`; vendas com `dataSP`; vacinas com `dataSimples`.
-**Where**: `src/features/relatorios/queries.ts`, `src/app/(dashboard)/vendas/page.tsx`, `src/app/(dashboard)/vacinas/page.tsx`
+**What**: `limitesDoMes` e o filtro `mes` de `getVendas` com `T00:00:00-03:00`; vendas com `dataSP`; vacinas com `dataSimples`.
+**Where**: `src/features/relatorios/queries.ts`, `src/features/vendas/queries.ts`, `src/app/(dashboard)/vendas/page.tsx`, `src/app/(dashboard)/vacinas/page.tsx`
 **Depends on**: T1
 **Reuses**: `dataSP`, `dataSimples`
 **Requirement**: FUS-06, FUS-07, FUS-08
 
 **Done when**:
-- [ ] Relatório de novembro vai de `2026-11-01T00:00:00-03:00` a `2026-12-01T00:00:00-03:00`
+- [x] Relatório de novembro vai de `2026-11-01T00:00:00-03:00` a `2026-12-01T00:00:00-03:00`
 
 **Tests**: unit
 **Gate**: full
 
 **Commit**: `fix(relatorios): limites do mes no fuso de sao paulo`
 
-**Status**: Pending
+**Status**: Done

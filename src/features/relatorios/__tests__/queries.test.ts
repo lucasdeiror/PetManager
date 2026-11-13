@@ -29,7 +29,12 @@ function makeBuilder() {
   return builder;
 }
 
-const from = vi.fn(() => makeBuilder());
+let builders: Record<string, ReturnType<typeof vi.fn>>[] = [];
+const from = vi.fn(() => {
+  const b = makeBuilder() as Record<string, ReturnType<typeof vi.fn>>;
+  builders.push(b);
+  return b;
+});
 
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
@@ -72,6 +77,24 @@ describe("getRelatorioMensal", () => {
     expect(relatorio.faturamentoTotal).toBe(90);
     expect(relatorio.vendas).toHaveLength(2);
     expect(getVendas).toHaveBeenCalledWith({ mes: "2026-09" });
+  });
+
+  it.each([
+    [11, "2026-11-01T00:00:00-03:00", "2026-12-01T00:00:00-03:00"],
+    [12, "2026-12-01T00:00:00-03:00", "2027-01-01T00:00:00-03:00"],
+  ])("mês %i conta agendamentos entre os limites de Brasília (FUS-06)", async (mes, inicio, fim) => {
+    vi.mocked(getCurrentUserRole).mockResolvedValue("dono");
+    vi.mocked(getVendas).mockResolvedValue([]);
+    counts = [0, 0];
+    builders = [];
+
+    await getRelatorioMensal(2026, mes);
+
+    expect(builders).toHaveLength(2);
+    for (const b of builders) {
+      expect(b.gte).toHaveBeenCalledWith("data_hora", inicio);
+      expect(b.lt).toHaveBeenCalledWith("data_hora", fim);
+    }
   });
 
   it("mês sem nenhum dado retorna zero em todos os campos, sem erro", async () => {

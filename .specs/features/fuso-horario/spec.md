@@ -78,14 +78,14 @@ O form da agenda manda o horário sem fuso (`2026-11-14T17:00:00`) e o Postgres,
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| FUS-01 | P1: Horário da agenda | Tasks | Pending |
-| FUS-02 | P1: Horário da agenda | Tasks | Pending |
-| FUS-03 | P1: Horário da agenda | Tasks | Pending |
-| FUS-04 | P1: Horário da agenda | Tasks | Pending |
-| FUS-05 | P1: Horário da agenda | Tasks | Pending |
-| FUS-06 | P1: Relatório e vendas | Tasks | Pending |
-| FUS-07 | P1: Relatório e vendas | Tasks | Pending |
-| FUS-08 | P1: Relatório e vendas | Tasks | Pending |
+| FUS-01 | P1: Horário da agenda | Execute | Done |
+| FUS-02 | P1: Horário da agenda | Execute | Done |
+| FUS-03 | P1: Horário da agenda | Execute | Done |
+| FUS-04 | P1: Horário da agenda | Execute | Done |
+| FUS-05 | P1: Horário da agenda | Execute | Done |
+| FUS-06 | P1: Relatório e vendas | Execute | Done |
+| FUS-07 | P1: Relatório e vendas | Execute | Done |
+| FUS-08 | P1: Relatório e vendas | Execute | Done |
 
 FUS-01..05 = ACs 1..5 da história 1; FUS-06..08 = ACs 1..3 da história 2.
 
