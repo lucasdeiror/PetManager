@@ -559,15 +559,17 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: e-mail não-string → `Dados inválidos.` sem chamar o Auth; mensagem de credencial inválida inalterada
-- [ ] `grep` de action exportada sem `validar(` em `src/features/*/actions.ts` retorna vazio
-- [ ] Gate build passa (fim da Phase 5)
+- [x] Unit: e-mail não-string → `Dados inválidos.` sem chamar o Auth; mensagem de credencial inválida inalterada
+- [x] `grep` de action exportada sem `validar(` em `src/features/*/actions.ts` retorna vazio
+- [x] Gate build passa (fim da Phase 5)
 
 **Tests**: unit
 **Gate**: build
 
 **Commit**: `feat(auth): valida entrada do login com zod`
 
+
+**Status**: Done
 ---
 
 ### T20: proxy.ts protegendo todo o dashboard

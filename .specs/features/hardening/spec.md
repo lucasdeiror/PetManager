@@ -218,12 +218,12 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | MAQ-02 | P1: Máquina de estados | Design | Done |
 | MAQ-03 | P1: Máquina de estados | Design | Done |
 | MAQ-04 | P1: Máquina de estados | Design | Done |
-| ENT-01 | P1: Entrada validada | Design | Pending |
-| ENT-02 | P1: Entrada validada | Design | Pending |
-| ENT-03 | P1: Entrada validada | Design | Pending |
-| ENT-04 | P1: Entrada validada | Design | Pending |
-| SEG-01 | P2: Papel no servidor | Design | Pending |
-| SEG-02 | P2: Papel no servidor | Design | Pending |
+| ENT-01 | P1: Entrada validada | Design | Done |
+| ENT-02 | P1: Entrada validada | Design | Done |
+| ENT-03 | P1: Entrada validada | Design | Done |
+| ENT-04 | P1: Entrada validada | Design | Done |
+| SEG-01 | P2: Papel no servidor | Design | Done |
+| SEG-02 | P2: Papel no servidor | Design | Done |
 | ROT-01 | P2: Rotas protegidas | Design | Pending |
 | ROT-02 | P2: Rotas protegidas | Design | Pending |
 | ROT-03 | P2: Rotas protegidas | Design | Pending |
