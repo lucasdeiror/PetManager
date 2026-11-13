@@ -201,16 +201,18 @@ T20 → T21 → T22 → T23
 - Skill: `supabase-postgres-best-practices`
 
 **Done when**:
-- [ ] Teste db por transição válida (4) e inválida (`concluido → cancelado` com a mensagem do MAQ-02; outra com `Transição de status inválida`)
-- [ ] Teste db: `update` direto como recepcionista `agendado → concluido` cria exatamente 1 venda com a soma certa
-- [ ] Teste db: `concluido → agendado` preenche `estornada_em`/`estornada_por` e a linha continua existindo
-- [ ] Teste db: reconcluir depois do estorno cria nova venda e mantém a antiga
-- [ ] Gate full passa
+- [x] Teste db por transição válida (4) e inválida (`concluido → cancelado` com a mensagem do MAQ-02; outra com `Transição de status inválida`)
+- [x] Teste db: `update` direto como recepcionista `agendado → concluido` cria exatamente 1 venda com a soma certa
+- [x] Teste db: `concluido → agendado` preenche `estornada_em`/`estornada_por` e a linha continua existindo
+- [x] Teste db: reconcluir depois do estorno cria nova venda e mantém a antiga
+- [x] Gate full passa
 
 **Tests**: integration (db)
 **Gate**: full
 
 **Commit**: `feat(agenda): trigger guarda transicoes de status e sincroniza vendas`
+
+**Status**: Done
 
 ---
 

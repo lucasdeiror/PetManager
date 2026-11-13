@@ -206,18 +206,18 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | TST-02 | P1: Testes de banco reais | Design | Done |
 | TST-03 | P1: Testes de banco reais | Design | Done |
 | TST-04 | P1: Testes de banco reais | Design | Done |
-| IDP-01 | P1: Venda idempotente / estorno | Design | Pending |
+| IDP-01 | P1: Venda idempotente / estorno | Design | Done |
 | IDP-02 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-03 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-04 | P1: Venda idempotente / estorno | Design | Done |
-| IDP-05 | P1: Venda idempotente / estorno | Design | Pending |
+| IDP-05 | P1: Venda idempotente / estorno | Design | Done |
 | IDP-06 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-07 | P1: Venda idempotente / estorno | Design | Pending |
-| IDP-08 | P1: Venda idempotente / estorno | Design | Pending |
-| MAQ-01 | P1: Máquina de estados | Design | Pending |
-| MAQ-02 | P1: Máquina de estados | Design | Pending |
+| IDP-08 | P1: Venda idempotente / estorno | Design | Done |
+| MAQ-01 | P1: Máquina de estados | Design | Done |
+| MAQ-02 | P1: Máquina de estados | Design | Done |
 | MAQ-03 | P1: Máquina de estados | Design | Pending |
-| MAQ-04 | P1: Máquina de estados | Design | Pending |
+| MAQ-04 | P1: Máquina de estados | Design | Done |
 | ENT-01 | P1: Entrada validada | Design | Pending |
 | ENT-02 | P1: Entrada validada | Design | Pending |
 | ENT-03 | P1: Entrada validada | Design | Pending |
