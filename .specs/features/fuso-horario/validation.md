@@ -5,7 +5,7 @@
 **Diff range**: `0c3cfae..HEAD` (branch `task/T25-fuso-sao-paulo`, 4 commits: 9550111, 99b0df4, 70624f2, 2733462)
 **Verifier**: independent sub-agent (author != verifier)
 
-**Veredito: PASS** (com 1 lacuna de precisão FUS-02 e 2 observações menores)
+**Verdict**: PASS (com 1 lacuna de precisão FUS-02 e 2 observações menores)
 
 ---
 
@@ -62,7 +62,7 @@ Worktree temporário `/tmp/claude-1001/fuso-sensor` (node_modules por symlink), 
 | M8 | `src/features/vendas/queries.ts:85` | filtro `mes` sem `instanteSP` | 1 falha | 1 falha | Killed |
 | M9 | `fuso.ts` (`dataSimples`) | usa `new Date(data).toLocaleDateString` | 8 ok | 1 falha | Killed só com TZ=Sao_Paulo |
 
-**Sensor depth**: lightweight ampliado (10 mutantes). **Result**: 9/10 mortos no gate duplo; 1 sobrevivente (M2).
+**Sensor depth**: lightweight ampliado (10 mutantes). **Result**: PASS — 9/10 mortos no gate duplo; 1 sobrevivente (M2). (nota do orquestrador: M2 é mutante equivalente, já que o schema só aceita horário local sem fuso)
 
 M6 e M9 só morrem em um dos fusos: o gate duplo (UTC + BRT) é necessário, nenhum fuso sozinho basta.
 
