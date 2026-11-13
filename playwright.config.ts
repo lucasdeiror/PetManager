@@ -18,12 +18,12 @@ export default defineConfig({
     {
       // specs que não dependem de sessão: rodam deslogadas
       name: "sem-sessao",
-      testMatch: ["proxy.spec.ts", "login.spec.ts"],
+      testMatch: ["proxy.spec.ts", "login.spec.ts", "headers.spec.ts"],
       use: { ...devices["Desktop Chrome"], channel: process.env.PW_CHANNEL ?? "chrome" },
     },
     {
       name: "chromium",
-      testIgnore: ["proxy.spec.ts", "login.spec.ts", "auth.setup.ts"],
+      testIgnore: ["proxy.spec.ts", "login.spec.ts", "headers.spec.ts", "auth.setup.ts"],
       dependencies: ["setup"],
       use: {
         ...devices["Desktop Chrome"],

@@ -232,7 +232,7 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | CAD-03 | P2: Cadastro fechado | Design | Pending |
 | DAT-01 | P2: Data em Brasília | Design | Pending |
 | DAT-02 | P2: Data em Brasília | Design | Pending |
-| SEG-03 | P3: Headers | Design | Pending |
+| SEG-03 | P3: Headers | Design | Done |
 
 **Coverage:** 31 total, 31 mapped to tasks (T1–T23), 0 unmapped
 

@@ -609,8 +609,8 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] E2E: resposta de `/login` traz os três headers com os valores do spec
-- [ ] Gate full (com e2e) passa
+- [x] E2E: resposta de `/login` traz os três headers com os valores do spec
+- [x] Gate full (com e2e) passa
 
 **Tests**: e2e
 **Gate**: full
