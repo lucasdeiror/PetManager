@@ -203,7 +203,7 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
 | TST-01 | P1: Testes de banco reais | Design | Done |
-| TST-02 | P1: Testes de banco reais | Design | Pending |
+| TST-02 | P1: Testes de banco reais | Design | Done |
 | TST-03 | P1: Testes de banco reais | Design | Done |
 | TST-04 | P1: Testes de banco reais | Design | Done |
 | IDP-01 | P1: Venda idempotente / estorno | Design | Pending |
@@ -228,7 +228,7 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | ROT-02 | P2: Rotas protegidas | Design | Pending |
 | ROT-03 | P2: Rotas protegidas | Design | Pending |
 | CAD-01 | P2: Cadastro fechado | Design | Done |
-| CAD-02 | P2: Cadastro fechado | Design | Pending |
+| CAD-02 | P2: Cadastro fechado | Design | Done |
 | CAD-03 | P2: Cadastro fechado | Design | Pending |
 | DAT-01 | P2: Data em Brasília | Design | Pending |
 | DAT-02 | P2: Data em Brasília | Design | Pending |

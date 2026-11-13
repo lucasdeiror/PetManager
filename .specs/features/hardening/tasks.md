@@ -150,13 +150,15 @@ T20 → T21 → T22 → T23
 - Skill: `supabase-postgres-best-practices`
 
 **Done when**:
-- [ ] `rls.db.test.ts` cobre os três cenários com login real
-- [ ] Gate full passa
+- [x] `rls.db.test.ts` cobre os três cenários com login real
+- [x] Gate full passa
 
 **Tests**: integration (db)
 **Gate**: full
 
 **Commit**: `test(db): sessoes reais de dono e recepcionista`
+
+**Status**: Done
 
 ---
 
