@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getCurrentUserRole } from "../queries";
+import { getCurrentUserRole, exigirSessao, exigirDono } from "../queries";
 
 const getUser = vi.fn();
 const single = vi.fn();
@@ -54,5 +54,34 @@ describe("getCurrentUserRole", () => {
     const role = await getCurrentUserRole();
 
     expect(role).toBeNull();
+  });
+});
+
+describe("exigirSessao / exigirDono", () => {
+  beforeEach(() => {
+    getUser.mockReset();
+    single.mockReset();
+  });
+
+  it("sem sessão: Sessão expirada (SEG-02)", async () => {
+    getUser.mockResolvedValue({ data: { user: null } });
+
+    expect(await exigirSessao()).toEqual({ error: "Sessão expirada. Entre novamente." });
+    expect(await exigirDono()).toEqual({ error: "Sessão expirada. Entre novamente." });
+  });
+
+  it("recepcionista passa em exigirSessao e é barrada em exigirDono (SEG-01)", async () => {
+    getUser.mockResolvedValue({ data: { user: { id: "u" } } });
+    single.mockResolvedValue({ data: { role: "recepcionista" } });
+
+    expect(await exigirSessao()).toEqual({ role: "recepcionista" });
+    expect(await exigirDono()).toEqual({ error: "Ação permitida só ao dono." });
+  });
+
+  it("dono passa em exigirDono (SEG-01)", async () => {
+    getUser.mockResolvedValue({ data: { user: { id: "u" } } });
+    single.mockResolvedValue({ data: { role: "dono" } });
+
+    expect(await exigirDono()).toEqual({});
   });
 });

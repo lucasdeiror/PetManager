@@ -334,14 +334,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: sem sessão → `Sessão expirada. Entre novamente.`; recepcionista em `exigirDono` → `Ação permitida só ao dono.`; dono passa
-- [ ] Gate quick passa
+- [x] Unit: sem sessão → `Sessão expirada. Entre novamente.`; recepcionista em `exigirDono` → `Ação permitida só ao dono.`; dono passa
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(auth): checagem de sessao e papel no servidor`
 
+
+**Status**: Done
 ---
 
 ### T11: Zod + sessão em agenda
