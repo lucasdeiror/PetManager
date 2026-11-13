@@ -229,16 +229,18 @@ T20 → T21 → T22 → T23
 - Skill: `supabase-postgres-best-practices`
 
 **Done when**:
-- [ ] Teste db: concluir não-`agendado` → `Agendamento não está agendado`, nenhuma venda nova
-- [ ] Teste db: duas chamadas concorrentes (`Promise.all`) → exatamente 1 venda ativa
-- [ ] Teste db: reabrir não-`concluido` → `Agendamento não está concluído`, vendas intactas
-- [ ] `grep -n "delete from public.vendas" supabase/migrations/0011*` vazio
-- [ ] Gate full passa
+- [x] Teste db: concluir não-`agendado` → `Agendamento não está agendado`, nenhuma venda nova
+- [x] Teste db: duas chamadas concorrentes (`Promise.all`) → exatamente 1 venda ativa
+- [x] Teste db: reabrir não-`concluido` → `Agendamento não está concluído`, vendas intactas
+- [x] `grep -n "delete from public.vendas" supabase/migrations/0011*` vazio
+- [x] Gate full passa
 
 **Tests**: integration (db)
 **Gate**: full
 
 **Commit**: `fix(agenda): rpcs de concluir e reabrir checam status e nao apagam venda`
+
+**Status**: Done
 
 ---
 

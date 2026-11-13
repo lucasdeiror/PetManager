@@ -207,11 +207,11 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | TST-03 | P1: Testes de banco reais | Design | Done |
 | TST-04 | P1: Testes de banco reais | Design | Done |
 | IDP-01 | P1: Venda idempotente / estorno | Design | Done |
-| IDP-02 | P1: Venda idempotente / estorno | Design | Pending |
-| IDP-03 | P1: Venda idempotente / estorno | Design | Pending |
+| IDP-02 | P1: Venda idempotente / estorno | Design | Done |
+| IDP-03 | P1: Venda idempotente / estorno | Design | Done |
 | IDP-04 | P1: Venda idempotente / estorno | Design | Done |
 | IDP-05 | P1: Venda idempotente / estorno | Design | Done |
-| IDP-06 | P1: Venda idempotente / estorno | Design | Pending |
+| IDP-06 | P1: Venda idempotente / estorno | Design | Done |
 | IDP-07 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-08 | P1: Venda idempotente / estorno | Design | Done |
 | MAQ-01 | P1: Máquina de estados | Design | Done |
