@@ -3,6 +3,8 @@ import { gerarRelatorioPdf } from "../actions";
 import { getRelatorioMensal } from "../queries";
 import { renderRelatorioPdf } from "../../../shared/pdf/relatorio-pdf";
 
+vi.mock("../../auth/queries", () => ({ exigirDono: vi.fn(async () => ({})) }));
+
 vi.mock("../queries", () => ({
   getRelatorioMensal: vi.fn(),
 }));

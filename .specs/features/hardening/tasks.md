@@ -534,14 +534,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: recepcionista não recebe PDF; mês 13 → `Dados inválidos.`
-- [ ] Gate quick passa
+- [x] Unit: recepcionista não recebe PDF; mês 13 → `Dados inválidos.`
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `fix(relatorios): so o dono gera o pdf de faturamento`
 
+
+**Status**: Done
 ---
 
 ### T19: Zod no login
