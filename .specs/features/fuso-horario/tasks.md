@@ -84,14 +84,14 @@ T1 → T4
 **Requirement**: FUS-04, FUS-05
 
 **Done when**:
-- [ ] Consulta do dia usa limites `-03:00`; nenhuma hora exibida sai de `slice` do ISO
+- [x] Consulta do dia usa limites `-03:00`; nenhuma hora exibida sai de `slice` do ISO
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `fix(agenda): exibe e filtra no fuso de sao paulo`
 
-**Status**: Pending
+**Status**: Done
 
 ---
 

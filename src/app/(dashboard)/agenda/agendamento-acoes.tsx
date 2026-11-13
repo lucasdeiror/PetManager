@@ -10,6 +10,7 @@ import {
   reabrirAgendamentoConcluido,
 } from "../../../features/agenda/actions";
 import type { AgendamentoDoDia } from "../../../features/agenda/queries";
+import { partesSP } from "../../../shared/data/fuso";
 
 interface Acao {
   error?: string;
@@ -38,11 +39,10 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const hora = String(formData.get("hora"));
-    const dia = agendamento.dataHora.slice(0, 10);
     run(() => editarAgendamento({ id: agendamento.id, dataHora: `${dia}T${hora}:00` }));
   }
 
-  const hora = agendamento.dataHora.slice(11, 16);
+  const { dia, hora } = partesSP(agendamento.dataHora);
 
   return (
     <div className="rounded-lg border p-3" data-status={agendamento.status}>

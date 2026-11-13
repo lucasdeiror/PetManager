@@ -14,7 +14,8 @@ function makeBuilder() {
   return builder;
 }
 
-const from = vi.fn(() => makeBuilder());
+let ultimo: Record<string, ReturnType<typeof vi.fn>>;
+const from = vi.fn(() => (ultimo = makeBuilder() as typeof ultimo));
 
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
@@ -23,6 +24,15 @@ vi.mock("../../../shared/supabase/server", () => ({
 describe("getAgendamentosPorDia", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  it("filtra o dia pelos limites de Brasília (FUS-04)", async () => {
+    result = { data: [] };
+
+    await getAgendamentosPorDia("2026-09-21");
+
+    expect(ultimo.gte).toHaveBeenCalledWith("data_hora", "2026-09-21T00:00:00-03:00");
+    expect(ultimo.lte).toHaveBeenCalledWith("data_hora", "2026-09-21T23:59:59.999-03:00");
   });
 
   it("retorna lista vazia num dia sem agendamentos", async () => {
