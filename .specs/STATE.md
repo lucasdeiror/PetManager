@@ -77,12 +77,9 @@
 
 ## Handoff
 
-- **Feature**: hardening — **COMPLETA** (23/23 tasks, `validation.md` = PASS na iteração 2; a iteração 1 reprovou por 4 lacunas de teste, fechadas em `1059424`)
-- **Phase / Task**: encerrada
-- **Completed**: T1-T23 + fix de filtros (`90bae10`) + fix do verificador (`1059424`)
-- **In-progress**: none
-- **Next step**: (1) decisão do usuário sobre T24 (registrarEntrada não atômico, `src/features/estoque/actions.ts:86-96`) e T25 (`criarAgendamento` usa fuso do servidor); (2) publicar: `gh pr create` foi bloqueado pela política de permissões, então tudo está só na `main` local; (3) aplicar migrations 0009-0011 na nuvem só com ok explícito, desligar o signup no painel (README) e rodar `get_advisors`.
-- **Observações sem bloqueio**: ENT-03 sem caso explícito de `porte` inválido; CAD-03 só por leitura; IDP-05 afirma `estornada_por` não nulo, não o id; `/login` não redireciona quem já está logado.
-- **Testes**: unit 172 · db 24 (`npm run test:db`, exige `npx supabase start`) · e2e 36 (Chrome local + Supabase local)
-- **Uncommitted files**: `.idea/` (fora do git)
-- **Branch**: main (local, à frente do remoto)
+- **Feature**: fuso-horario (T25) — **COMPLETA** (4/4 tasks, `validation.md` = PASS; mutante M2 sobrevivente é equivalente, pois o schema só aceita horário local sem fuso)
+- **T24**: entrada de estoque atômica via RPC `registrar_entrada` (migration 0012) — PR #51 aguardando merge
+- **Next step**: (1) merge dos PRs #51 (T24) e da T25; (2) rodar e2e com Supabase local; (3) nuvem só com ok explícito: reativar o projeto (está INACTIVE, região ca-central-1 — avaliar sa-east-1), aplicar migrations 0009-0012, desligar signup, `get_advisors`; depois deploy Vercel e piloto.
+- **Observações**: offset fixo `-03:00` (shortcut, sem horário de verão desde 2019); falta guarda automática contra `toLocale*String` sem `timeZone`.
+- **Testes**: unit 184 (passa com TZ=UTC e TZ=America/Sao_Paulo) · db 29 · e2e não rodado nesta feature
+- **Branch**: task/T25-fuso-sao-paulo

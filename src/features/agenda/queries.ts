@@ -1,4 +1,5 @@
 import { createClient } from "../../shared/supabase/server";
+import { instanteSP } from "../../shared/data/fuso";
 
 export interface AgendamentoDoDia {
   id: number;
@@ -40,8 +41,8 @@ export async function getAgendamentosPorDia(data: string): Promise<AgendamentoDo
     .select(
       "id, pet_id, data_hora, status, pets ( nome ), agendamento_servicos ( servicos ( nome ) )",
     )
-    .gte("data_hora", `${data}T00:00:00`)
-    .lte("data_hora", `${data}T23:59:59.999`)
+    .gte("data_hora", instanteSP(`${data}T00:00:00`))
+    .lte("data_hora", instanteSP(`${data}T23:59:59.999`))
     .order("data_hora");
 
   return ((rows ?? []) as unknown as AgendamentoRow[]).map((row) => ({

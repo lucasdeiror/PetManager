@@ -34,7 +34,7 @@ describe("editarAgendamento", () => {
     const result = await editarAgendamento({ id: 7, petId: 2, dataHora: "2026-09-21T11:00:00" });
 
     expect(result.error).toBeUndefined();
-    expect(update).toHaveBeenCalledWith({ pet_id: 2, data_hora: "2026-09-21T11:00:00" });
+    expect(update).toHaveBeenCalledWith({ pet_id: 2, data_hora: "2026-09-21T11:00:00-03:00" });
     expect(eqUpdate).toHaveBeenCalledWith("id", 7);
   });
 

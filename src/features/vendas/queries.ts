@@ -1,4 +1,5 @@
 import { createClient } from "../../shared/supabase/server";
+import { instanteSP } from "../../shared/data/fuso";
 
 export interface Venda {
   id: number;
@@ -81,7 +82,7 @@ export async function getVendas(filtro: GetVendasFiltro = {}): Promise<Venda[]> 
     query = query.eq("tipo", filtro.tipo);
   }
   if (filtro.mes) {
-    query = query.gte("criado_em", `${filtro.mes}-01`).lt("criado_em", proximoMes(filtro.mes));
+    query = query.gte("criado_em", instanteSP(`${filtro.mes}-01T00:00:00`)).lt("criado_em", instanteSP(`${proximoMes(filtro.mes)}T00:00:00`));
   }
 
   const { data } = await query;

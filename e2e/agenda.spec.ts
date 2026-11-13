@@ -19,7 +19,8 @@ test.describe("tela de agenda - fluxo completo de estados", () => {
     await page.getByRole("checkbox").first().check();
     await page.getByRole("button", { name: "Criar agendamento" }).click();
 
-    const item = page.locator('[data-status]', { hasText: hora }).first();
+    // O calendário mostra a mesma hora sem botões; o card de ações é o item que tem botão.
+    const item = page.locator('[data-status]:has(button)', { hasText: hora }).first();
     await expect(item).toBeVisible();
     await expect(item).toHaveAttribute("data-status", "agendado");
 
@@ -27,10 +28,10 @@ test.describe("tela de agenda - fluxo completo de estados", () => {
     await item.getByRole("button", { name: "Editar" }).click();
     await item.locator('input[type="time"]').fill(horaNova);
     await item.getByRole("button", { name: "Salvar" }).click();
-    await expect(page.locator('[data-status]', { hasText: horaNova })).toBeVisible();
+    await expect(page.locator('[data-status]:has(button)', { hasText: horaNova })).toBeVisible();
 
     // Cancelar
-    const itemEditado = page.locator('[data-status]', { hasText: horaNova }).first();
+    const itemEditado = page.locator('[data-status]:has(button)', { hasText: horaNova }).first();
     await itemEditado.getByRole("button", { name: "Cancelar" }).click();
     await expect(itemEditado).toHaveAttribute("data-status", "cancelado");
 

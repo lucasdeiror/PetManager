@@ -19,7 +19,7 @@ test.describe("componente AgendaCalendario", () => {
       await page.getByRole("button", { name: "Criar agendamento" }).click();
       await expect(page.locator("[data-status]", { hasText: hora }).first()).toBeVisible();
     }
-    await page.locator("[data-status]", { hasText: cancelado }).first().getByRole("button", { name: "Cancelar" }).click();
+    await page.locator("[data-status]:has(button)", { hasText: cancelado }).first().getByRole("button", { name: "Cancelar" }).click();
 
     await expect(page.getByText("Ocupado").first()).toBeVisible();
     await expect(page.getByText("Cancelado").first()).toBeVisible();

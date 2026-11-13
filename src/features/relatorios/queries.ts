@@ -1,6 +1,7 @@
 import { createClient } from "../../shared/supabase/server";
 import { getCurrentUserRole } from "../auth/queries";
 import { getVendas, type Venda } from "../vendas/queries";
+import { instanteSP } from "../../shared/data/fuso";
 
 export interface RelatorioMensal {
   ano: number;
@@ -26,7 +27,7 @@ function limitesDoMes(ano: number, mes: number): { inicio: string; fim: string }
   const mesStr = String(mes).padStart(2, "0");
   const inicio = `${ano}-${mesStr}-01`;
   const fim = mes === 12 ? `${ano + 1}-01-01` : `${ano}-${String(mes + 1).padStart(2, "0")}-01`;
-  return { inicio, fim };
+  return { inicio: instanteSP(`${inicio}T00:00:00`), fim: instanteSP(`${fim}T00:00:00`) };
 }
 
 /**

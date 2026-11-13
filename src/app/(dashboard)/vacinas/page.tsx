@@ -3,6 +3,7 @@ import { getPets } from "../../../features/pets/queries";
 import { getVacinas, getVacinasPorPet } from "../../../features/vacinas/queries";
 import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
 import { RegistrarVacinaForm } from "./registrar-vacina-form";
+import { dataSimples } from "../../../shared/data/fuso";
 
 const STATUS = ["em-dia", "atrasada"] as const;
 const STATUS_LABELS = { "em-dia": "Em dia", atrasada: "Atrasada" };
@@ -41,8 +42,8 @@ export default async function VacinasPage({
             {(historicoPet ?? []).map((v) => (
               <li key={v.id} className="rounded-md border p-2 text-sm">
                 <span className="font-bold">{v.nome}</span> — aplicada em{" "}
-                {new Date(v.dataAplicacao).toLocaleDateString("pt-BR")}, retorno previsto{" "}
-                {new Date(v.dataRetornoPrevista).toLocaleDateString("pt-BR")}
+                {dataSimples(v.dataAplicacao)}, retorno previsto{" "}
+                {dataSimples(v.dataRetornoPrevista)}
               </li>
             ))}
             {(historicoPet ?? []).length === 0 && (
@@ -72,7 +73,7 @@ export default async function VacinasPage({
                 {v.nome} — {v.petNome}
               </p>
               <p className="text-sm text-slate-600">
-                Retorno previsto: {new Date(v.dataRetornoPrevista).toLocaleDateString("pt-BR")} ·{" "}
+                Retorno previsto: {dataSimples(v.dataRetornoPrevista)} ·{" "}
                 {STATUS_LABELS[v.status]}
               </p>
             </div>

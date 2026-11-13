@@ -4,6 +4,7 @@ import { getProdutos } from "../../../features/estoque/queries";
 import { getVendas } from "../../../features/vendas/queries";
 import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
 import { RegistrarVendaProdutoForm } from "./registrar-venda-produto-form";
+import { dataSP } from "../../../shared/data/fuso";
 
 const TIPOS = ["servico", "produto"] as const;
 const TIPO_LABELS = { servico: "Serviço", produto: "Produto" };
@@ -57,7 +58,7 @@ export default async function VendasPage({
               <p className="font-bold">{v.itemNome}</p>
               <p className="text-sm text-slate-600">
                 {TIPO_LABELS[v.tipo]} · qtd. {v.quantidade} ·{" "}
-                {new Date(v.criadoEm).toLocaleDateString("pt-BR")}
+                {dataSP(v.criadoEm)}
               </p>
             </div>
             <span className="font-bold">

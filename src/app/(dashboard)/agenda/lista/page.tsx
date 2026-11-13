@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { getAgendamentosFiltrados } from "../../../../features/agenda/queries";
 import { SearchFilterBar } from "../../../../shared/filters/search-filter-bar";
+import { dataHoraSP } from "../../../../shared/data/fuso";
 
 const STATUS = ["agendado", "concluido", "cancelado"] as const;
 const STATUS_LABELS = { agendado: "Agendado", concluido: "Concluído", cancelado: "Cancelado" };
@@ -42,7 +43,7 @@ export default async function AgendaListaPage({
               {a.petNome} — {a.tutorNome}
             </p>
             <p className="text-sm text-slate-600">
-              {new Date(a.dataHora).toLocaleString("pt-BR")} · {STATUS_LABELS[a.status]}
+              {dataHoraSP(a.dataHora)} · {STATUS_LABELS[a.status]}
             </p>
           </li>
         ))}

@@ -1,4 +1,5 @@
 import { getAgendamentosPorDia } from "../queries";
+import { partesSP } from "../../../shared/data/fuso";
 
 interface AgendaCalendarioProps {
   data: string; // "YYYY-MM-DD"
@@ -19,10 +20,7 @@ export async function AgendaCalendario({ data }: AgendaCalendarioProps) {
       )}
       {agendamentos.map((a) => {
         const cancelado = a.status === "cancelado";
-        const hora = new Date(a.dataHora).toLocaleTimeString("pt-BR", {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+        const hora = partesSP(a.dataHora).hora;
 
         return (
           <div
