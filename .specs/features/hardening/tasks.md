@@ -123,15 +123,17 @@ T20 → T21 → T22 → T23
 - Skill: `supabase`
 
 **Done when**:
-- [ ] Com o stack parado, `npm run test:db` falha com `Supabase local não está rodando: rode "npx supabase start"`
-- [ ] Com o stack rodando, o banco é resetado e os dois usuários existem
-- [ ] `npm run test:unit` continua sem Docker (o `include` não pega `*.db.test.ts`)
-- [ ] Test count: suíte unit mantém 80 testes
+- [x] Com o stack parado, `npm run test:db` falha com `Supabase local não está rodando: rode "npx supabase start"`
+- [x] Com o stack rodando, o banco é resetado e os dois usuários existem
+- [x] `npm run test:unit` continua sem Docker (o `include` não pega `*.db.test.ts`)
+- [x] Test count: suíte unit mantém 80 testes
 
 **Tests**: integration (db)
 **Gate**: full
 
 **Commit**: `test(db): adiciona harness de testes contra supabase local`
+
+**Status**: Done
 
 ---
 

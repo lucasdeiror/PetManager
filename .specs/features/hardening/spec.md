@@ -202,10 +202,10 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| TST-01 | P1: Testes de banco reais | Design | Pending |
+| TST-01 | P1: Testes de banco reais | Design | Done |
 | TST-02 | P1: Testes de banco reais | Design | Pending |
-| TST-03 | P1: Testes de banco reais | Design | Pending |
-| TST-04 | P1: Testes de banco reais | Design | Pending |
+| TST-03 | P1: Testes de banco reais | Design | Done |
+| TST-04 | P1: Testes de banco reais | Design | Done |
 | IDP-01 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-02 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-03 | P1: Venda idempotente / estorno | Design | Pending |
