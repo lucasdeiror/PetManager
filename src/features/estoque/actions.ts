@@ -68,9 +68,7 @@ interface RegistrarEntradaResult {
 
 /**
  * Soma `quantidade` ao saldo do produto e registra a movimentação
- * (EST-01). Select-then-update, não atômico — mesmo risco de
- * concorrência já aceito em outras partes do projeto (ex.: agenda),
- * baixo impacto real com 1-2 usuários internos por petshop.
+ * (EST-01) numa transação só, pela RPC `registrar_entrada` (T24).
  */
 export async function registrarEntrada(produtoIdEntrada: number, quantidadeEntrada: number): Promise<RegistrarEntradaResult> {
   const validado = validar(registrarEntradaSchema, { produtoId: produtoIdEntrada, quantidade: quantidadeEntrada });
@@ -80,31 +78,10 @@ export async function registrarEntrada(produtoIdEntrada: number, quantidadeEntra
   const { produtoId, quantidade } = validado.data;
 
   const supabase = await createClient();
-
-  const { data: produto, error: fetchError } = await supabase
-    .from("produtos")
-    .select("saldo_estoque")
-    .eq("id", produtoId)
-    .single();
-
-  if (fetchError || !produto) {
-    return { error: "Produto não encontrado." };
+  const { error } = await supabase.rpc("registrar_entrada", { p_produto_id: produtoId, p_quantidade: quantidade });
+  if (error) {
+    return { error: error.message === "Produto não encontrado" ? "Produto não encontrado." : "Não foi possível registrar a entrada. Tente novamente." };
   }
-
-  const { error: updateError } = await supabase
-    .from("produtos")
-    .update({ saldo_estoque: produto.saldo_estoque + quantidade })
-    .eq("id", produtoId);
-
-  if (updateError) {
-    return { error: "Não foi possível registrar a entrada. Tente novamente." };
-  }
-
-  await supabase.from("movimentacoes_estoque").insert({
-    produto_id: produtoId,
-    tipo: "entrada",
-    quantidade,
-  });
 
   return {};
 }
