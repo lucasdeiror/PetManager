@@ -1,3 +1,4 @@
+import { hojeEmSaoPaulo } from "../../shared/data/hoje";
 import { createClient } from "../../shared/supabase/server";
 
 export interface Vacina {
@@ -69,7 +70,7 @@ export async function getVacinas(filtro: GetVacinasFiltro = {}): Promise<VacinaC
     .select("id, pet_id, nome, data_aplicacao, data_retorno_prevista, pets ( nome )")
     .order("data_retorno_prevista", { ascending: true });
 
-  const hoje = new Date().toISOString().slice(0, 10);
+  const hoje = hojeEmSaoPaulo();
   const rows = (data ?? []) as unknown as VacinaRow[];
 
   let vacinas: VacinaComStatus[] = rows.map((row) => ({

@@ -655,9 +655,9 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: `2026-11-13T01:30:00Z` → `2026-11-12`; `2026-11-12T15:00:00Z` → `2026-11-12`
-- [ ] `grep -rn "toISOString().slice(0, 10)" src --include=*.ts --include=*.tsx` fora de testes retorna vazio
-- [ ] Gate build passa
+- [x] Unit: `2026-11-13T01:30:00Z` → `2026-11-12`; `2026-11-12T15:00:00Z` → `2026-11-12`
+- [x] `grep -rn "toISOString().slice(0, 10)" src --include=*.ts --include=*.tsx` fora de testes retorna vazio
+- [x] Gate build passa
 
 **Tests**: unit
 **Gate**: build
