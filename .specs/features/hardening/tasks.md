@@ -509,14 +509,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: dia/horário malformado → `Dados inválidos.`; recepcionista bloqueada
-- [ ] Gate quick passa
+- [x] Unit: dia/horário malformado → `Dados inválidos.`; recepcionista bloqueada
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(horario): valida entrada e exige papel dono`
 
+
+**Status**: Done
 ---
 
 ### T18: Zod + dono em relatórios
