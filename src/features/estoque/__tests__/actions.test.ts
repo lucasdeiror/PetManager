@@ -8,6 +8,8 @@ const eqUpdate = vi.fn();
 const update = vi.fn(() => ({ eq: eqUpdate }));
 const from = vi.fn(() => ({ insert, select, update }));
 
+vi.mock("../../auth/queries", () => ({ exigirDono: vi.fn(async () => ({})) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ from })),
 }));
@@ -67,7 +69,7 @@ describe("registrarEntrada", () => {
   it("rejeita quantidade inválida sem chamar o banco", async () => {
     const result = await registrarEntrada(1, 0);
 
-    expect(result.error).toBe("Informe uma quantidade válida (maior que zero).");
+    expect(result.error).toBe("Dados inválidos. Informe uma quantidade válida (maior que zero).");
     expect(from).not.toHaveBeenCalled();
   });
 });

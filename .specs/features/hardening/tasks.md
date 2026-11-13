@@ -434,14 +434,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: recepcionista → `Ação permitida só ao dono.`; quantidade 0 ou fracionada → `Dados inválidos.`
-- [ ] Gate quick passa
+- [x] Unit: recepcionista → `Ação permitida só ao dono.`; quantidade 0 ou fracionada → `Dados inválidos.`
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(estoque): valida entrada e exige papel dono`
 
+
+**Status**: Done
 ---
 
 ### T15: Zod + dono em vendas
