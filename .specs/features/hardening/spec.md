@@ -209,7 +209,7 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | IDP-01 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-02 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-03 | P1: Venda idempotente / estorno | Design | Pending |
-| IDP-04 | P1: Venda idempotente / estorno | Design | Pending |
+| IDP-04 | P1: Venda idempotente / estorno | Design | Done |
 | IDP-05 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-06 | P1: Venda idempotente / estorno | Design | Pending |
 | IDP-07 | P1: Venda idempotente / estorno | Design | Pending |

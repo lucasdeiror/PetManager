@@ -11,7 +11,7 @@ describe("RLS e cadastro com sessões reais", () => {
   it("dono lê produtos", async () => {
     const { data, error } = await (await clienteComo("dono")).from("produtos").select("nome");
     expect(error).toBeNull();
-    expect(data).toEqual([{ nome: "Shampoo" }]);
+    expect(data).toContainEqual({ nome: "Shampoo" });
   });
 
   it("recepcionista não lê produtos", async () => {

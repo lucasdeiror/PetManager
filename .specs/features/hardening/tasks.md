@@ -175,14 +175,16 @@ T20 → T21 → T22 → T23
 - Skill: `supabase-postgres-best-practices`
 
 **Done when**:
-- [ ] Teste db: segunda venda `servico` ativa no mesmo agendamento → erro `23505`
-- [ ] Teste db: com a primeira estornada, a segunda entra
-- [ ] Gate full passa
+- [x] Teste db: segunda venda `servico` ativa no mesmo agendamento → erro `23505`
+- [x] Teste db: com a primeira estornada, a segunda entra
+- [x] Gate full passa
 
 **Tests**: integration (db)
 **Gate**: full
 
 **Commit**: `feat(vendas): estorno nao destrutivo com unique parcial`
+
+**Status**: Done
 
 ---
 

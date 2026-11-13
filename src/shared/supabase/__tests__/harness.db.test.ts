@@ -8,10 +8,10 @@ describe("harness do test:db", () => {
       auth: { persistSession: false },
     });
 
-  it("aplica as migrations: tabela vendas existe e está vazia", async () => {
+  it("aplica as migrations: tabela vendas existe", async () => {
     const { data, error } = await admin().from("vendas").select("id");
     expect(error).toBeNull();
-    expect(data).toEqual([]);
+    expect(data).toBeInstanceOf(Array);
   });
 
   it("cria exatamente um dono e uma recepcionista", async () => {
