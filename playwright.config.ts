@@ -19,6 +19,7 @@ export default defineConfig({
       // specs que não dependem de sessão: rodam deslogadas
       name: "sem-sessao",
       testMatch: ["proxy.spec.ts", "login.spec.ts", "headers.spec.ts"],
+      dependencies: ["setup"], // proxy.spec usa a sessão da recepcionista (ROT-02)
       use: { ...devices["Desktop Chrome"], channel: process.env.PW_CHANNEL ?? "chrome" },
     },
     {

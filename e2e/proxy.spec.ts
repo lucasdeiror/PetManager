@@ -27,8 +27,18 @@ test.describe("proxy: proteção por papel", () => {
   }
 });
 
-// NOTA: os casos "recepcionista é redirecionado" / "dono acessa
-// normalmente" (com sessão real autenticada) dependem da página de
-// login existir (T8) e de haver contas de teste dono/recepcionista
-// seedadas — ver Notas de execução no tasks.md desta task. Este
-// arquivo ganha esses dois cenários assim que T8-T14 estiverem prontos.
+test.describe("proxy: recepcionista logada (ROT-02)", () => {
+  test.use({ storageState: "e2e/.auth/recepcionista.json" });
+
+  for (const rota of ["/estoque", "/relatorios"]) {
+    test(`${rota} redireciona para /`, async ({ page }) => {
+      await page.goto(rota);
+      await expect(page).toHaveURL(/localhost:3000\/$/);
+    });
+  }
+
+  test("/agenda continua acessível", async ({ page }) => {
+    await page.goto("/agenda");
+    await expect(page).toHaveURL(/\/agenda$/);
+  });
+});
