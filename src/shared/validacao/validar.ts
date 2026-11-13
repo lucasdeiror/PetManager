@@ -1,4 +1,6 @@
-import type { z } from "zod";
+import { z } from "zod";
+
+z.config(z.locales.pt());
 
 type ResultadoValidacao<T> = { data: T } | { error: string };
 

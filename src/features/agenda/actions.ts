@@ -1,6 +1,9 @@
 "use server";
 
+import { z } from "zod";
 import { createClient } from "../../shared/supabase/server";
+import { validar } from "../../shared/validacao/validar";
+import { exigirSessao } from "../auth/queries";
 import { getHorarios } from "../horario-funcionamento/queries";
 
 interface CriarAgendamentoInput {
@@ -14,6 +17,22 @@ interface CriarAgendamentoResult {
   id?: number;
 }
 
+const idSchema = z.number().int().positive();
+const dataHoraSchema = z.string().refine((v) => !Number.isNaN(Date.parse(v)), "Data e hora inválidas");
+
+const criarAgendamentoSchema = z.object({
+  petId: idSchema,
+  servicoIds: z.array(idSchema),
+  dataHora: dataHoraSchema,
+});
+
+const editarAgendamentoSchema = z.object({
+  id: idSchema,
+  petId: idSchema.optional(),
+  servicoIds: z.array(idSchema).optional(),
+  dataHora: dataHoraSchema.optional(),
+});
+
 function extrairDiaEHora(dataHoraIso: string): { diaSemana: number; hora: string } {
   const data = new Date(dataHoraIso);
   return { diaSemana: data.getDay(), hora: data.toTimeString().slice(0, 5) };
@@ -26,11 +45,13 @@ function extrairDiaEHora(dataHoraIso: string): { diaSemana: number; hora: string
  * agendamentos simultâneos no mesmo horário são ambos aceitos (risco
  * aceito na spec, AD já documentado no MVP original).
  */
-export async function criarAgendamento({
-  petId,
-  servicoIds,
-  dataHora,
-}: CriarAgendamentoInput): Promise<CriarAgendamentoResult> {
+export async function criarAgendamento(input: CriarAgendamentoInput): Promise<CriarAgendamentoResult> {
+  const validado = validar(criarAgendamentoSchema, input);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const { petId, servicoIds, dataHora } = validado.data;
+
   if (servicoIds.length === 0) {
     return { error: "Selecione ao menos um serviço." };
   }
@@ -86,12 +107,13 @@ interface EditarAgendamentoResult {
  * insert) em vez de tentar diff — mais simples e sem risco de duplicar
  * linha na tabela de junção.
  */
-export async function editarAgendamento({
-  id,
-  petId,
-  servicoIds,
-  dataHora,
-}: EditarAgendamentoInput): Promise<EditarAgendamentoResult> {
+export async function editarAgendamento(input: EditarAgendamentoInput): Promise<EditarAgendamentoResult> {
+  const validado = validar(editarAgendamentoSchema, input);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const { id, petId, servicoIds, dataHora } = validado.data;
+
   const supabase = await createClient();
 
   const { data: atual, error: fetchError } = await supabase
@@ -143,7 +165,13 @@ interface CancelarAgendamentoResult {
  * Cancela um agendamento (soft delete — só muda o status, nunca exclui
  * o registro) e nunca cria venda (AGD-05).
  */
-export async function cancelarAgendamento(id: number): Promise<CancelarAgendamentoResult> {
+export async function cancelarAgendamento(idEntrada: number): Promise<CancelarAgendamentoResult> {
+  const validado = validar(idSchema, idEntrada);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const id = validado.data;
+
   const supabase = await createClient();
   const { error } = await supabase.from("agendamentos").update({ status: "cancelado" }).eq("id", id);
 
@@ -167,7 +195,13 @@ interface ReabrirAgendamentoResult {
  * um "concluído" é um fluxo diferente (ver `reabrirAgendamentoConcluido`,
  * T29, que também estorna a venda associada).
  */
-export async function reabrirAgendamento(id: number): Promise<ReabrirAgendamentoResult> {
+export async function reabrirAgendamento(idEntrada: number): Promise<ReabrirAgendamentoResult> {
+  const validado = validar(idSchema, idEntrada);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const id = validado.data;
+
   const supabase = await createClient();
 
   const { data: agendamento, error: fetchError } = await supabase
@@ -204,7 +238,13 @@ interface ConcluirAgendamentoResult {
  * transacional `concluir_agendamento` (migration 0006). Permitido
  * mesmo se a data já passou (a spec exige isso explicitamente).
  */
-export async function concluirAgendamento(id: number): Promise<ConcluirAgendamentoResult> {
+export async function concluirAgendamento(idEntrada: number): Promise<ConcluirAgendamentoResult> {
+  const validado = validar(idSchema, idEntrada);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const id = validado.data;
+
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc("concluir_agendamento", {
@@ -237,7 +277,13 @@ interface ReabrirAgendamentoConcluidoResult {
  * Postgres transacional `reabrir_agendamento_concluido` (migration
  * 0007). Existe pra AGD-08 nunca deixar o faturamento inflado.
  */
-export async function reabrirAgendamentoConcluido(id: number): Promise<ReabrirAgendamentoConcluidoResult> {
+export async function reabrirAgendamentoConcluido(idEntrada: number): Promise<ReabrirAgendamentoConcluidoResult> {
+  const validado = validar(idSchema, idEntrada);
+  if ("error" in validado) return validado;
+  const sessao = await exigirSessao();
+  if (sessao.error) return { error: sessao.error };
+  const id = validado.data;
+
   const supabase = await createClient();
 
   const { error } = await supabase.rpc("reabrir_agendamento_concluido", {

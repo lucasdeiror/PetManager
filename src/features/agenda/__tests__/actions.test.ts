@@ -2,6 +2,8 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { criarAgendamento } from "../actions";
 import { getHorarios } from "../../horario-funcionamento/queries";
 
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
+
 vi.mock("../../horario-funcionamento/queries", () => ({
   getHorarios: vi.fn(),
 }));

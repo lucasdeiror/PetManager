@@ -359,14 +359,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit por action: payload malformado → `Dados inválidos.` e `createClient` não chamado
-- [ ] Gate quick passa; testes antigos de agenda continuam verdes
+- [x] Unit por action: payload malformado → `Dados inválidos.` e `createClient` não chamado
+- [x] Gate quick passa; testes antigos de agenda continuam verdes
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(agenda): valida entrada com zod`
 
+
+**Status**: Done
 ---
 
 ### T12: Zod + sessão em pets

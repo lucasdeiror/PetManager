@@ -3,6 +3,8 @@ import { concluirAgendamento } from "../actions";
 
 const rpc = vi.fn();
 
+vi.mock("../../auth/queries", () => ({ exigirSessao: vi.fn(async () => ({ role: "dono" })) }));
+
 vi.mock("../../../shared/supabase/server", () => ({
   createClient: vi.fn(async () => ({ rpc })),
 }));
