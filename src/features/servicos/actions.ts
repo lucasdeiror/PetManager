@@ -1,6 +1,16 @@
 "use server";
 
+import { z } from "zod";
 import { createClient } from "../../shared/supabase/server";
+import { validar } from "../../shared/validacao/validar";
+import { exigirDono } from "../auth/queries";
+
+const MSG_PRECO = "O preço deve ser um número válido e não pode ser negativo.";
+
+const criarServicoSchema = z.object({
+  nome: z.string().trim().min(1, "Informe o nome.").max(255, "O nome não pode ter mais de 255 caracteres."),
+  precoInterno: z.number({ error: MSG_PRECO }).min(0, MSG_PRECO),
+});
 
 interface CriarServicoInput {
   nome: string;
@@ -18,10 +28,12 @@ interface CriarServicoResult {
  * queries (`getServicosParaAgendamento` x `getServicosComPreco`, T16),
  * não aqui.
  */
-export async function criarServico({ nome, precoInterno }: CriarServicoInput): Promise<CriarServicoResult> {
-  if (!Number.isFinite(precoInterno) || precoInterno < 0) {
-    return { error: "O preço deve ser um número válido e não pode ser negativo." };
-  }
+export async function criarServico(input: CriarServicoInput): Promise<CriarServicoResult> {
+  const validado = validar(criarServicoSchema, input);
+  if ("error" in validado) return validado;
+  const dono = await exigirDono();
+  if (dono.error) return dono;
+  const { nome, precoInterno } = validado.data;
 
   const supabase = await createClient();
   const { data, error } = await supabase

@@ -484,14 +484,16 @@ T20 → T21 → T22 → T23
 - Skill: NONE
 
 **Done when**:
-- [ ] Unit: preço negativo/texto → `Dados inválidos.`; recepcionista bloqueada
-- [ ] Gate quick passa
+- [x] Unit: preço negativo/texto → `Dados inválidos.`; recepcionista bloqueada
+- [x] Gate quick passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(servicos): valida entrada e exige papel dono`
 
+
+**Status**: Done
 ---
 
 ### T17: Zod + dono em horário de funcionamento
