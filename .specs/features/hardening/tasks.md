@@ -585,9 +585,9 @@ T20 → T21 → T22 → T23
 - Skill: `vercel:nextjs`
 
 **Done when**:
-- [ ] E2E: sem sessão, `/agenda` e `/pets` terminam em `/login`; `/login` abre
-- [ ] `src/middleware.ts` não existe
-- [ ] Gate full (com e2e) passa
+- [x] E2E: sem sessão, `/agenda` e `/pets` terminam em `/login`; `/login` abre
+- [x] `src/middleware.ts` não existe
+- [x] Gate full (com e2e) passa
 
 **Tests**: e2e
 **Gate**: full

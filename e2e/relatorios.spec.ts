@@ -1,9 +1,12 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("tela de relatório mensal", () => {
-  test("sem sessão, /relatorios redireciona para /login", async ({ page }) => {
-    await page.goto("/relatorios");
-    await expect(page).toHaveURL(/\/login$/);
+  test.describe("sem sessão", () => {
+    test.use({ storageState: { cookies: [], origins: [] } });
+    test("/relatorios redireciona para /login", async ({ page }) => {
+      await page.goto("/relatorios");
+      await expect(page).toHaveURL(/\/login$/);
+    });
   });
 
   test("navegação entre meses atualiza os dados exibidos", async ({ page }) => {

@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
  *
  * `setAll` pode falhar quando chamado a partir de um Server Component
  * (que não pode escrever cookies) — o try/catch é intencional e seguro
- * porque o middleware (quando existir, ver T13) é quem garante a sessão
+ * porque o proxy (`src/proxy.ts`) é quem garante a sessão
  * atualizada nesse caso.
  */
 export async function createClient() {
@@ -27,8 +27,8 @@ export async function createClient() {
               cookieStore.set(name, value, options);
             });
           } catch {
-            // Chamado de um Server Component — ignorável, o middleware
-            // de refresh de sessão (T13) cobre esse caso.
+            // Chamado de um Server Component — ignorável, o proxy
+            // (`src/proxy.ts`) cobre esse caso.
           }
         },
       },

@@ -7,7 +7,7 @@ test.describe("página de login", () => {
     await page.getByLabel("Senha").fill("senha-errada");
     await page.getByRole("button", { name: /entrar no petmanager/i }).click();
 
-    await expect(page.getByRole("alert")).toHaveText("E-mail ou senha inválidos");
+    await expect(page.locator("p[role=alert]")).toHaveText("E-mail ou senha inválidos");
     await expect(page).toHaveURL(/\/login$/);
   });
 

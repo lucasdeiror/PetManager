@@ -224,9 +224,9 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | ENT-04 | P1: Entrada validada | Design | Done |
 | SEG-01 | P2: Papel no servidor | Design | Done |
 | SEG-02 | P2: Papel no servidor | Design | Done |
-| ROT-01 | P2: Rotas protegidas | Design | Pending |
-| ROT-02 | P2: Rotas protegidas | Design | Pending |
-| ROT-03 | P2: Rotas protegidas | Design | Pending |
+| ROT-01 | P2: Rotas protegidas | Design | Done |
+| ROT-02 | P2: Rotas protegidas | Design | Done |
+| ROT-03 | P2: Rotas protegidas | Design | Done |
 | CAD-01 | P2: Cadastro fechado | Design | Done |
 | CAD-02 | P2: Cadastro fechado | Design | Done |
 | CAD-03 | P2: Cadastro fechado | Design | Pending |

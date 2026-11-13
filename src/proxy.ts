@@ -14,8 +14,9 @@ function rotaRestritaADono(pathname: string): boolean {
   return ROTAS_RESTRITAS_A_DONO.some((rota) => pathname.startsWith(rota));
 }
 
-export async function middleware(request: NextRequest) {
-  if (!rotaRestritaADono(request.nextUrl.pathname)) {
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  if (pathname === "/login") {
     return NextResponse.next();
   }
 
@@ -48,6 +49,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+  if (!rotaRestritaADono(pathname)) {
+    return response;
+  }
+
   const { data: profile } = await supabase
     .from("profiles")
     .select("role")
@@ -62,5 +67,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/estoque/:path*", "/relatorios/:path*"],
+  // Tudo, menos assets: _next, ícones e imagens.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
 };
