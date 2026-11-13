@@ -43,7 +43,7 @@ export function RegistrarEntradaForm({ produtoId }: { produtoId: number }) {
       <button
         type="submit"
         disabled={isPending}
-        className="h-8 rounded-md border-2 border-cyan-600 px-3 text-sm font-bold text-cyan-700 disabled:opacity-60"
+        className="h-8 rounded-md border-2 border-orange-600 px-3 text-sm font-bold text-orange-700 disabled:opacity-60"
       >
         {isPending ? "..." : "Registrar"}
       </button>

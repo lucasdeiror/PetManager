@@ -60,7 +60,7 @@ export async function proxy(request: NextRequest) {
     .single();
 
   if (profile?.role !== "dono") {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/agenda", request.url));
   }
 
   return response;

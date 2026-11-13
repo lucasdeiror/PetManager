@@ -34,7 +34,7 @@ export default async function VacinasPage({
       <RegistrarVacinaForm pets={pets} />
 
       {petId && (
-        <section className="mt-6 rounded-lg border-2 border-cyan-600 p-4">
+        <section className="mt-6 rounded-lg border-2 border-orange-600 p-4">
           <h2 className="text-lg font-bold">
             Ficha de {petSelecionado?.nome ?? "pet"}
           </h2>
@@ -77,7 +77,7 @@ export default async function VacinasPage({
                 {STATUS_LABELS[v.status]}
               </p>
             </div>
-            <a href={`/vacinas?pet=${v.petId}`} className="text-sm font-bold text-cyan-700 underline">
+            <a href={`/vacinas?pet=${v.petId}`} className="text-sm font-bold text-orange-700 underline">
               Ver ficha
             </a>
           </li>

@@ -29,7 +29,7 @@ export async function AgendaCalendario({ data }: AgendaCalendarioProps) {
             className={
               cancelado
                 ? "rounded-lg border border-dashed border-slate-300 p-2 text-sm text-slate-400 line-through"
-                : "rounded-lg border-2 border-cyan-600 bg-cyan-50 p-2 text-sm font-bold text-slate-900"
+                : "rounded-lg border-2 border-orange-600 bg-orange-50 p-2 text-sm font-bold text-slate-900"
             }
           >
             <span>{hora}</span> — <span>{a.petNome}</span>{" "}

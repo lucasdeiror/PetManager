@@ -52,7 +52,7 @@ export function CriarTutorForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="h-9 rounded-md bg-cyan-600 text-sm font-bold text-white disabled:opacity-60"
+        className="h-9 rounded-md bg-orange-600 text-sm font-bold text-white disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Cadastrar tutor"}
       </button>

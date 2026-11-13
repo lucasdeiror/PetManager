@@ -65,7 +65,7 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
       <button
         type="submit"
         disabled={isPending}
-        className="h-10 rounded-lg bg-cyan-600 px-4 text-sm font-black text-white transition-colors hover:bg-cyan-700 disabled:opacity-60"
+        className="h-10 rounded-lg bg-orange-600 px-4 text-sm font-black text-white transition-colors hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Salvar"}
       </button>
