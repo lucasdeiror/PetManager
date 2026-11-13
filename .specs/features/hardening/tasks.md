@@ -632,8 +632,8 @@ T20 → T21 → T22 → T23
 - Skill: `humanize-skills`
 
 **Done when**:
-- [ ] README tem os três passos
-- [ ] Gate build passa
+- [x] README tem os três passos
+- [x] Gate build passa
 
 **Tests**: none
 **Gate**: build
