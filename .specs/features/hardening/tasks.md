@@ -97,14 +97,16 @@ T20 → T21 → T22 → T23
 - Skill: `supabase`
 
 **Done when**:
-- [ ] `npx supabase start` sobe o stack e aplica as 8 migrations sem erro
-- [ ] `config.toml` versionado com `enable_signup = false`
-- [ ] Gate build passa (sem `test:db` ainda)
+- [x] `npx supabase start` sobe o stack e aplica as 8 migrations sem erro
+- [x] `config.toml` versionado com `enable_signup = false`
+- [x] Gate build passa (sem `test:db` ainda)
 
 **Tests**: none
 **Gate**: build
 
 **Commit**: `chore(supabase): inicializa stack local com cadastro publico desligado`
+
+**Status**: Done
 
 ---
 

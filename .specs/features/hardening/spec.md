@@ -227,7 +227,7 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | ROT-01 | P2: Rotas protegidas | Design | Pending |
 | ROT-02 | P2: Rotas protegidas | Design | Pending |
 | ROT-03 | P2: Rotas protegidas | Design | Pending |
-| CAD-01 | P2: Cadastro fechado | Design | Pending |
+| CAD-01 | P2: Cadastro fechado | Design | Done |
 | CAD-02 | P2: Cadastro fechado | Design | Pending |
 | CAD-03 | P2: Cadastro fechado | Design | Pending |
 | DAT-01 | P2: Data em Brasília | Design | Pending |
