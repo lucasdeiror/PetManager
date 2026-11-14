@@ -20,6 +20,8 @@ test.describe("tela de estoque", () => {
     await page.getByLabel("Saldo inicial").fill("2");
     await page.getByRole("button", { name: "Cadastrar produto" }).click();
 
+    // A lista é paginada por nome; busca pelo produto criado em vez de depender da página 1
+    await page.getByPlaceholder("Buscar produto...").fill(nome);
     const item = page.getByRole("listitem").filter({ hasText: nome });
     await expect(item).toBeVisible();
     await expect(item.getByText("Estoque baixo")).toBeVisible();

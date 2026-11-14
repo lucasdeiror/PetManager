@@ -29,7 +29,7 @@ export function RegistrarEntradaForm({ produtoId }: { produtoId: number }) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 flex items-center gap-2">
+    <form ref={formRef} onSubmit={handleSubmit} className="flex flex-wrap items-center gap-2">
       <label className="flex items-center gap-2 text-sm font-bold">
         Entrada
         <input
@@ -37,13 +37,13 @@ export function RegistrarEntradaForm({ produtoId }: { produtoId: number }) {
           type="number"
           min="1"
           required
-          className="h-8 w-20 rounded-md border px-2 text-sm"
+          className="h-9 w-20 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
         />
       </label>
       <button
         type="submit"
         disabled={isPending}
-        className="h-8 rounded-md border-2 border-orange-600 px-3 text-sm font-bold text-orange-700 disabled:opacity-60"
+        className="h-9 rounded-lg border-2 border-orange-600 bg-white px-3 text-sm font-bold text-orange-700 disabled:opacity-60"
       >
         {isPending ? "..." : "Registrar"}
       </button>

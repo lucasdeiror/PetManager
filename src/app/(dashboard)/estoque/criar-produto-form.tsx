@@ -33,26 +33,26 @@ export function CriarProdutoForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="mt-4 grid gap-2 rounded-lg border p-3 sm:grid-cols-2">
+    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3 sm:grid-cols-2">
       <label className="grid gap-1 text-sm font-bold">
         Nome
-        <input name="nome" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="nome" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Categoria
-        <input name="categoria" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="categoria" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Preço unitário (R$)
-        <input name="precoUnitario" type="number" step="0.01" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="precoUnitario" type="number" step="0.01" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Estoque mínimo
-        <input name="estoqueMinimo" type="number" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="estoqueMinimo" type="number" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Saldo inicial
-        <input name="saldoInicial" type="number" defaultValue={0} className="h-9 rounded-md border px-2 text-sm" />
+        <input name="saldoInicial" type="number" defaultValue={0} className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       {error && (
         <p role="alert" className="text-sm font-bold text-red-700 sm:col-span-2">
@@ -62,7 +62,7 @@ export function CriarProdutoForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="h-9 rounded-md bg-orange-600 text-sm font-bold text-white disabled:opacity-60 sm:col-span-2"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60 sm:col-span-2"
       >
         {isPending ? "Salvando..." : "Cadastrar produto"}
       </button>
