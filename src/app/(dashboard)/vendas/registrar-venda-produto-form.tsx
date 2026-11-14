@@ -31,10 +31,10 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="mt-4 flex flex-wrap items-end gap-2 rounded-lg border p-3">
+    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 flex flex-wrap items-end gap-3">
       <label className="grid gap-1 text-sm font-bold">
         Produto
-        <select name="produtoId" required className="h-9 rounded-md border px-2 text-sm">
+        <select name="produtoId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
           <option value="">Selecione um produto</option>
           {produtos.map((p) => (
             <option key={p.id} value={p.id}>
@@ -50,7 +50,7 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
           type="number"
           min="1"
           required
-          className="h-9 w-24 rounded-md border px-2 text-sm"
+          className="h-10 w-24 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
         />
       </label>
       {error && (
@@ -61,7 +61,7 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
       <button
         type="submit"
         disabled={isPending}
-        className="h-9 rounded-md bg-orange-600 px-4 text-sm font-bold text-white disabled:opacity-60"
+        className="h-10 rounded-xl bg-orange-600 px-4 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Registrar venda"}
       </button>
