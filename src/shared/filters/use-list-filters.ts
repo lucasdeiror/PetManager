@@ -33,6 +33,7 @@ export function useListFilters<T extends string>(atributos: readonly T[]) {
   const updateParams = useCallback(
     (updates: Record<string, string | null>) => {
       const params = new URLSearchParams(pendentes.current ?? searchParams.toString());
+      params.delete("pagina"); // busca/filtro novo sempre volta para a página 1
       for (const [key, value] of Object.entries(updates)) {
         if (value === null || value === "") {
           params.delete(key);

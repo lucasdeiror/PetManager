@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
 import { useListFilters } from "./use-list-filters";
 
 interface SearchFilterBarProps<T extends string> {
@@ -46,19 +47,23 @@ export function SearchFilterBar<T extends string>({
   }, [inputValue, debounceMs]);
 
   return (
-    <div className="flex gap-2">
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder={placeholder}
-        className="flex-1 rounded-md border px-3 py-2 text-sm"
-      />
+    <div className="flex flex-wrap gap-2">
+      <label className="flex h-11 min-w-0 flex-1 basis-64 items-center gap-2 rounded-xl border-2 border-slate-200 bg-white px-3 focus-within:border-orange-500">
+        <Search className="size-4 shrink-0 text-slate-500" aria-hidden />
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder={placeholder}
+          aria-label="Buscar"
+          className="w-full bg-transparent text-sm font-semibold outline-none"
+        />
+      </label>
       {atributos.length > 0 && (
         <select
           value={filtro ?? ""}
           onChange={(e) => setFiltro((e.target.value || null) as T | null)}
-          className="rounded-md border px-3 py-2 text-sm"
+          className="h-11 rounded-xl border-2 border-slate-200 bg-white px-3 text-sm font-bold"
         >
           <option value="">{filtroLabel}</option>
           {atributos.map((a) => (

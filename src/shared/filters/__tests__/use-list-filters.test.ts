@@ -44,6 +44,15 @@ describe("useListFilters", () => {
     expect(replace).toHaveBeenCalledWith("/pets?busca=rex", { scroll: false });
   });
 
+  it("mudar busca volta para a página 1 (DES-06)", () => {
+    searchParamsString = "pagina=3&filtro=ativo";
+    const { result } = renderHook(() => useListFilters(["ativo"] as const));
+    act(() => {
+      result.current.setBusca("rex");
+    });
+    expect(replace).toHaveBeenCalledWith("/pets?filtro=ativo&busca=rex", { scroll: false });
+  });
+
   it("busca e filtro combinados aparecem juntos na URL (E lógico)", () => {
     searchParamsString = "busca=rex";
     const { result } = renderHook(() => useListFilters(["ativo"] as const));
