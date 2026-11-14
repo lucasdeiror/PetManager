@@ -1,7 +1,7 @@
 # Design do MVP Tasks
 
 **Spec**: `.specs/features/design-mvp/spec.md`
-**Status**: Lote 1 concluído; Lote 2 em andamento (T27–T30 feitas)
+**Status**: Lote 1 concluído; Lote 2 em andamento (T27–T31 feitas)
 
 ## Gate Check Commands
 
@@ -24,7 +24,7 @@ Evidência: lint/tsc limpos · unit 187 · build ok · e2e 36/36 na porta 3010.
 - [x] T28 Tutores e pets: duas listas paginadas (`pagina_tutores`, `pagina_pets`), pet mostra tutor e porte
 - [x] T30 Vacinas: registro em cartão, ficha do pet destacada com "Fechar ficha", selo Em dia/Atrasada, lista paginada
 - [x] T29 Vendas: `Metrica` (total, itens, produtos sobre a lista filtrada inteira), registro de produto em cartão, lista paginada
-- [ ] Estoque
+- [x] T31 Estoque: métricas (produtos, estoque baixo, unidades), cadastro em cartão, entrada na linha do produto, lista paginada
 - [ ] Relatórios
 - [ ] Serviços e Horário
 - [ ] Painel inicial (opcional)
