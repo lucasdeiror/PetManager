@@ -1,7 +1,7 @@
 # Design do MVP Tasks
 
 **Spec**: `.specs/features/design-mvp/spec.md`
-**Status**: Lote 1 concluído; Lote 2 em andamento (T27–T32 feitas)
+**Status**: Lote 1 concluído; Lote 2 concluído (T27–T33); falta só o painel inicial (opcional)
 
 ## Gate Check Commands
 
@@ -26,5 +26,5 @@ Evidência: lint/tsc limpos · unit 187 · build ok · e2e 36/36 na porta 3010.
 - [x] T29 Vendas: `Metrica` (total, itens, produtos sobre a lista filtrada inteira), registro de produto em cartão, lista paginada
 - [x] T31 Estoque: métricas (produtos, estoque baixo, unidades), cadastro em cartão, entrada na linha do produto, lista paginada
 - [x] T32 Relatórios: métricas do mês, navegação em cartão, PDF no cabeçalho, vendas paginadas; mês corrente em Brasília (corrige bug de UTC); `test:unit` com `TZ=UTC`
-- [ ] Serviços e Horário
+- [x] T33 Serviços e Horário: título, cadastro em cartão ao lado da lista (sem paginação: catálogo curto), dias do horário em cartões brancos
 - [ ] Painel inicial (opcional)

@@ -77,10 +77,10 @@
 
 ## Handoff
 
-- **Feature**: design-mvp — Lote 1 (T26) e T27 (Agenda e lista) na `main` (PRs #53, #54); T28 (Tutores e pets) no PR em aberto.
-- **Peças compartilhadas**: `src/shared/tela/` (`TituloPagina`, `cartao`, `Paginacao`/`paginar`, 10 por página). Duas listas na mesma tela usam `chave` própria (`pagina_<lista>`).
-- **Next step**: telas restantes do Lote 2 — Vacinas, Vendas, Estoque, Relatórios, Serviços e Horário.
-- **Nuvem bloqueada**: o Free permite 2 projetos ativos (`nexo-saas` e `gabi-modas` estão ativos). O Lucas decidiu esperar (2026-11-14). Quando abrir a vaga, avaliar um projeto novo em sa-east-1 (banco sem dados de cliente) em vez de reativar o de ca-central-1; aplicar 0001–0012, desligar signup, `get_advisors`.
-- **Cuidado com e2e**: lista paginada por nome esconde o registro recém-criado; o teste deve buscar pelo nome criado.
-- **Testes**: unit 192 · e2e 36/36 (porta 3010).
-- **Branch**: task/T28-pets-design
+- **Feature**: design-mvp — Lote 2 concluído (T27–T33, PRs #54–#60): todas as telas internas no padrão do MVP. Falta só o painel inicial (opcional, fora do escopo atual).
+- **Peças compartilhadas**: `src/shared/tela/` (`TituloPagina`, `cartao`, `Metrica`, `Paginacao`/`paginar`, 10 por página; `chave` própria para duas listas na mesma tela).
+- **Bug corrigido na T32**: mês padrão dos relatórios usava o relógio UTC. `test:unit` agora roda com `TZ=UTC`, como na Vercel.
+- **e2e intermitente (pré-existente)**: `agenda-calendario.spec.ts` e `agenda.spec.ts` sorteiam horário no dia de hoje; com o banco de teste acumulando agendamentos, o sorteio às vezes cai num horário ocupado. Correção sugerida: dia exclusivo por rodada, respeitando o horário de funcionamento.
+- **Nuvem bloqueada**: o Free permite 2 projetos ativos (`nexo-saas` e `gabi-modas`). O Lucas decidiu esperar (2026-11-14). Quando abrir a vaga, avaliar projeto novo em sa-east-1 (sem dados de cliente) em vez de reativar o de ca-central-1; aplicar 0001–0012, desligar signup, `get_advisors`.
+- **Dev local**: `.env.local` tem as chaves do Supabase local; `vercel env pull` sobrescreve.
+- **Testes**: unit 193 (TZ=UTC) · e2e 36/36 (com a intermitência acima).

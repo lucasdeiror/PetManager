@@ -1,4 +1,5 @@
 import { getHorarios } from "../../../features/horario-funcionamento/queries";
+import { TituloPagina } from "../../../shared/tela/titulo-pagina";
 import { HorarioDiaForm } from "./horario-dia-form";
 
 const DIAS_DA_SEMANA = [
@@ -15,14 +16,13 @@ export default async function HorarioFuncionamentoPage() {
   const horarios = await getHorarios();
 
   return (
-    <div className="mx-auto max-w-3xl p-6">
-      <h1 className="text-2xl font-black">Horário de funcionamento</h1>
-      <p className="mt-2 text-sm text-slate-600">
-        Cadastre o horário de cada dia. Dias sem horário ficam fechados na
-        agenda.
-      </p>
+    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+      <TituloPagina
+        titulo="Horário de funcionamento"
+        texto="Dias sem horário ficam fechados na agenda"
+      />
 
-      <div className="mt-6 grid gap-3">
+      <div className="grid gap-3">
         {DIAS_DA_SEMANA.map((nomeDia, diaSemana) => {
           const horario = horarios.find((h) => h.diaSemana === diaSemana) ?? null;
           return (
