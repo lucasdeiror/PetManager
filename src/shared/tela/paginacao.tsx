@@ -19,20 +19,25 @@ export function paginar<T>(itens: T[], pagina: unknown, porPagina = POR_PAGINA) 
   };
 }
 
-/** Rodapé de paginação por link (`?pagina=N`), mantendo os outros parâmetros da URL. */
+/**
+ * Rodapé de paginação por link (`?pagina=N`), mantendo os outros parâmetros da URL.
+ * `chave` separa duas listas na mesma tela (ex.: `pagina_tutores`).
+ */
 export function Paginacao({
   pagina,
   params,
+  chave = "pagina",
 }: {
   pagina: ReturnType<typeof paginar>;
   params: Record<string, string | undefined>;
+  chave?: string;
 }) {
   if (pagina.totalPaginas <= 1) return null;
 
   const href = (n: number) => {
     const q = new URLSearchParams();
-    for (const [k, v] of Object.entries(params)) if (v && k !== "pagina") q.set(k, v);
-    q.set("pagina", String(n));
+    for (const [k, v] of Object.entries(params)) if (v && k !== chave) q.set(k, v);
+    q.set(chave, String(n));
     return `?${q}`;
   };
   const botao = "rounded-lg border-2 border-slate-200 bg-white p-2 text-slate-800";

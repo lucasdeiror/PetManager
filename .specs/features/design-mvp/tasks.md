@@ -1,7 +1,7 @@
 # Design do MVP Tasks
 
 **Spec**: `.specs/features/design-mvp/spec.md`
-**Status**: Lote 1 concluído; Lote 2 em andamento (T27 feita)
+**Status**: Lote 1 concluído; Lote 2 em andamento (T27, T28 feitas)
 
 ## Gate Check Commands
 
@@ -21,7 +21,7 @@ Evidência: lint/tsc limpos · unit 187 · build ok · e2e 36/36 na porta 3010.
 ## Lote 2+ — telas internas (DES-06)
 
 - [x] T27 Agenda e lista: `TituloPagina`, `cartao`, `Paginacao`/`paginar` (10 por página, `?pagina=`) em `src/shared/tela/`; busca com ícone; busca/filtro novo volta à página 1
-- [ ] Tutores e pets
+- [x] T28 Tutores e pets: duas listas paginadas (`pagina_tutores`, `pagina_pets`), pet mostra tutor e porte
 - [ ] Vacinas
 - [ ] Vendas
 - [ ] Estoque
