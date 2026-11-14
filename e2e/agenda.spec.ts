@@ -44,7 +44,7 @@ test.describe("tela de agenda - fluxo completo de estados", () => {
     await expect(itemEditado).toHaveAttribute("data-status", "concluido");
 
     await page.goto("/vendas");
-    await expect(page.getByText("Total do período:")).toBeVisible();
+    await expect(page.getByText("Total do período")).toBeVisible();
   });
 
   test("botão de ação desabilita imediatamente após o clique", async ({ page }) => {

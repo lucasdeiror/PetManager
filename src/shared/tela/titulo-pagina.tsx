@@ -20,3 +20,13 @@ export function TituloPagina({
 }
 
 export const cartao = "rounded-2xl border-2 border-slate-200 bg-white";
+
+/** Cartão de número-resumo (DES-06). */
+export function Metrica({ rotulo, valor }: { rotulo: string; valor: string }) {
+  return (
+    <div className={`${cartao} p-5`}>
+      <p className="text-sm font-bold text-slate-600">{rotulo}</p>
+      <p className="mt-1 text-2xl font-black tracking-tight text-stone-950">{valor}</p>
+    </div>
+  );
+}

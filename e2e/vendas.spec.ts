@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("tela de vendas", () => {
   test("lista carrega com o total do período visível", async ({ page }) => {
     await page.goto("/vendas");
-    await expect(page.getByText("Total do período:")).toBeVisible();
+    await expect(page.getByText("Total do período")).toBeVisible();
   });
 
   test("busca por tipo filtra a lista", async ({ page }) => {
