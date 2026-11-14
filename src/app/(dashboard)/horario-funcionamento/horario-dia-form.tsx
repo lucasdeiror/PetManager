@@ -36,9 +36,9 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-wrap items-end gap-3 rounded-xl border-2 border-slate-200 p-4"
+      className="flex flex-wrap items-end gap-3 rounded-2xl border-2 border-slate-200 bg-white p-4"
     >
-      <span className="w-28 font-bold">{nomeDia}</span>
+      <span className="w-28 font-black text-stone-950">{nomeDia}</span>
 
       <label className="grid gap-1 text-xs font-bold text-slate-700">
         Abertura
@@ -47,7 +47,7 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
           name="horaAbertura"
           defaultValue={horario?.horaAbertura ?? ""}
           required
-          className="h-10 rounded-lg border-2 border-slate-200 px-2 text-sm"
+          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
         />
       </label>
 
@@ -58,7 +58,7 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
           name="horaFechamento"
           defaultValue={horario?.horaFechamento ?? ""}
           required
-          className="h-10 rounded-lg border-2 border-slate-200 px-2 text-sm"
+          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
         />
       </label>
 
