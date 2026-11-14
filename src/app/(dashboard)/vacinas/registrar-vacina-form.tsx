@@ -33,10 +33,10 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-2 rounded-lg border p-3">
+    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3 sm:grid-cols-2">
       <label className="grid gap-1 text-sm font-bold">
         Pet
-        <select name="petId" required className="h-9 rounded-md border px-2 text-sm">
+        <select name="petId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
           <option value="">Selecione um pet</option>
           {pets.map((p) => (
             <option key={p.id} value={p.id}>
@@ -47,11 +47,11 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Nome da vacina
-        <input name="nome" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="nome" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Data de aplicação
-        <input name="dataAplicacao" type="date" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="dataAplicacao" type="date" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Data de retorno prevista
@@ -59,18 +59,18 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
           name="dataRetornoPrevista"
           type="date"
           required
-          className="h-9 rounded-md border px-2 text-sm"
+          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
         />
       </label>
       {error && (
-        <p role="alert" className="text-sm font-bold text-red-700">
+        <p role="alert" className="text-sm font-bold text-red-700 sm:col-span-2">
           {error}
         </p>
       )}
       <button
         type="submit"
         disabled={isPending}
-        className="h-9 rounded-md bg-orange-600 text-sm font-bold text-white disabled:opacity-60"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60 sm:col-span-2"
       >
         {isPending ? "Salvando..." : "Registrar vacina"}
       </button>
