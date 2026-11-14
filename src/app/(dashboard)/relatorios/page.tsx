@@ -79,7 +79,7 @@ export default async function RelatoriosPage({
           <span>Agendamentos cancelados</span>
           <span className="font-bold">{relatorio.agendamentosCancelados}</span>
         </div>
-        <div className="flex justify-between rounded-lg border-2 border-cyan-600 bg-cyan-50 p-3">
+        <div className="flex justify-between rounded-lg border-2 border-orange-600 bg-orange-50 p-3">
           <span className="font-bold">Faturamento total</span>
           <span className="font-black">{formatarMoeda(relatorio.faturamentoTotal)}</span>
         </div>

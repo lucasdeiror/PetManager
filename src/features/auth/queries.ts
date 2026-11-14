@@ -3,11 +3,11 @@ import { createClient } from "../../shared/supabase/server";
 export type UserRole = "dono" | "recepcionista";
 
 /**
- * Retorna o papel do usuário autenticado, lendo de `profiles`.
- * `null` cobre tanto "não autenticado" quanto "autenticado mas sem
- * profile" (estado inconsistente que não deve travar a chamada).
+ * Usuário autenticado com o papel lido de `profiles`. `null` cobre tanto
+ * "não autenticado" quanto "autenticado mas sem profile" (estado
+ * inconsistente que não deve travar a chamada).
  */
-export async function getCurrentUserRole(): Promise<UserRole | null> {
+export async function getUsuarioAtual(): Promise<{ email: string; role: UserRole } | null> {
   const supabase = await createClient();
 
   const {
@@ -24,7 +24,13 @@ export async function getCurrentUserRole(): Promise<UserRole | null> {
     .eq("id", user.id)
     .single();
 
-  return (profile?.role as UserRole | undefined) ?? null;
+  const role = profile?.role as UserRole | undefined;
+  return role ? { email: user.email ?? "", role } : null;
+}
+
+/** Papel do usuário autenticado; `null` nos mesmos casos de `getUsuarioAtual`. */
+export async function getCurrentUserRole(): Promise<UserRole | null> {
+  return (await getUsuarioAtual())?.role ?? null;
 }
 
 /** SEG-02: barra chamada sem sessão antes de qualquer escrita. */

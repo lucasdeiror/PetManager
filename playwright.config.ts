@@ -1,12 +1,15 @@
 import { defineConfig, devices } from "@playwright/test";
 
+// PORT=3010 npm run test:e2e quando a 3000 estiver ocupada.
+const PORT = process.env.PORT ?? "3000";
+
 export default defineConfig({
   testDir: "./e2e",
   testMatch: "*.spec.ts",
   fullyParallel: true,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: `http://localhost:${PORT}`,
     trace: "on-first-retry",
   },
   projects: [
@@ -34,8 +37,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run dev",
-    url: "http://localhost:3000",
+    command: `npm run dev -- -p ${PORT}`,
+    url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     // Sem .env.local, aponta para o Supabase local (`npx supabase start`); chaves padrão do stack local.
     env: {

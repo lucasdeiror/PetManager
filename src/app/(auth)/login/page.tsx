@@ -23,7 +23,7 @@ export default function LoginPage() {
         return;
       }
       setError("");
-      router.push("/");
+      router.push("/agenda");
       router.refresh();
     });
   }
@@ -33,7 +33,7 @@ export default function LoginPage() {
       <div className="mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-5 py-10 lg:grid-cols-[1.1fr_.9fr]">
         <section>
           <Brand />
-          <p className="mt-12 inline-flex rounded-full bg-cyan-400/15 px-3 py-1 text-sm font-bold text-cyan-300">
+          <p className="mt-12 inline-flex rounded-full bg-orange-300/15 px-3 py-1 text-sm font-bold text-orange-200">
             Gestão simples para pet shops
           </p>
           <h1 className="mt-5 max-w-xl text-4xl font-black leading-tight sm:text-6xl">
@@ -46,8 +46,17 @@ export default function LoginPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl bg-white p-6 text-slate-950 shadow-2xl sm:p-8"
+          className="rounded-[2rem] bg-white p-6 text-slate-950 shadow-[0_24px_80px_-24px_rgba(15,23,42,.7)] sm:p-8"
         >
+          <div className="mb-7 flex items-center gap-4">
+            <div className="flex size-14 items-center justify-center rounded-2xl bg-orange-300 text-slate-950">
+              <PawPrint aria-hidden />
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-700">Área segura</p>
+              <p className="text-sm font-bold text-slate-600">Acesso do seu pet shop</p>
+            </div>
+          </div>
           <h2 className="text-2xl font-black">Bem-vindo de volta</h2>
           <p className="mt-2 text-sm font-medium text-slate-600">
             Entre para acessar seu painel.
@@ -66,7 +75,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="h-12 rounded-xl bg-cyan-600 font-black text-white transition hover:bg-cyan-700 disabled:opacity-60"
+              className="h-12 rounded-xl bg-orange-600 font-black text-white transition hover:bg-orange-700 disabled:opacity-60"
             >
               {isPending ? "Entrando..." : "Entrar no PetManager"}
             </button>
@@ -80,7 +89,7 @@ export default function LoginPage() {
 function Brand() {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex size-10 items-center justify-center rounded-xl bg-cyan-400 text-slate-950">
+      <div className="flex size-10 items-center justify-center rounded-xl bg-orange-300 text-slate-950">
         <PawPrint />
       </div>
       <div>
@@ -107,7 +116,7 @@ function Field({ label, name, type = "text", placeholder }: FieldProps) {
         name={name}
         type={type}
         placeholder={placeholder}
-        className="h-11 rounded-xl border-2 border-slate-200 bg-white px-3 text-slate-950 outline-none focus:border-cyan-600"
+        className="h-11 rounded-xl border-2 border-slate-200 bg-white px-3 text-slate-950 outline-none focus:border-orange-600 focus-visible:ring-2 focus-visible:ring-orange-600/30"
       />
     </label>
   );

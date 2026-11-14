@@ -367,9 +367,10 @@ Cada petshop tem o próprio projeto Supabase e o próprio deploy. Em cada um:
    sign up**. Sem isso, qualquer pessoa cria conta pela API. Localmente isso
    já vem de `enable_signup = false` em `supabase/config.toml`.
 2. **Crie os usuários por convite.** Em Authentication → Users, use
-   **Invite user** para dono e recepcionista. Depois do primeiro acesso,
-   defina o papel de cada um em `profiles.role` (`dono` ou
-   `recepcionista`; o padrão é `recepcionista`).
+   **Invite user** para dono e recepcionista. Nenhum trigger cria o
+   perfil: insira uma linha em `profiles` para cada usuário (`id` do
+   `auth.users` e `role` `dono` ou `recepcionista`). Sem ela, o login
+   volta para `/login`.
 3. **Rode os testes de banco antes de subir.** Precisa do Docker:
 
    ```bash

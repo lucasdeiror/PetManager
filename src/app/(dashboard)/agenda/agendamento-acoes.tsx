@@ -69,7 +69,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
           <button
             type="submit"
             disabled={isPending}
-            className="h-8 rounded-md bg-cyan-600 px-3 text-sm font-bold text-white disabled:opacity-60"
+            className="h-8 rounded-md bg-orange-600 px-3 text-sm font-bold text-white disabled:opacity-60"
           >
             Salvar
           </button>
@@ -105,7 +105,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
                 type="button"
                 disabled={isPending}
                 onClick={() => run(() => concluirAgendamento(agendamento.id))}
-                className="h-8 rounded-md bg-cyan-600 px-3 text-sm font-bold text-white disabled:opacity-60"
+                className="h-8 rounded-md bg-orange-600 px-3 text-sm font-bold text-white disabled:opacity-60"
               >
                 Concluir
               </button>

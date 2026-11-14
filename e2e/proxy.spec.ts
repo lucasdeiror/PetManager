@@ -31,9 +31,9 @@ test.describe("proxy: recepcionista logada (ROT-02)", () => {
   test.use({ storageState: "e2e/.auth/recepcionista.json" });
 
   for (const rota of ["/estoque", "/relatorios"]) {
-    test(`${rota} redireciona para /`, async ({ page }) => {
+    test(`${rota} redireciona para /agenda`, async ({ page }) => {
       await page.goto(rota);
-      await expect(page).toHaveURL(/localhost:3000\/$/);
+      await expect(page).toHaveURL(/\/agenda$/);
     });
   }
 
