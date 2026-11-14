@@ -11,9 +11,12 @@ test.describe("tela de vacinas", () => {
     await page.getByLabel("Data de retorno prevista").fill("2027-01-10");
     await page.getByRole("button", { name: "Registrar vacina" }).click();
 
-    await expect(page.getByText(nome).first()).toBeVisible();
+    // A lista é paginada; busca pela vacina criada em vez de depender da página 1
+    await page.getByPlaceholder("Buscar por pet ou nome da vacina...").fill(nome);
+    const linha = page.getByRole("listitem").filter({ hasText: nome });
+    await expect(linha).toBeVisible();
 
-    await page.getByRole("link", { name: "Ver ficha" }).first().click();
+    await linha.getByRole("link", { name: "Ver ficha" }).click();
     await expect(page.getByText(/Ficha de/)).toBeVisible();
     await expect(page.getByText(nome).first()).toBeVisible();
   });
