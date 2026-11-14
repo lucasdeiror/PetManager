@@ -45,7 +45,7 @@ describe("useListFilters", () => {
   });
 
   it("mudar busca volta para a página 1 (DES-06)", () => {
-    searchParamsString = "pagina=3&filtro=ativo";
+    searchParamsString = "pagina=3&filtro=ativo&pagina_pets=2";
     const { result } = renderHook(() => useListFilters(["ativo"] as const));
     act(() => {
       result.current.setBusca("rex");

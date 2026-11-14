@@ -33,10 +33,10 @@ export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-2 rounded-lg border p-3">
+    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3">
       <label className="grid gap-1 text-sm font-bold">
         Tutor
-        <select name="tutorId" required className="h-9 rounded-md border px-2 text-sm">
+        <select name="tutorId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
           <option value="">Selecione um tutor</option>
           {tutores.map((t) => (
             <option key={t.id} value={t.id}>
@@ -47,15 +47,15 @@ export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Nome do pet
-        <input name="nome" required maxLength={255} className="h-9 rounded-md border px-2 text-sm" />
+        <input name="nome" required maxLength={255} className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Raça
-        <input name="raca" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="raca" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Porte
-        <select name="porte" required className="h-9 rounded-md border px-2 text-sm">
+        <select name="porte" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
           <option value="pequeno">Pequeno</option>
           <option value="medio">Médio</option>
           <option value="grande">Grande</option>
@@ -69,7 +69,7 @@ export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
       <button
         type="submit"
         disabled={isPending}
-        className="h-9 rounded-md bg-orange-600 text-sm font-bold text-white disabled:opacity-60"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Cadastrar pet"}
       </button>

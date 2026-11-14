@@ -16,14 +16,17 @@ test.describe("cadastro de tutor + pet", () => {
     // Telefone válido é aceito
     await page.getByLabel("Telefone").fill("(79) 99999-8888");
     await page.getByRole("button", { name: "Cadastrar tutor" }).click();
-    await expect(page.locator("p", { hasText: tutor })).toBeVisible();
+    // A lista é paginada por nome; busca pelo cadastrado em vez de depender da página 1
+    await page.getByPlaceholder("Buscar por nome ou telefone...").fill(tutor);
+    await expect(page.locator("li p", { hasText: tutor })).toBeVisible();
 
     // Cadastra um pet vinculado ao tutor recém-criado
     await page.getByLabel("Tutor").selectOption({ label: tutor });
     await page.getByLabel("Nome do pet").fill(pet);
     await page.getByLabel("Raça").fill("Vira-lata");
     await page.getByRole("button", { name: "Cadastrar pet" }).click();
-    await expect(page.locator("p", { hasText: pet }).first()).toBeVisible();
+    await page.getByPlaceholder("Buscar por nome ou telefone...").fill(pet);
+    await expect(page.locator("li p", { hasText: pet }).first()).toBeVisible();
   });
 
   test("busca filtra a lista de tutores", async ({ page }) => {

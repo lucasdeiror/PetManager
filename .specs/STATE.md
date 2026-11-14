@@ -77,9 +77,10 @@
 
 ## Handoff
 
-- **Feature**: fuso-horario (T25) — **COMPLETA** (4/4 tasks, `validation.md` = PASS; mutante M2 sobrevivente é equivalente, pois o schema só aceita horário local sem fuso)
-- **T24**: entrada de estoque atômica via RPC `registrar_entrada` (migration 0012) — PR #51 aguardando merge
-- **Next step**: (1) merge dos PRs #51 (T24) e da T25; (2) rodar e2e com Supabase local; (3) nuvem só com ok explícito: reativar o projeto (está INACTIVE, região ca-central-1 — avaliar sa-east-1), aplicar migrations 0009-0012, desligar signup, `get_advisors`; depois deploy Vercel e piloto.
-- **Observações**: offset fixo `-03:00` (shortcut, sem horário de verão desde 2019); falta guarda automática contra `toLocale*String` sem `timeZone`.
-- **Testes**: unit 184 (passa com TZ=UTC e TZ=America/Sao_Paulo) · db 29 · e2e não rodado nesta feature
-- **Branch**: task/T25-fuso-sao-paulo
+- **Feature**: design-mvp — Lote 1 (T26) e T27 (Agenda e lista) na `main` (PRs #53, #54); T28 (Tutores e pets) no PR em aberto.
+- **Peças compartilhadas**: `src/shared/tela/` (`TituloPagina`, `cartao`, `Paginacao`/`paginar`, 10 por página). Duas listas na mesma tela usam `chave` própria (`pagina_<lista>`).
+- **Next step**: telas restantes do Lote 2 — Vacinas, Vendas, Estoque, Relatórios, Serviços e Horário.
+- **Nuvem bloqueada**: o Free permite 2 projetos ativos (`nexo-saas` e `gabi-modas` estão ativos). O Lucas decidiu esperar (2026-11-14). Quando abrir a vaga, avaliar um projeto novo em sa-east-1 (banco sem dados de cliente) em vez de reativar o de ca-central-1; aplicar 0001–0012, desligar signup, `get_advisors`.
+- **Cuidado com e2e**: lista paginada por nome esconde o registro recém-criado; o teste deve buscar pelo nome criado.
+- **Testes**: unit 192 · e2e 36/36 (porta 3010).
+- **Branch**: task/T28-pets-design
