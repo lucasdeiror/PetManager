@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { getRelatorioMensal } from "../../../features/relatorios/queries";
+import { hojeEmSaoPaulo } from "../../../shared/data/hoje";
+import { Metrica, TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import { Paginacao, paginar } from "../../../shared/tela/paginacao";
 import { ExportarPdfButton } from "./exportar-pdf-button";
 
 const MESES = [
@@ -17,9 +20,10 @@ const MESES = [
   "Dezembro",
 ];
 
+/** Mês corrente em Brasília (AD-010): o servidor roda em UTC e viraria o mês às 21h. */
 function mesAtual(): { ano: number; mes: number } {
-  const hoje = new Date();
-  return { ano: hoje.getFullYear(), mes: hoje.getMonth() + 1 };
+  const [ano, mes] = hojeEmSaoPaulo().split("-").map(Number);
+  return { ano, mes };
 }
 
 function mesAnterior(ano: number, mes: number): { ano: number; mes: number } {
@@ -37,9 +41,10 @@ function formatarMoeda(valor: number): string {
 export default async function RelatoriosPage({
   searchParams,
 }: {
-  searchParams: Promise<{ ano?: string; mes?: string }>;
+  searchParams: Promise<{ ano?: string; mes?: string; pagina?: string }>;
 }) {
-  const { ano: anoParam, mes: mesParam } = await searchParams;
+  const params = await searchParams;
+  const { ano: anoParam, mes: mesParam } = params;
   const atual = mesAtual();
   const ano = anoParam ? Number(anoParam) : atual.ano;
   const mes = mesParam ? Number(mesParam) : atual.mes;
@@ -48,59 +53,56 @@ export default async function RelatoriosPage({
   const anterior = mesAnterior(ano, mes);
   const seguinte = proximoMes(ano, mes);
 
-  return (
-    <div className="mx-auto max-w-2xl p-6">
-      <h1 className="text-2xl font-black">Relatório Mensal</h1>
+  const vendas = paginar(relatorio.vendas, params.pagina);
+  const navegacao =
+    "inline-flex h-10 items-center rounded-xl border-2 border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 hover:border-orange-500";
 
-      <div className="mt-4 flex items-center justify-between">
-        <Link
-          href={`/relatorios?ano=${anterior.ano}&mes=${anterior.mes}`}
-          className="text-sm font-bold underline"
-        >
+  return (
+    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+      <TituloPagina titulo="Relatório mensal" texto="Atendimentos e faturamento do mês">
+        <ExportarPdfButton ano={ano} mes={mes} />
+      </TituloPagina>
+
+      <div className={`${cartao} flex flex-wrap items-center justify-between gap-3 p-3`}>
+        <Link href={`/relatorios?ano=${anterior.ano}&mes=${anterior.mes}`} className={navegacao}>
           ← Mês anterior
         </Link>
-        <p className="text-lg font-bold">
+        <p className="text-lg font-black text-stone-950">
           {MESES[mes - 1]} de {ano}
         </p>
-        <Link
-          href={`/relatorios?ano=${seguinte.ano}&mes=${seguinte.mes}`}
-          className="text-sm font-bold underline"
-        >
+        <Link href={`/relatorios?ano=${seguinte.ano}&mes=${seguinte.mes}`} className={navegacao}>
           Próximo mês →
         </Link>
       </div>
 
-      <div className="mt-6 grid gap-2">
-        <div className="flex justify-between rounded-lg border p-3">
-          <span>Agendamentos concluídos</span>
-          <span className="font-bold">{relatorio.agendamentosConcluidos}</span>
-        </div>
-        <div className="flex justify-between rounded-lg border p-3">
-          <span>Agendamentos cancelados</span>
-          <span className="font-bold">{relatorio.agendamentosCancelados}</span>
-        </div>
-        <div className="flex justify-between rounded-lg border-2 border-orange-600 bg-orange-50 p-3">
-          <span className="font-bold">Faturamento total</span>
-          <span className="font-black">{formatarMoeda(relatorio.faturamentoTotal)}</span>
-        </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Metrica rotulo="Faturamento total" valor={formatarMoeda(relatorio.faturamentoTotal)} />
+        <Metrica rotulo="Agendamentos concluídos" valor={String(relatorio.agendamentosConcluidos)} />
+        <Metrica rotulo="Agendamentos cancelados" valor={String(relatorio.agendamentosCancelados)} />
       </div>
 
-      <ExportarPdfButton ano={ano} mes={mes} />
-
-      <h2 className="mt-6 text-lg font-bold">Vendas do período</h2>
-      <ul className="mt-2 grid gap-2">
-        {relatorio.vendas.map((v) => (
-          <li key={v.id} className="flex justify-between rounded-lg border p-2 text-sm">
-            <span>
-              {v.itemNome} ({v.tipo === "produto" ? "Produto" : "Serviço"})
-            </span>
-            <span>{formatarMoeda(v.valorTotal)}</span>
-          </li>
-        ))}
-        {relatorio.vendas.length === 0 && (
-          <p className="text-sm text-slate-500">Nenhuma venda neste período.</p>
-        )}
-      </ul>
+      <section className={`${cartao} overflow-hidden`}>
+        <h2 className="border-b-2 border-slate-100 px-4 py-3 text-lg font-black sm:px-5">
+          Vendas do período
+        </h2>
+        <ul className="divide-y-2 divide-slate-100">
+          {vendas.visiveis.map((v) => (
+            <li key={v.id} className="flex flex-wrap justify-between gap-2 px-4 py-3 text-sm sm:px-5">
+              <span className="font-bold text-stone-950">
+                {v.itemNome}{" "}
+                <span className="font-semibold text-slate-600">
+                  · {v.tipo === "produto" ? "Produto" : "Serviço"}
+                </span>
+              </span>
+              <span className="font-black text-stone-950">{formatarMoeda(v.valorTotal)}</span>
+            </li>
+          ))}
+          {vendas.total === 0 && (
+            <li className="p-5 text-sm font-semibold text-slate-500">Nenhuma venda neste período.</li>
+          )}
+        </ul>
+        <Paginacao pagina={vendas} params={params} />
+      </section>
     </div>
   );
 }

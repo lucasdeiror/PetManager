@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:unit": "vitest run",
+    "test:unit": "TZ=UTC vitest run",
     "test:db": "vitest run --config vitest.db.config.ts",
     "test:e2e": "playwright test"
   },
