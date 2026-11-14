@@ -43,10 +43,10 @@ export function CriarAgendamentoForm({ pets, servicos, dia }: Props) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-2 rounded-lg border p-3">
+    <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3">
       <label className="grid gap-1 text-sm font-bold">
         Pet
-        <select name="petId" required className="h-9 rounded-md border px-2 text-sm">
+        <select name="petId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
           <option value="">Selecione um pet</option>
           {pets.map((p) => (
             <option key={p.id} value={p.id}>
@@ -57,13 +57,14 @@ export function CriarAgendamentoForm({ pets, servicos, dia }: Props) {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Horário
-        <input name="hora" type="time" required className="h-9 rounded-md border px-2 text-sm" />
+        <input name="hora" type="time" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
       </label>
       <fieldset className="grid gap-1">
         <legend className="text-sm font-bold">Serviços</legend>
         {servicos.map((s) => (
-          <label key={s.id} className="flex items-center gap-2 text-sm">
-            <input type="checkbox" name="servicoIds" value={s.id} />
+          <label key={s.id} className="flex items-center gap-2 text-sm font-semibold">
+            
+            <input type="checkbox" name="servicoIds" value={s.id} className="size-4 accent-orange-600" />
             {s.nome}
           </label>
         ))}
@@ -79,7 +80,7 @@ export function CriarAgendamentoForm({ pets, servicos, dia }: Props) {
       <button
         type="submit"
         disabled={isPending}
-        className="h-9 rounded-md bg-orange-600 text-sm font-bold text-white disabled:opacity-60"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Criar agendamento"}
       </button>
