@@ -1,15 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { diaExclusivo, horaUnica } from "./agenda-dados";
 
-// Horário único por execução (o banco local acumula dados entre rodadas).
-function horaUnica(): string {
-  const h = String(10 + Math.floor(Math.random() * 12)).padStart(2, "0");
-  const m = String(Math.floor(Math.random() * 60)).padStart(2, "0");
-  return `${h}:${m}`;
-}
 
 test.describe("tela de agenda - fluxo completo de estados", () => {
   test("criar, editar, cancelar, reabrir, concluir e efeito em Vendas", async ({ page }) => {
-    await page.goto("/agenda");
+    await page.goto(`/agenda?data=${diaExclusivo()}`);
     const hora = horaUnica();
     const horaNova = horaUnica();
 
@@ -48,7 +43,7 @@ test.describe("tela de agenda - fluxo completo de estados", () => {
   });
 
   test("botão de ação desabilita imediatamente após o clique", async ({ page }) => {
-    await page.goto("/agenda");
+    await page.goto(`/agenda?data=${diaExclusivo()}`);
 
     await page.getByLabel("Pet").selectOption({ index: 1 });
     await page.getByLabel("Horário").fill(horaUnica());

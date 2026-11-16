@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { diaExclusivo, horaUnica } from "./agenda-dados";
 
 // Este teste exercita <AgendaCalendario /> através da rota /agenda,
 // que só existe a partir do T33 — até lá, ele falha por rota
@@ -7,11 +8,12 @@ import { test, expect } from "@playwright/test";
 // tela é responsabilidade do T33.
 test.describe("componente AgendaCalendario", () => {
   test("horários ocupados e cancelados aparecem visualmente distintos", async ({ page }) => {
-    await page.goto("/agenda");
+    await page.goto(`/agenda?data=${diaExclusivo()}`);
 
     // Cria os próprios dados: um agendamento que fica ocupado e outro que é cancelado.
-    const h = () => `${String(10 + Math.floor(Math.random() * 12)).padStart(2, "0")}:${String(Math.floor(Math.random() * 60)).padStart(2, "0")}`;
-    const [ocupado, cancelado] = [h(), h()];
+    const ocupado = horaUnica();
+    let cancelado = horaUnica();
+    while (cancelado === ocupado) cancelado = horaUnica();
     for (const hora of [ocupado, cancelado]) {
       await page.getByLabel("Pet").selectOption({ index: 1 });
       await page.getByLabel("Horário").fill(hora);
