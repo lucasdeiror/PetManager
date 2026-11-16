@@ -345,7 +345,7 @@ npm install
 
 # configurar variáveis de ambiente do Supabase
 cp .env.example .env.local
-# preencher NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY
+# preencher NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 
 # aplicar as migrations no projeto Supabase
 # (via Supabase CLI ou MCP, conforme o fluxo do projeto)
@@ -360,26 +360,75 @@ Acesse `http://localhost:3000`.
 
 ## 🛫 Deploy (runbook)
 
-Cada petshop tem o próprio projeto Supabase e o próprio deploy. Em cada um:
+Cada petshop tem o próprio projeto Supabase e o próprio deploy na Vercel.
+Faça na ordem; a checagem do passo 6 diz se algo ficou para trás.
 
-1. **Feche o cadastro público.** No painel do Supabase, vá em
-   Authentication → Sign In / Providers e desligue **Allow new users to
-   sign up**. Sem isso, qualquer pessoa cria conta pela API. Localmente isso
-   já vem de `enable_signup = false` em `supabase/config.toml`.
-2. **Crie os usuários por convite.** Em Authentication → Users, use
-   **Invite user** para dono e recepcionista. Nenhum trigger cria o
-   perfil: insira uma linha em `profiles` para cada usuário (`id` do
-   `auth.users` e `role` `dono` ou `recepcionista`). Sem ela, o login
-   volta para `/login`.
-3. **Rode os testes de banco antes de subir.** Precisa do Docker:
+1. **Antes de tudo, rode os testes de banco no local** (precisa do Docker).
+   `test:db` recria o banco local com `supabase db reset`, então não aponte
+   para nada que tenha dados.
 
    ```bash
    npx supabase start
    npm run test:db
    ```
 
-   `test:db` recria o banco local com `supabase db reset`, então não aponte
-   para nada que tenha dados.
+2. **Crie o projeto Supabase** na região `sa-east-1` (São Paulo). Anote a
+   URL e a chave publicável em Project Settings → API Keys.
+
+3. **Feche o cadastro e endureça o login** em Authentication:
+   - Sign In / Providers: desligue **Allow new users to sign up**. O
+     `supabase/config.toml` só vale no local; na nuvem o projeto nasce com o
+     cadastro **ligado**, e qualquer pessoa criaria conta pela API.
+   - Senha mínima de 8 caracteres (o local usa 6 só para teste).
+
+4. **Aplique as migrations** (`supabase/migrations/0001` a `0013`):
+
+   ```bash
+   npx supabase link --project-ref <ref-do-projeto>
+   npx supabase db push
+   ```
+
+   Pelo MCP, aplique cada arquivo em ordem com `apply_migration`.
+
+5. **Crie os usuários.** Em Authentication → Users → **Add user → Create new
+   user**, com e-mail, senha e **Auto Confirm User** marcado. Não use
+   **Invite user**: o link do convite leva a uma tela de definir senha que o
+   app não tem. Depois, no SQL Editor, dê o papel a cada um (sem isso o
+   login não entra em nada):
+
+   ```sql
+   insert into public.profiles (id, role)
+   select id, 'dono' from auth.users where email = 'dono@petshop.com';
+   -- repita com 'recepcionista' para cada funcionária
+   ```
+
+   Para desligar alguém depois: `update public.profiles set ativo = false
+   where id = (select id from auth.users where email = '...');`. O acesso
+   cai na hora, inclusive pela API.
+
+6. **Rode a checagem** colando `supabase/checagem-implantacao.sql` no SQL
+   Editor. O resultado tem que ser uma única linha `ok`; qualquer outra
+   linha diz o que falta (tabela sem RLS, função aberta a `anon`, migration
+   faltando, nenhum dono, login sem perfil). Rode também o **Security
+   Advisor** do painel (ou `get_advisors` pelo MCP) e zere os avisos.
+
+7. **Deploy na Vercel.** Importe o repositório e cadastre, em Production:
+
+   | Variável | Valor |
+   |---|---|
+   | `NEXT_PUBLIC_SUPABASE_URL` | URL do passo 2 |
+   | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | chave publicável do passo 2 |
+
+   Nenhuma chave secreta (`service_role`) vai para a Vercel.
+
+8. **Teste de fumaça em produção**, com o dono: entrar, cadastrar horário de
+   funcionamento, um tutor com pet, um serviço, agendar e concluir (a venda
+   aparece em Vendas), e baixar o PDF de Relatórios. Com a recepcionista:
+   Estoque e Relatórios somem do menu e `/estoque` volta para `/agenda`.
+
+> **Plano Free:** o Supabase pausa projetos sem uso por 7 dias e não tem
+> backup para baixar. Um petshop em uso diário não pausa, mas o backup fica
+> por sua conta até haver plano pago.
 
 ## 🧪 Testes
 

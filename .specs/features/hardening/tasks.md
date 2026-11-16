@@ -692,3 +692,17 @@ Phase 6:  T20 → T21 → T22 → T23
 **Commit**: `fix(seguranca): acesso ao dominio exige perfil ativo (T38)`
 
 **Status**: Done
+
+### T39: Roteiro de implantação por petshop
+
+**What**: Seção "Deploy (runbook)" do README reescrita em 8 passos (testes locais, projeto em sa-east-1, cadastro fechado e senha 8+, `db push` das migrations 0001–0013, usuários por **Create new user** + SQL de perfil, checagem, Vercel, fumaça). `supabase/checagem-implantacao.sql` lista o que falta (tabela sem RLS, função aberta a `anon`, 0013 ausente, nenhum dono, login sem perfil) ou devolve `ok`. Corrige o T22: **Invite user** não funciona porque o app não tem tela de definir senha.
+**Where**: `README.md`, `supabase/checagem-implantacao.sql`
+**Requirement**: CAD-03, SEG-07
+
+**Done when**:
+- [x] Simulação local após `db reset`: checagem acusa "nenhum dono" → criar login acusa "login sem perfil" → SQL do perfil dá `ok` → login do dono emite token
+- [x] Checagem acusa RLS desligada e `grant execute ... to anon` plantados de propósito
+
+**Commit**: `docs(implantacao): roteiro por petshop com checagem sql (T39)`
+
+**Status**: Done
