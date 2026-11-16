@@ -233,8 +233,11 @@ O `petmanager-completo` passa nos 80 testes unitários, mas eles mockam o Supaba
 | DAT-01 | P2: Data em Brasília | Design | Done |
 | DAT-02 | P2: Data em Brasília | Design | Done |
 | SEG-03 | P3: Headers | Design | Done |
+| SEG-07 | Revisão de segurança 2026-11 | T38 | Done |
 
-**Coverage:** 31 total, 31 mapped to tasks (T1–T23), 0 unmapped
+**Coverage:** 32 total, 32 mapped to tasks (T1–T23, T38), 0 unmapped
+
+**SEG-07**: WHEN um login não tem perfil ativo em `profiles` (sem linha ou `ativo = false`) THEN o banco SHALL negar leitura e escrita de todo o domínio, e o app SHALL tratá-lo como sem sessão. Agendamento novo SHALL nascer `agendado`.
 
 
 ---

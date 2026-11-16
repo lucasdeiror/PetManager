@@ -57,6 +57,7 @@ export async function proxy(request: NextRequest) {
     .from("profiles")
     .select("role")
     .eq("id", user.id)
+    .eq("ativo", true)
     .single();
 
   if (profile?.role !== "dono") {
