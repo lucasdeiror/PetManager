@@ -678,3 +678,17 @@ Phase 4:  T11 → T12 → T13
 Phase 5:  T14 → T15 → T16 → T17 → T18 → T19
 Phase 6:  T20 → T21 → T22 → T23
 ```
+
+### T38: Acesso exige perfil ativo (revisão de segurança 2026-11)
+
+**What**: Migration 0013: `current_role_petmanager` só devolve papel de perfil ativo; as policies `using (true)` (tutores, pets, agendamentos, agendamento_servicos, vacinas e os selects de horários, serviços e vendas) passam a exigir papel; trigger `trg_agendamento_status_inicial` barra insert fora de `agendado`; `revoke execute ... from anon` nas funções que faltavam (L-003). `getUsuarioAtual` e `proxy` filtram `ativo = true`. Achados e riscos aceitos em `revisao-seguranca-2026-11.md`.
+**Where**: `supabase/migrations/0013_acesso_exige_perfil_ativo.sql`, `src/features/auth/queries.ts`, `src/proxy.ts`
+**Requirement**: SEG-07
+
+**Done when**:
+- [x] `acesso-sem-perfil.db.test.ts` falha sem a migration (8 falhas) e passa com ela
+- [x] lint · tsc · unit 204 · test:db 40 · build · e2e 38/38
+
+**Commit**: `fix(seguranca): acesso ao dominio exige perfil ativo (T38)`
+
+**Status**: Done

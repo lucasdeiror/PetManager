@@ -22,6 +22,7 @@ export async function getUsuarioAtual(): Promise<{ email: string; role: UserRole
     .from("profiles")
     .select("role")
     .eq("id", user.id)
+    .eq("ativo", true)
     .single();
 
   const role = profile?.role as UserRole | undefined;

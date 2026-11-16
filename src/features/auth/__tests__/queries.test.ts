@@ -3,7 +3,7 @@ import { getCurrentUserRole, exigirSessao, exigirDono } from "../queries";
 
 const getUser = vi.fn();
 const single = vi.fn();
-const eq = vi.fn(() => ({ single }));
+const eq: ReturnType<typeof vi.fn> = vi.fn(() => ({ eq, single }));
 const select = vi.fn(() => ({ eq }));
 const from = vi.fn(() => ({ select }));
 
@@ -36,6 +36,7 @@ describe("getCurrentUserRole", () => {
 
     expect(role).toBe("dono");
     expect(eq).toHaveBeenCalledWith("id", "user-dono");
+    expect(eq).toHaveBeenCalledWith("ativo", true);
   });
 
   it("retorna 'recepcionista' para o profile correspondente", async () => {
