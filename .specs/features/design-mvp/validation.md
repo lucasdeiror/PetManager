@@ -81,3 +81,9 @@ Ambiente: Supabase local ativo (`npx supabase status` ok; serviços opcionais im
 | O3 | Observação | `design-mvp/tasks.md` marca o Lote 2 como concluído; coerente com o código. O Painel inicial segue aberto por decisão |
 
 Nenhuma falha de implementação encontrada; nenhum código de produção ou teste foi alterado.
+
+---
+
+## Lacunas cobertas (T35, 2026-11-15)
+
+L1–L5 receberam testes (ver `tasks.md`, T35). A volta à página 1 pela **busca** já tinha teste em `use-list-filters.test.ts`. Faltava a volta pelo **filtro**, que foi adicionada. O1 (fonte via rede) segue em aberto.

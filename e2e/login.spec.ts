@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { EMAIL_TESTE, SENHA_TESTE } from "../src/shared/supabase/__tests__/db-setup";
 
 test.describe("página de login", () => {
   test("credenciais inválidas exibem a mensagem de erro genérica", async ({ page }) => {
@@ -11,7 +12,13 @@ test.describe("página de login", () => {
     await expect(page).toHaveURL(/\/login$/);
   });
 
-  // NOTA: o happy path (login válido -> redireciona ao dashboard)
-  // depende de uma conta de teste seedada no Supabase Auth deste
-  // projeto — ver Notas de execução no tasks.md desta task.
+  test("login válido mostra o card Área segura e leva à agenda (DES-04, DES-05)", async ({ page }) => {
+    await page.goto("/login");
+    await expect(page.getByText("Área segura")).toBeVisible();
+    await page.getByLabel("E-mail").fill(EMAIL_TESTE.dono);
+    await page.getByLabel("Senha").fill(SENHA_TESTE);
+    await page.getByRole("button", { name: /entrar no petmanager/i }).click();
+
+    await expect(page).toHaveURL(/\/agenda$/);
+  });
 });

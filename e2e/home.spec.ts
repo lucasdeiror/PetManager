@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("home page carrega", async ({ page }) => {
+test("/ leva à agenda (DES-04)", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle(/.+/);
+  await expect(page).toHaveURL(/\/agenda$/);
 });
