@@ -28,3 +28,9 @@ Evidência: lint/tsc limpos · unit 187 · build ok · e2e 36/36 na porta 3010.
 - [x] T32 Relatórios: métricas do mês, navegação em cartão, PDF no cabeçalho, vendas paginadas; mês corrente em Brasília (corrige bug de UTC); `test:unit` com `TZ=UTC`
 - [x] T33 Serviços e Horário: título, cadastro em cartão ao lado da lista (sem paginação: catálogo curto), dias do horário em cartões brancos
 - [ ] Painel inicial (opcional)
+
+## Lacunas de teste da validação (T35)
+
+- [x] T35 Testes para L1–L5 do `validation.md`: `MenuLateral` (papel, `aria-current`, gaveta com Esc) e e2e da recepcionista sem Estoque/Relatórios (DES-02); `/` e login válido levam a `/agenda` (DES-04); card "Área segura" (DES-05); componente `Paginacao` e filtro novo volta à página 1 (DES-06); `mesAtual` vira `mesEmSaoPaulo` em `src/shared/data/hoje.ts`, testado às 22h BRT (L5). Vitest passa a incluir `src/app/**/__tests__`.
+
+Evidência: lint/tsc limpos · unit 204 · build ok · e2e 38/38. Mutantes mortos: `soDono` ignorado no menu, `mesEmSaoPaulo` em UTC.

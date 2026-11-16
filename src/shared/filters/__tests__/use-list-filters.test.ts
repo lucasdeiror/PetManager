@@ -53,6 +53,15 @@ describe("useListFilters", () => {
     expect(replace).toHaveBeenCalledWith("/pets?filtro=ativo&busca=rex", { scroll: false });
   });
 
+  it("mudar filtro também volta para a página 1 (DES-06)", () => {
+    searchParamsString = "busca=rex&pagina_tutores=3&pagina_pets=2";
+    const { result } = renderHook(() => useListFilters(["ativo"] as const));
+    act(() => {
+      result.current.setFiltro("ativo");
+    });
+    expect(replace).toHaveBeenCalledWith("/pets?busca=rex&filtro=ativo", { scroll: false });
+  });
+
   it("busca e filtro combinados aparecem juntos na URL (E lógico)", () => {
     searchParamsString = "busca=rex";
     const { result } = renderHook(() => useListFilters(["ativo"] as const));

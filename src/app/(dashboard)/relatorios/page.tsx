@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getRelatorioMensal } from "../../../features/relatorios/queries";
-import { hojeEmSaoPaulo } from "../../../shared/data/hoje";
+import { mesEmSaoPaulo } from "../../../shared/data/hoje";
 import { Metrica, TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
 import { Paginacao, paginar } from "../../../shared/tela/paginacao";
 import { ExportarPdfButton } from "./exportar-pdf-button";
@@ -19,12 +19,6 @@ const MESES = [
   "Novembro",
   "Dezembro",
 ];
-
-/** Mês corrente em Brasília (AD-010): o servidor roda em UTC e viraria o mês às 21h. */
-function mesAtual(): { ano: number; mes: number } {
-  const [ano, mes] = hojeEmSaoPaulo().split("-").map(Number);
-  return { ano, mes };
-}
 
 function mesAnterior(ano: number, mes: number): { ano: number; mes: number } {
   return mes === 1 ? { ano: ano - 1, mes: 12 } : { ano, mes: mes - 1 };
@@ -45,7 +39,7 @@ export default async function RelatoriosPage({
 }) {
   const params = await searchParams;
   const { ano: anoParam, mes: mesParam } = params;
-  const atual = mesAtual();
+  const atual = mesEmSaoPaulo();
   const ano = anoParam ? Number(anoParam) : atual.ano;
   const mes = mesParam ? Number(mesParam) : atual.mes;
 

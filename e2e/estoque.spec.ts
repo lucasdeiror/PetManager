@@ -32,10 +32,14 @@ test.describe("tela de estoque", () => {
     await expect(item.getByText("12 un.")).toBeVisible();
   });
 
-  // NOTA: "recepcionista não vê o menu nem acessa a rota diretamente"
-  // é coberto pela lógica do middleware (T7, já testado ali) + pela
-  // checagem de papel em getProdutos (T19, retorna [] pra
-  // recepcionista). O cenário de ponta a ponta com uma sessão real de
-  // recepcionista depende de conta de teste seedada — mesmo TODO já
-  // registrado desde o T7/T8.
+  test.describe("recepcionista", () => {
+    test.use({ storageState: "e2e/.auth/recepcionista.json" });
+    test("menu esconde Estoque e Relatórios (DES-02)", async ({ page }) => {
+      await page.goto("/agenda");
+      const menu = page.getByRole("navigation", { name: "Navegação principal" });
+      await expect(menu.getByRole("link", { name: "Agenda" })).toHaveAttribute("aria-current", "page");
+      await expect(menu.getByRole("link", { name: "Estoque" })).toHaveCount(0);
+      await expect(menu.getByRole("link", { name: "Relatórios" })).toHaveCount(0);
+    });
+  });
 });
