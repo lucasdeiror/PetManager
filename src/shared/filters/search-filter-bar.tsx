@@ -43,8 +43,8 @@ export function SearchFilterBar<T extends string>({
       }
     }, debounceMs);
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputValue, debounceMs]);
+    // busca/setBusca nas deps: um timer com setBusca antiga montaria a URL sem o filtro recém-escolhido
+  }, [inputValue, busca, setBusca, debounceMs]);
 
   return (
     <div className="flex flex-wrap gap-2">
