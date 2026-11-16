@@ -112,3 +112,19 @@ T1 → T4
 **Commit**: `fix(relatorios): limites do mes no fuso de sao paulo`
 
 **Status**: Done
+
+---
+
+### T36: Guarda no lint contra data sem `timeZone`
+
+**What**: `no-restricted-syntax` no `eslint.config.mjs` para `src/**`: `toLocaleDateString`/`toLocaleTimeString` sem `timeZone` e `toLocaleString` sem `timeZone` nem `style` (moeda) viram erro. Não há workflow de CI no repo; a guarda roda no `npm run lint` de toda task.
+**Where**: `eslint.config.mjs`
+**Requirement**: AD-010
+
+**Done when**:
+- [x] Lint limpo no código atual
+- [x] Arquivo de prova com 3 usos sem fuso dá 3 erros; `timeZone` e moeda com `style` passam
+
+**Commit**: `chore(lint): barra data formatada sem timeZone (T36)`
+
+**Status**: Done
