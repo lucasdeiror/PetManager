@@ -76,7 +76,7 @@ Ambiente: Supabase local ativo (`npx supabase status` ok; serviços opcionais im
 | L3 | Teste | DES-05: sem asserção do card "Área segura" |
 | L4 | Teste | DES-06: sem teste do componente `Paginacao` (links, `aria-label`, `?pagina=`) nem e2e de navegação entre páginas; "busca/filtro novo volta à página 1" (`use-list-filters.ts`) sem teste |
 | L5 | Teste | `mesAtual()` (T32, correção de bug de fuso) não é exportada nem testada; um revert para UTC passaria na suíte. Sugestão: extrair e testar com relógio fixo às 22h BRT |
-| O1 | Observação | `next/font/google` baixa Inter em build/dev; sem rede cai no fallback e o build/e2e passam mesmo assim. Em CI offline a fonte some em silêncio. Avaliar `next/font/local` |
+| O1 | Observação | `next/font/google` baixa Inter em build/dev; sem rede cai no fallback e o build/e2e passam mesmo assim. Em CI offline a fonte some em silêncio. Avaliar `next/font/local` — **Resolvido no T37** (Inter local em `src/app/fonts/`) |
 | O2 | Observação | Discrimination sensor não rodado nesta verificação (pedido cobria ACs, regras e gates). Mutantes sugeridos: `soDono` invertido no menu, `POR_PAGINA` 10 -> 20 (o teste de `paginar` mata), `hojeEmSaoPaulo` -> `new Date()` em `mesAtual` (provável sobrevivente, L5) |
 | O3 | Observação | `design-mvp/tasks.md` marca o Lote 2 como concluído; coerente com o código. O Painel inicial segue aberto por decisão |
 
