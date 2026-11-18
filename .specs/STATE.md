@@ -137,13 +137,21 @@
 - **Trade-off**: `DashboardLayout` lê `cookies()` do `next/headers` em request-time (onde já rodava `getUsuarioAtual()`).
 - **Scope**: Feature `design-geral` (T46–T49) e layout `(dashboard)`.
 - **Date**: 2026-11-18
+- **Status**: superseded by AD-018
+
+### AD-018
+- **Decision**: Na barra lateral (`MenuLateral`) a partir de `768px` (`md:`), o espaçador de layout (`data-slot="sidebar-gap"`) acompanha diretamente o estado `expandida` (`fixada || pairando || focoTeclado`), alternando entre `w-64` (`256px`) quando aberta e `w-16` (`64px`) quando recolhida com `transition-[width] duration-200 ease-out` — exatamente como o `SidebarProvider open={fixada || pairando}` da Gabi Modas, fazendo a tela (`<main>`) acompanhar tanto ao abrir (por hover, foco de teclado ou pino) quanto ao fechar (substitui AD-017).
+- **Reason**: Pedido explícito do usuário para igualar o comportamento de acompanhamento de tela da Gabi Modas ao abrir e fechar a sidebar, mantendo a leitura SSR do cookie `sidebar_state`, o debounce `120ms`/`220ms` e a identidade visual do PetManager.
+- **Trade-off**: O `<main>` ajusta sua largura suavemente junto com a abertura e o fechamento da sidebar em vez de ficar sob sobreposição.
+- **Scope**: Feature `design-geral` (T46/T50) e layout `(dashboard)`.
+- **Date**: 2026-11-18
 - **Status**: active
 
 ## Handoff
 
-- **Feature**: `design-geral` — concluída e verificada (`PASS ✅`, 13/13 ACs, T46–T49 mergeadas via PRs #72–#75).
-- **Phase / Task**: T46–T49 concluídas (sidebar recolhível com cookie `sidebar_state` no SSR, escala única de tipografia e `tabular-nums`, escala única de espaçamento com `PaginaContainer`, e responsividade `375px`/`768px`/`1280px` com alvos de toque `>= 44px`).
-- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41, T45), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44), `design-geral` (T46–T49).
+- **Feature**: `design-geral` — concluída e verificada (`PASS ✅`, 13/13 ACs, T46–T50 mergeadas via PRs #72–#76).
+- **Phase / Task**: T46–T50 concluídas (sidebar recolhível acompanhando a tela ao abrir e fechar igual à Gabi Modas com cookie `sidebar_state` no SSR, escala única de tipografia e `tabular-nums`, escala única de espaçamento com `PaginaContainer`, e responsividade `375px`/`768px`/`1280px` com alvos de toque `>= 44px`).
+- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41, T45), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44), `design-geral` (T46–T50).
 - **In-progress**: nenhum arquivo pendente no código.
 - **Next step**: Rodar o 1º piloto com petshop real em Aracaju/Barra dos Coqueiros.
 - **Blockers**: none.

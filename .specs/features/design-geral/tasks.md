@@ -41,7 +41,7 @@ T46 (sidebar) → T47 (tipografia) → T48 (espaçamento) → T49 (responsividad
 **Branch**: `task/T46-sidebar-recolhivel`
 **What**:
 - Ler `cookies()` no Server Component `src/app/(dashboard)/layout.tsx` (`sidebar_state === "true"`, default `false` = recolhida) e repassar `defaultFixada` para `MenuLateral` sem piscar na hidratação.
-- Em `src/app/(dashboard)/menu-lateral.tsx`, exibir sidebar recolhível em ícones a partir de `md:` (`768px`), abrindo por cima do conteúdo ao passar o mouse (`pointerType === "mouse"`, `120ms`/`220ms`) ou ao receber foco via `Tab`, com botão de pino (`aria-pressed`, `aria-label`, gravação no cookie `sidebar_state`) que fixa a barra aberta e ajusta o `sidebar-gap` no layout.
+- Em `src/app/(dashboard)/menu-lateral.tsx`, exibir sidebar recolhível em ícones a partir de `md:` (`768px`), abrindo ao passar o mouse (`pointerType === "mouse"`, `120ms`/`220ms`) ou ao receber foco via `Tab` com o `sidebar-gap` acompanhando `expandida` (`w-64` aberta e `w-16` fechada, igual à Gabi Modas), e com botão de pino (`aria-pressed`, `aria-label`, gravação no cookie `sidebar_state`) que mantém a barra fixa aberta.
 - Abaixo de `768px` (`md:hidden`), manter barra superior + gaveta modal acessível (`role="dialog"`, `aria-label="Menu"`, fecha com `Escape`, backdrop, botão X ou clique em link).
 **Where**: `src/app/(dashboard)/layout.tsx`, `src/app/(dashboard)/menu-lateral.tsx`, `src/app/(dashboard)/__tests__/menu-lateral.test.tsx`
 **Requirement**: DSG-01, DSG-02, DSG-03, DSG-04, DSG-05, DSG-06

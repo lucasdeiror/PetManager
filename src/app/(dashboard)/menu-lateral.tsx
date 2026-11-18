@@ -119,14 +119,13 @@ export function MenuLateral({ email, role, defaultFixada = false }: Props) {
           data-slot="sidebar-gap"
           className={cn(
             "relative shrink-0 bg-transparent transition-[width] duration-200 ease-out motion-reduce:transition-none",
-            fixada ? "w-64" : "w-16",
+            expandida ? "w-64" : "w-16",
           )}
         />
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-30 hidden h-svh flex-col bg-slate-950 py-4 text-white transition-[width,box-shadow] duration-200 ease-out motion-reduce:transition-none md:flex",
+            "fixed inset-y-0 left-0 z-30 hidden h-svh flex-col bg-slate-950 py-4 text-white transition-[width] duration-200 ease-out motion-reduce:transition-none md:flex",
             expandida ? "w-64 px-4" : "w-16 items-center px-2",
-            !fixada && expandida && "shadow-2xl shadow-slate-950/60",
           )}
         >
           <div

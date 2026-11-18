@@ -40,14 +40,17 @@ test.describe("tela do painel inicial", () => {
     await page.goto("/painel");
 
     const sidebar = page.locator("[data-slot='sidebar']");
+    const gap = page.locator("[data-slot='sidebar-gap']");
     await expect(sidebar).toHaveAttribute("data-state", "collapsed");
     await expect(sidebar).toHaveAttribute("data-collapsible", "icon");
+    expect((await gap.boundingBox())?.width).toBe(64);
 
-    // Tab chega ao pino e expande a sidebar com foco visível
+    // Tab chega ao pino, expande a sidebar com foco visível e a tela acompanha a largura (256px)
     const pino = page.getByRole("button", { name: "Fixar a barra lateral aberta" });
     await page.keyboard.press("Tab");
     await expect(pino).toBeFocused();
     await expect(sidebar).toHaveAttribute("data-state", "expanded");
+    await expect.poll(async () => (await gap.boundingBox())?.width).toBe(256);
 
     // Clicar no pino fixa aberta e grava o cookie sidebar_state=true
     await pino.click();
@@ -60,6 +63,7 @@ test.describe("tela do painel inicial", () => {
     await page.reload();
     await expect(sidebar).toHaveAttribute("data-state", "expanded");
     await expect(pinoSoltar).toHaveAttribute("aria-pressed", "true");
+    expect((await gap.boundingBox())?.width).toBe(256);
   });
 
   test("responsividade e alvos de toque: 375px, 768px e 1280px sem scroll horizontal e controles >= 44px (DSG-12, DSG-13)", async ({
