@@ -16,11 +16,12 @@ export default async function PetsPage({
 }) {
   const params = await searchParams;
   const { busca } = params;
-  const [tutoresFiltrados, pets, todosTutores] = await Promise.all([
-    getTutores(busca),
-    getPets(busca),
+  const [todosTutores, pets, tutoresComBusca] = await Promise.all([
     getTutores(),
+    getPets(busca),
+    busca ? getTutores(busca) : Promise.resolve(null),
   ]);
+  const tutoresFiltrados = tutoresComBusca ?? todosTutores;
   const tutores = paginar(tutoresFiltrados, params.pagina_tutores);
   const petsPagina = paginar(pets, params.pagina_pets);
   const nomeTutor = new Map(todosTutores.map((t) => [t.id, t.nome]));

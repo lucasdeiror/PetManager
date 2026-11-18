@@ -734,3 +734,18 @@ Phase 6:  T20 → T21 → T22 → T23
 **Commit**: `docs(specs): sincroniza state, tasks e readme com producao (T41)`
 
 **Status**: Done
+
+### T45: Otimização de latência e navegação instantânea no dashboard
+
+**What**: Deduplicar `getUsuarioAtual` e `getAgendamentosPorDia` por request via `React.cache()`; paralelizar as queries de `getRelatorioMensal`, `VendasPage` e `PetsPage` com `Promise.all` (eliminando a query duplicada de tutores sem filtro); adicionar `src/app/(dashboard)/loading.tsx` para habilitar partial prefetching e transição imediata nas rotas dinâmicas do Next.js 16.
+**Where**: `src/features/auth/queries.ts`, `src/features/agenda/queries.ts`, `src/features/relatorios/queries.ts`, `src/app/(dashboard)/pets/page.tsx`, `src/app/(dashboard)/vendas/page.tsx`, `src/app/(dashboard)/loading.tsx`
+
+**Done when**:
+- [x] `getUsuarioAtual` e `getAgendamentosPorDia` encapsuladas com `cache()` do React
+- [x] `getRelatorioMensal` dispara contagens e `getVendas` em `Promise.all`
+- [x] `src/app/(dashboard)/loading.tsx` presente e todas as rotas dinâmicas com partial prefetch habilitado
+- [x] Gate completo (`lint`, `tsc`, `test:unit` 212, `build`, `test:e2e` 41/41) passa
+
+**Commit**: `perf(dashboard): deduplica queries por request e habilita loading imediato (T45)`
+
+**Status**: Done

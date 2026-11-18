@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "../../shared/supabase/server";
 
 export type UserRole = "dono" | "recepcionista";
@@ -6,28 +7,34 @@ export type UserRole = "dono" | "recepcionista";
  * Usuário autenticado com o papel lido de `profiles`. `null` cobre tanto
  * "não autenticado" quanto "autenticado mas sem profile" (estado
  * inconsistente que não deve travar a chamada).
+ *
+ * `cache()` do React deduplica a chamada dentro do mesmo request RSC
+ * (`DashboardLayout` + página + queries como `getProdutos`), evitando
+ * múltiplas viagens em série ao Supabase Auth e PostgREST.
  */
-export async function getUsuarioAtual(): Promise<{ email: string; role: UserRole } | null> {
-  const supabase = await createClient();
+export const getUsuarioAtual = cache(
+  async (): Promise<{ email: string; role: UserRole } | null> => {
+    const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user) {
-    return null;
-  }
+    if (!user) {
+      return null;
+    }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .eq("ativo", true)
-    .single();
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .eq("ativo", true)
+      .single();
 
-  const role = profile?.role as UserRole | undefined;
-  return role ? { email: user.email ?? "", role } : null;
-}
+    const role = profile?.role as UserRole | undefined;
+    return role ? { email: user.email ?? "", role } : null;
+  },
+);
 
 /** Papel do usuário autenticado; `null` nos mesmos casos de `getUsuarioAtual`. */
 export async function getCurrentUserRole(): Promise<UserRole | null> {
