@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { MenuLateral } from "../menu-lateral";
 
 const { mockUsePathname } = vi.hoisted(() => ({
@@ -11,12 +11,18 @@ vi.mock("../../../features/auth/actions", () => ({ signOut: vi.fn() }));
 
 const menu = () => within(screen.getAllByRole("navigation", { name: "Navegação principal" })[0]);
 
+beforeEach(() => {
+  vi.useFakeTimers();
+  document.cookie = "sidebar_state=; path=/; max-age=0";
+});
+
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   mockUsePathname.mockReturnValue("/vendas");
 });
 
-describe("MenuLateral (DES-02, DES-03, PNL-01)", () => {
+describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   it("recepcionista vê Painel no topo e não vê Estoque nem Relatórios", () => {
     render(<MenuLateral email="rec@petshop.com" role="recepcionista" />);
     const links = menu().getAllByRole("link");
@@ -49,7 +55,7 @@ describe("MenuLateral (DES-02, DES-03, PNL-01)", () => {
     expect(menu().getByRole("link", { name: "Agenda" }).getAttribute("aria-current")).toBeNull();
   });
 
-  it("gaveta mobile abre pelo botão e fecha com Esc", () => {
+  it("gaveta mobile abre pelo botão e fecha com Esc (DSG-05)", () => {
     render(<MenuLateral email="dono@petshop.com" role="dono" />);
     const abrir = screen.getByRole("button", { name: "Abrir menu" });
     expect(screen.queryByRole("dialog", { name: "Menu" })).toBeNull();
@@ -60,5 +66,85 @@ describe("MenuLateral (DES-02, DES-03, PNL-01)", () => {
 
     fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("dialog", { name: "Menu" })).toBeNull();
+  });
+
+  it("inicia recolhida por padrão (collapsible=icon) e respeita defaultFixada=true do servidor (DSG-01)", () => {
+    const { unmount } = render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    const sidebar = document.querySelector("[data-slot='sidebar']");
+    expect(sidebar?.getAttribute("data-state")).toBe("collapsed");
+    expect(sidebar?.getAttribute("data-collapsible")).toBe("icon");
+    unmount();
+
+    render(<MenuLateral email="dono@petshop.com" role="dono" defaultFixada />);
+    const sidebarFixada = document.querySelector("[data-slot='sidebar']");
+    expect(sidebarFixada?.getAttribute("data-state")).toBe("expanded");
+    expect(sidebarFixada?.getAttribute("data-collapsible")).toBe("");
+  });
+
+  it("abre ao passar o mouse (120ms) e fecha ao sair (220ms), ignorando toque (DSG-02)", () => {
+    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    const sidebar = document.querySelector("[data-slot='sidebar']") as HTMLElement;
+    expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+
+    // Toque (touch) não deve deixar a barra presa aberta
+    fireEvent.pointerEnter(sidebar, { pointerType: "touch" });
+    act(() => {
+      vi.advanceTimersByTime(200);
+    });
+    expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+
+    // Mouse abre após 120ms
+    fireEvent.pointerEnter(sidebar, { pointerType: "mouse" });
+    act(() => {
+      vi.advanceTimersByTime(119);
+    });
+    expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(sidebar.getAttribute("data-state")).toBe("expanded");
+
+    // Mouse sai e fecha após 220ms
+    fireEvent.pointerLeave(sidebar, { pointerType: "mouse" });
+    act(() => {
+      vi.advanceTimersByTime(219);
+    });
+    expect(sidebar.getAttribute("data-state")).toBe("expanded");
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+  });
+
+  it("botão de fixar aberta alterna aria-pressed, aria-label e grava cookie sidebar_state (DSG-03)", () => {
+    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    const pino = screen.getByRole("button", { name: "Fixar a barra lateral aberta" });
+    expect(pino.getAttribute("aria-pressed")).toBe("false");
+
+    fireEvent.click(pino);
+
+    const pinoSoltar = screen.getByRole("button", {
+      name: "Soltar a barra lateral (abre só com o mouse)",
+    });
+    expect(pinoSoltar.getAttribute("aria-pressed")).toBe("true");
+    expect(document.cookie).toContain("sidebar_state=true");
+
+    fireEvent.click(pinoSoltar);
+    expect(
+      screen.getByRole("button", { name: "Fixar a barra lateral aberta" }).getAttribute("aria-pressed"),
+    ).toBe("false");
+    expect(document.cookie).toContain("sidebar_state=false");
+  });
+
+  it("expande imediatamente ao receber foco de teclado e recolhe ao sair o foco (DSG-04)", () => {
+    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    const sidebar = document.querySelector("[data-slot='sidebar']") as HTMLElement;
+    const pino = screen.getByRole("button", { name: "Fixar a barra lateral aberta" });
+
+    fireEvent.focus(pino);
+    expect(sidebar.getAttribute("data-state")).toBe("expanded");
+
+    fireEvent.blur(pino, { relatedTarget: document.body });
+    expect(sidebar.getAttribute("data-state")).toBe("collapsed");
   });
 });
