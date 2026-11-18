@@ -92,15 +92,17 @@ T1 → T2 → T3
 
 **Done when**:
 
-- [ ] `"Painel"` aparece como primeiro link do menu para `dono` e `recepcionista`
-- [ ] Em `/painel`, o link `"Painel"` recebe `aria-current="page"`
-- [ ] Gate check passes: `npm run test:unit`
-- [ ] Test count: >= 211 tests pass
+- [x] `"Painel"` aparece como primeiro link do menu para `dono` e `recepcionista`
+- [x] Em `/painel`, o link `"Painel"` recebe `aria-current="page"`
+- [x] Gate check passes: `npm run test:unit`
+- [x] Test count: >= 210 tests pass
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(painel): adiciona atalho do painel no menu lateral (T43)`
+
+**Status**: Done
 
 ---
 

@@ -7,6 +7,7 @@ import {
   BarChart3,
   CalendarDays,
   Clock,
+  LayoutDashboard,
   LogOut,
   Menu,
   Package,
@@ -21,6 +22,7 @@ import { signOut } from "../../features/auth/actions";
 import type { UserRole } from "../../features/auth/queries";
 
 const ITENS = [
+  { href: "/painel", label: "Painel", icon: LayoutDashboard },
   { href: "/agenda", label: "Agenda", icon: CalendarDays },
   { href: "/pets", label: "Tutores e pets", icon: Users },
   { href: "/vacinas", label: "Vacinas", icon: Syringe },
