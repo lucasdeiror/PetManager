@@ -21,6 +21,9 @@ import {
 } from "lucide-react";
 import { signOut } from "../../features/auth/actions";
 import type { UserRole } from "../../features/auth/queries";
+import { Notificacoes } from "../../features/notificacoes/notificacoes";
+import type { NotificacaoItem } from "../../features/notificacoes/types";
+import { BotaoTema, BotaoTemaMenu } from "../../shared/tela/botao-tema";
 import { cn } from "../../lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
@@ -42,9 +45,10 @@ interface Props {
   email: string;
   role: UserRole;
   defaultFixada?: boolean;
+  notificacoes?: NotificacaoItem[];
 }
 
-export function MenuLateral({ email, role, defaultFixada = false }: Props) {
+export function MenuLateral({ email, role, defaultFixada = false, notificacoes = [] }: Props) {
   const pathname = usePathname();
   const [aberto, setAberto] = useState(false);
   const [fixada, setFixada] = useState(defaultFixada);
@@ -185,21 +189,37 @@ export function MenuLateral({ email, role, defaultFixada = false }: Props) {
             })}
           </nav>
 
+          <div className="mt-auto flex w-full flex-col gap-1 border-t border-white/10 pt-3">
+            <div
+              className={cn(
+                "px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400",
+                !expandida && "sr-only",
+              )}
+            >
+              Aparelho
+            </div>
+            <BotaoTemaMenu expandida={expandida} />
+          </div>
+
           <Conta email={email} role={role} expandida={expandida} />
         </aside>
       </div>
 
       <div className="fixed inset-x-0 top-0 z-30 flex h-16 items-center justify-between border-b border-slate-800 bg-slate-950 px-3 text-white md:hidden">
         <Marca />
-        <button
-          type="button"
-          aria-label="Abrir menu"
-          aria-expanded={aberto}
-          onClick={() => setAberto(true)}
-          className="flex size-11 items-center justify-center rounded-xl bg-orange-300 text-stone-950 outline-none focus-visible:ring-2 focus-visible:ring-white"
-        >
-          <Menu aria-hidden />
-        </button>
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Notificacoes itensIniciais={notificacoes} userEmail={email} />
+          <BotaoTema />
+          <button
+            type="button"
+            aria-label="Abrir menu"
+            aria-expanded={aberto}
+            onClick={() => setAberto(true)}
+            className="flex size-11 items-center justify-center rounded-xl bg-orange-300 text-stone-950 outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            <Menu aria-hidden />
+          </button>
+        </div>
       </div>
 
       {aberto && (
@@ -247,6 +267,12 @@ export function MenuLateral({ email, role, defaultFixada = false }: Props) {
                 );
               })}
             </nav>
+            <div className="mt-auto flex w-full flex-col gap-1 border-t border-white/10 pt-3">
+              <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Aparelho
+              </div>
+              <BotaoTemaMenu expandida />
+            </div>
             <Conta email={email} role={role} expandida />
           </aside>
         </div>

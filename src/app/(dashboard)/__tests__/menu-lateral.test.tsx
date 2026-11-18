@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { MenuLateral } from "../menu-lateral";
+import { TemaProvider } from "../../../shared/tela/tema";
 
 const { mockUsePathname } = vi.hoisted(() => ({
   mockUsePathname: vi.fn(() => "/vendas"),
@@ -10,10 +11,14 @@ vi.mock("next/navigation", () => ({ usePathname: () => mockUsePathname() }));
 vi.mock("../../../features/auth/actions", () => ({ signOut: vi.fn() }));
 
 const menu = () => within(screen.getAllByRole("navigation", { name: "Navegação principal" })[0]);
+const renderMenu = (ui: React.ReactElement) => render(<TemaProvider>{ui}</TemaProvider>);
 
 beforeEach(() => {
   vi.useFakeTimers();
   document.cookie = "sidebar_state=; path=/; max-age=0";
+  document.documentElement.removeAttribute("data-theme");
+  document.documentElement.classList.remove("dark");
+  localStorage.clear();
 });
 
 afterEach(() => {
@@ -24,7 +29,7 @@ afterEach(() => {
 
 describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   it("recepcionista vê Painel no topo e não vê Estoque nem Relatórios", () => {
-    render(<MenuLateral email="rec@petshop.com" role="recepcionista" />);
+    renderMenu(<MenuLateral email="rec@petshop.com" role="recepcionista" />);
     const links = menu().getAllByRole("link");
     expect(links[0].textContent).toBe("Painel");
     expect(links[0].getAttribute("href")).toBe("/painel");
@@ -35,7 +40,7 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   });
 
   it("dono vê Painel no topo, Estoque e Relatórios; só a rota atual tem aria-current", () => {
-    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    renderMenu(<MenuLateral email="dono@petshop.com" role="dono" />);
     const links = menu().getAllByRole("link");
     expect(links[0].textContent).toBe("Painel");
     expect(links[0].getAttribute("href")).toBe("/painel");
@@ -50,13 +55,13 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
 
   it("destaca Painel com aria-current='page' quando a rota atual é /painel (PNL-01)", () => {
     mockUsePathname.mockReturnValue("/painel");
-    render(<MenuLateral email="rec@petshop.com" role="recepcionista" />);
+    renderMenu(<MenuLateral email="rec@petshop.com" role="recepcionista" />);
     expect(menu().getByRole("link", { name: "Painel" }).getAttribute("aria-current")).toBe("page");
     expect(menu().getByRole("link", { name: "Agenda" }).getAttribute("aria-current")).toBeNull();
   });
 
   it("gaveta mobile abre pelo botão e fecha com Esc (DSG-05)", () => {
-    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    renderMenu(<MenuLateral email="dono@petshop.com" role="dono" />);
     const abrir = screen.getByRole("button", { name: "Abrir menu" });
     expect(screen.queryByRole("dialog", { name: "Menu" })).toBeNull();
 
@@ -69,7 +74,7 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   });
 
   it("inicia recolhida por padrão (collapsible=icon) e respeita defaultFixada=true do servidor (DSG-01)", () => {
-    const { unmount } = render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    const { unmount } = renderMenu(<MenuLateral email="dono@petshop.com" role="dono" />);
     const sidebar = document.querySelector("[data-slot='sidebar']");
     const gap = document.querySelector("[data-slot='sidebar-gap']");
     expect(sidebar?.getAttribute("data-state")).toBe("collapsed");
@@ -77,7 +82,7 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
     expect(gap?.className).toContain("w-16");
     unmount();
 
-    render(<MenuLateral email="dono@petshop.com" role="dono" defaultFixada />);
+    renderMenu(<MenuLateral email="dono@petshop.com" role="dono" defaultFixada />);
     const sidebarFixada = document.querySelector("[data-slot='sidebar']");
     const gapFixada = document.querySelector("[data-slot='sidebar-gap']");
     expect(sidebarFixada?.getAttribute("data-state")).toBe("expanded");
@@ -86,7 +91,7 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   });
 
   it("abre ao passar o mouse (120ms) e fecha ao sair (220ms), acompanhando a largura da tela e ignorando toque (DSG-02)", () => {
-    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    renderMenu(<MenuLateral email="dono@petshop.com" role="dono" />);
     const sidebar = document.querySelector("[data-slot='sidebar']") as HTMLElement;
     const gap = document.querySelector("[data-slot='sidebar-gap']") as HTMLElement;
     expect(sidebar.getAttribute("data-state")).toBe("collapsed");
@@ -128,7 +133,7 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   });
 
   it("botão de fixar aberta alterna aria-pressed, aria-label e grava cookie sidebar_state (DSG-03)", () => {
-    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    renderMenu(<MenuLateral email="dono@petshop.com" role="dono" />);
     const pino = screen.getByRole("button", { name: "Fixar a barra lateral aberta" });
     expect(pino.getAttribute("aria-pressed")).toBe("false");
 
@@ -148,7 +153,7 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   });
 
   it("expande imediatamente ao receber foco de teclado e recolhe ao sair o foco (DSG-04)", () => {
-    render(<MenuLateral email="dono@petshop.com" role="dono" />);
+    renderMenu(<MenuLateral email="dono@petshop.com" role="dono" />);
     const sidebar = document.querySelector("[data-slot='sidebar']") as HTMLElement;
     const pino = screen.getByRole("button", { name: "Fixar a barra lateral aberta" });
 
@@ -157,5 +162,38 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
 
     fireEvent.blur(pino, { relatedTarget: document.body });
     expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+  });
+
+  it("exibe seção Aparelho na barra lateral com botão de alternar tema claro e escuro", () => {
+    renderMenu(<MenuLateral email="dono@petshop.com" role="dono" />);
+    expect(screen.getAllByText("Aparelho").length).toBeGreaterThan(0);
+    const btnTema = screen.getAllByRole("button", { name: "Modo escuro" })[0];
+    expect(btnTema).toBeTruthy();
+
+    fireEvent.click(btnTema);
+    expect(screen.getAllByRole("button", { name: "Modo claro" })[0]).toBeTruthy();
+  });
+
+  it("renderiza botão de notificações e alternador de tema no cabeçalho mobile", () => {
+    const mockNotifs = [
+      {
+        id: "1",
+        tipo: "vacina" as const,
+        titulo: "Vacina atrasada: Raiva",
+        quando: "2026-11-18T10:00:00Z",
+        link: "/vacinas",
+        tom: "perigo" as const,
+      },
+    ];
+    render(
+      <MenuLateral
+        email="dono@petshop.com"
+        role="dono"
+        notificacoes={mockNotifs}
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: /Notificações/ })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Usar modo escuro/ })).toBeTruthy();
   });
 });

@@ -41,12 +41,12 @@ export function Paginacao({
     return `?${q}`;
   };
   const botao =
-    "inline-flex size-11 items-center justify-center rounded-xl border-2 border-slate-200 bg-white text-slate-800 transition-colors hover:border-orange-500";
+    "inline-flex size-11 items-center justify-center rounded-xl border-2 border-slate-200 bg-white text-slate-800 transition-colors hover:border-orange-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-orange-400";
 
   return (
     <nav
       aria-label="Paginação"
-      className="flex items-center justify-between border-t-2 border-slate-100 px-4 py-3 text-sm font-semibold text-slate-600 tabular-nums"
+      className="flex items-center justify-between border-t-2 border-slate-100 px-4 py-3 text-sm font-semibold text-slate-600 tabular-nums dark:border-slate-800 dark:text-slate-400"
     >
       <span>
         {pagina.de}–{pagina.ate} de {pagina.total}
@@ -61,7 +61,7 @@ export function Paginacao({
             <ChevronLeft className="size-4" />
           </span>
         )}
-        <span className="flex items-center px-2 text-slate-900">
+        <span className="flex items-center px-2 text-slate-900 dark:text-slate-100">
           {pagina.atual} / {pagina.totalPaginas}
         </span>
         {pagina.atual < pagina.totalPaginas ? (
