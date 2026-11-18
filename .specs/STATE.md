@@ -92,11 +92,11 @@
 - **Status**: active
 
 ### AD-012
-- **Decision**: Peças visuais compartilhadas das telas internas vivem em `src/shared/tela/` (`TituloPagina`, `cartao`, `Metrica`, `Paginacao`/`paginar` com 10 itens por página via `?pagina=`, ou `chave` própria quando há duas listas na mesma tela), e qualquer busca ou filtro novo reseta a paginação para a página 1.
-- **Reason**: Padroniza cabeçalho, cartões e paginação URL-first nas 9 telas autenticadas sem duplicar lógica de fatia e navegação.
+- **Decision**: Peças visuais compartilhadas das telas internas vivem em `src/shared/tela/` (`PaginaContainer`, `TituloPagina`, `TituloSecao`, `cartao`, `cartaoForm`, `cabecalhoLista`, `itemLista`, `Metrica`, `botaoPrimario`, `botaoSecundario`, `campoInput`, `Paginacao`/`paginar` com 10 itens por página via `?pagina=`, ou `chave` própria quando há duas listas na mesma tela), com escala única de tipografia (`tabular-nums` em valores numéricos), espaçamento e alvos de toque de no mínimo `44px` (`min-h-11` / `h-11`), e qualquer busca ou filtro novo reseta a paginação para a página 1.
+- **Reason**: Padroniza cabeçalho, cartões, tipografia, espaçamento, alvos de toque e paginação URL-first nas 10 telas autenticadas sem duplicar lógica ou estilos soltos.
 - **Trade-off**: Listas paginadas não exibem todos os itens de uma vez; testes E2E que criam registros buscam pelo nome recém-criado.
 - **Scope**: Todas as telas autenticadas (`src/app/(dashboard)/`).
-- **Date**: 2026-11-14
+- **Date**: 2026-11-18
 - **Status**: active
 
 ### AD-013
@@ -123,13 +123,29 @@
 - **Date**: 2026-11-16
 - **Status**: active
 
+### AD-016
+- **Decision**: Painel Inicial vive na rota dedicada `/painel` (topo do `MenuLateral`), visível para `dono` e `recepcionista` (com faturamento de hoje/mês e estoque baixo restritos ao `dono`), preservando `DES-04` (`/` e login seguem para `/agenda`). Queries repetidas por request (`getUsuarioAtual`, `getAgendamentosPorDia`) usam `React.cache()` e `(dashboard)/loading.tsx` habilita partial prefetching no Next.js 16.
+- **Reason**: Consolida indicadores operacionais e financeiros numa única renderização sem atrasar o balcão no login.
+- **Trade-off**: Mantém `/agenda` como rota inicial pós-login.
+- **Scope**: Feature `painel-inicial` e navegação autenticada.
+- **Date**: 2026-11-18
+- **Status**: active
+
+### AD-017
+- **Decision**: A barra lateral (`MenuLateral`) opera em modo recolhível (`collapsible="icon"`) a partir de `768px` (`md:`), iniciando recolhida por padrão (`false`) quando o cookie `sidebar_state` não existe, abrindo por cima do conteúdo ao passar o mouse (`pointerType === "mouse"`, `120ms`/`220ms`) ou ao receber foco de teclado (`Tab`), e fixando aberta pelo botão de pino persistido no cookie `sidebar_state` lido via `await cookies()` no Server Component `DashboardLayout` (sem piscar na hidratação). Abaixo de `768px` (`< md`) opera como barra superior + gaveta modal.
+- **Reason**: Libera largura útil em tablets e notebooks mantendo a identidade visual do PetManager (`slate-950` / `orange-300`, AD-011) e o comportamento ergonômico validado na Gabi Modas sem vazamento de estilos entre projetos.
+- **Trade-off**: `DashboardLayout` lê `cookies()` do `next/headers` em request-time (onde já rodava `getUsuarioAtual()`).
+- **Scope**: Feature `design-geral` (T46–T49) e layout `(dashboard)`.
+- **Date**: 2026-11-18
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: `painel-inicial` — concluída e verificada (`PASS ✅`, 11/11 ACs, 3/3 mutantes mortos, `validate_state.py` ok).
-- **Phase / Task**: T45 concluída (otimização de performance: `React.cache` em `getUsuarioAtual`/`getAgendamentosPorDia`, paralelização em `getRelatorioMensal`/`VendasPage`/`PetsPage` e `loading.tsx` para partial prefetching no Next.js 16).
-- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41, T45), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44).
-- **In-progress**: nenhum arquivo pendente no código; resta apenas o passo 8 manual do runbook no painel do Supabase (`nkqikthojcpirlwaddnh`) pelo Lucas.
-- **Next step**: Teste de fumaça em produção com `dono@dev.com` e criação da conta `recepcionista` no painel do Supabase, seguido do 1º piloto.
+- **Feature**: `design-geral` — concluída e verificada (`PASS ✅`, 13/13 ACs, T46–T49 mergeadas via PRs #72–#75).
+- **Phase / Task**: T46–T49 concluídas (sidebar recolhível com cookie `sidebar_state` no SSR, escala única de tipografia e `tabular-nums`, escala única de espaçamento com `PaginaContainer`, e responsividade `375px`/`768px`/`1280px` com alvos de toque `>= 44px`).
+- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41, T45), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44), `design-geral` (T46–T49).
+- **In-progress**: nenhum arquivo pendente no código.
+- **Next step**: Rodar o 1º piloto com petshop real em Aracaju/Barra dos Coqueiros.
 - **Blockers**: none.
 - **Uncommitted files**: none.
-- **Branch**: `main` (Testes verdes: `unit` 212 com `TZ=UTC` · `test:db` 40 · `e2e` 41/41).
+- **Branch**: `main` (Testes verdes: `unit` 220 com `TZ=UTC` · `test:db` 40 · `e2e` 43/43).

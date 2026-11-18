@@ -6,6 +6,7 @@ import {
   PaginaContainer,
   TituloPagina,
   TituloSecao,
+  botaoSecundario,
   cabecalhoLista,
   cartao,
   itemLista,
@@ -15,8 +16,7 @@ import {
 
 const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-const linkAtalho =
-  "inline-flex h-9 items-center rounded-xl border-2 border-slate-200 bg-white px-3 text-xs font-bold text-slate-800 hover:border-orange-500";
+const linkAtalho = botaoSecundario;
 
 export default async function PainelPage() {
   const resumo = await getResumoPainel();

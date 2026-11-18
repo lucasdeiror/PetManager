@@ -123,19 +123,19 @@ Every ambiguity is resolved or recorded here — nothing is left silently unclea
 
 | Requirement ID | Story | Phase / Task | Status |
 | -------------- | ----- | ------------ | ------ |
-| DSG-01 | P1: Sidebar Recolhível | T46 | Planned |
-| DSG-02 | P1: Sidebar Recolhível | T46 | Planned |
-| DSG-03 | P1: Sidebar Recolhível | T46 | Planned |
-| DSG-04 | P1: Sidebar Recolhível | T46 | Planned |
-| DSG-05 | P1: Sidebar Recolhível | T46 | Planned |
-| DSG-06 | P1: Sidebar Recolhível | T46 | Planned |
-| DSG-07 | P2: Escala Única de Tipografia | T47 | Planned |
-| DSG-08 | P2: Escala Única de Tipografia | T47 | Planned |
-| DSG-09 | P2: Escala Única de Tipografia | T47 | Planned |
-| DSG-10 | P3: Escala Única de Espaçamento | T48 | Planned |
-| DSG-11 | P3: Escala Única de Espaçamento | T48 | Planned |
-| DSG-12 | P4: Responsividade e Toque 44px | T49 | Planned |
-| DSG-13 | P4: Responsividade e Toque 44px | T49 | Planned |
+| DSG-01 | P1: Sidebar Recolhível | T46 | Verified |
+| DSG-02 | P1: Sidebar Recolhível | T46 | Verified |
+| DSG-03 | P1: Sidebar Recolhível | T46 | Verified |
+| DSG-04 | P1: Sidebar Recolhível | T46 | Verified |
+| DSG-05 | P1: Sidebar Recolhível | T46 | Verified |
+| DSG-06 | P1: Sidebar Recolhível | T46 | Verified |
+| DSG-07 | P2: Escala Única de Tipografia | T47 | Verified |
+| DSG-08 | P2: Escala Única de Tipografia | T47 | Verified |
+| DSG-09 | P2: Escala Única de Tipografia | T47 | Verified |
+| DSG-10 | P3: Escala Única de Espaçamento | T48 | Verified |
+| DSG-11 | P3: Escala Única de Espaçamento | T48 | Verified |
+| DSG-12 | P4: Responsividade e Toque 44px | T49 | Verified |
+| DSG-13 | P4: Responsividade e Toque 44px | T49 | Verified |
 
 **Coverage:** 13 total, 13 mapped to tasks, 0 unmapped ✅
 
@@ -143,7 +143,7 @@ Every ambiguity is resolved or recorded here — nothing is left silently unclea
 
 ## Success Criteria
 
-- [ ] Sidebar recolhível funcionando com cookie `sidebar_state` lido no servidor (zero flash), hover de mouse (`120ms`/`220ms`), foco de teclado (`Tab`), pino acessível e gaveta abaixo de `768px`.
-- [ ] Primitivos de `src/shared/tela/` governando tipografia (`tabular-nums`) e espaçamento em todas as 10 rotas do dashboard.
-- [ ] Zero scroll horizontal e alvos de toque `>= 44px` verificados em `375px`, `768px` e `1280px` com screenshots antes/depois.
-- [ ] `npm run lint`, `npx tsc --noEmit`, `npm run test:unit`, `npm run build` e `npm run test:e2e` (41/41 + novos testes) verdes.
+- [x] Sidebar recolhível funcionando com cookie `sidebar_state` lido no servidor (zero flash), hover de mouse (`120ms`/`220ms`), foco de teclado (`Tab`), pino acessível e gaveta abaixo de `768px`.
+- [x] Primitivos de `src/shared/tela/` governando tipografia (`tabular-nums`) e espaçamento em todas as 10 rotas do dashboard.
+- [x] Zero scroll horizontal e alvos de toque `>= 44px` verificados em `375px`, `768px` e `1280px` com screenshots antes/depois.
+- [x] `npm run lint`, `npx tsc --noEmit`, `npm run test:unit`, `npm run build` e `npm run test:e2e` (43/43) verdes.

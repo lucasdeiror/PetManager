@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { registrarVendaProduto } from "../../../features/vendas/actions";
 import type { Produto } from "../../../features/estoque/queries";
+import { botaoPrimario, campoInput } from "../../../shared/tela/titulo-pagina";
 
 export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] }) {
   const router = useRouter();
@@ -32,9 +33,9 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="mt-3 flex flex-wrap items-end gap-3">
-      <label className="grid gap-1 text-sm font-bold">
+      <label className="grid min-w-0 flex-1 basis-56 gap-1 text-sm font-bold">
         Produto
-        <select name="produtoId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
+        <select name="produtoId" required className={`w-full ${campoInput}`}>
           <option value="">Selecione um produto</option>
           {produtos.map((p) => (
             <option key={p.id} value={p.id}>
@@ -50,7 +51,7 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
           type="number"
           min="1"
           required
-          className="h-10 w-24 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
+          className={`w-24 ${campoInput} tabular-nums`}
         />
       </label>
       {error && (
@@ -58,11 +59,7 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
           {error}
         </p>
       )}
-      <button
-        type="submit"
-        disabled={isPending}
-        className="h-10 rounded-xl bg-orange-600 px-4 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
-      >
+      <button type="submit" disabled={isPending} className={botaoPrimario}>
         {isPending ? "Salvando..." : "Registrar venda"}
       </button>
     </form>

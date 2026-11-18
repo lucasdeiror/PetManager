@@ -5,7 +5,10 @@ import {
   PaginaContainer,
   TituloPagina,
   TituloSecao,
+  botaoPrimario,
+  botaoSecundario,
   cabecalhoLista,
+  campoInput,
   cartao,
   cartaoForm,
   itemLista,
@@ -79,5 +82,8 @@ describe("Primitivos de tipografia, tabular-nums e espaçamento (DSG-07..DSG-11)
     expect(cartaoForm).toContain("p-4 sm:p-5");
     expect(cabecalhoLista).toContain("px-4 py-3.5 sm:px-5");
     expect(itemLista).toContain("px-4 py-3.5 sm:px-5");
+    expect(botaoPrimario).toContain("min-h-11");
+    expect(botaoSecundario).toContain("min-h-11");
+    expect(campoInput).toContain("h-11");
   });
 });

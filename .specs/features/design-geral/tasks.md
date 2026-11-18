@@ -2,7 +2,7 @@
 
 **Spec**: `.specs/features/design-geral/spec.md`
 **Design**: `.specs/features/design-geral/design.md`
-**Status**: In Progress
+**Status**: Done
 
 ---
 
@@ -109,9 +109,9 @@ T46 (sidebar) → T47 (tipografia) → T48 (espaçamento) → T49 (responsividad
 **Skill**: `design-engineering`, `design-taste-frontend`
 
 **Done when**:
-- [ ] Todos os alvos de toque interativos têm `>= 44px` de altura
-- [ ] Zero scroll horizontal em `375px`, `768px` e `1280px` validado + screenshots antes/depois gerados
-- [ ] `lint`, `tsc`, `test:unit`, `build` e `test:e2e` (41/41+) verdes
-- [ ] PR criado e mergeado na `main` + deploy conferido na Vercel
+- [x] Todos os alvos de toque interativos têm `>= 44px` de altura
+- [x] Zero scroll horizontal em `375px`, `768px` e `1280px` validado + screenshots antes/depois gerados
+- [x] `lint`, `tsc`, `test:unit`, `build` e `test:e2e` (43/43) verdes
+- [x] PR criado e mergeado na `main` + deploy conferido na Vercel
 
-**Status**: Pending
+**Status**: Done

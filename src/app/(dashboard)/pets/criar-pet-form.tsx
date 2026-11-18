@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { criarPet } from "../../../features/pets/actions";
 import type { Tutor } from "../../../features/pets/queries";
+import { botaoPrimario, campoInput } from "../../../shared/tela/titulo-pagina";
 
 export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
   const router = useRouter();
@@ -36,7 +37,7 @@ export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
     <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3">
       <label className="grid gap-1 text-sm font-bold">
         Tutor
-        <select name="tutorId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
+        <select name="tutorId" required className={campoInput}>
           <option value="">Selecione um tutor</option>
           {tutores.map((t) => (
             <option key={t.id} value={t.id}>
@@ -47,15 +48,15 @@ export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Nome do pet
-        <input name="nome" required maxLength={255} className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="nome" required maxLength={255} className={campoInput} />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Raça
-        <input name="raca" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="raca" required className={campoInput} />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Porte
-        <select name="porte" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
+        <select name="porte" required className={campoInput}>
           <option value="pequeno">Pequeno</option>
           <option value="medio">Médio</option>
           <option value="grande">Grande</option>
@@ -66,11 +67,7 @@ export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
           {error}
         </p>
       )}
-      <button
-        type="submit"
-        disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
-      >
+      <button type="submit" disabled={isPending} className={botaoPrimario}>
         {isPending ? "Salvando..." : "Cadastrar pet"}
       </button>
     </form>

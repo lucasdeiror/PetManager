@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { gerarRelatorioPdf } from "../../../features/relatorios/actions";
+import { botaoPrimario } from "../../../shared/tela/titulo-pagina";
 
 export function ExportarPdfButton({ ano, mes }: { ano: number; mes: number }) {
   const [error, setError] = useState("");
@@ -37,7 +38,7 @@ export function ExportarPdfButton({ ano, mes }: { ano: number; mes: number }) {
         type="button"
         onClick={handleClick}
         disabled={isPending}
-        className="h-10 rounded-xl bg-orange-600 px-4 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
+        className={botaoPrimario}
       >
         {isPending ? "Gerando..." : "Exportar PDF"}
       </button>

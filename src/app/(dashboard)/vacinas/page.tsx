@@ -59,7 +59,10 @@ export default async function VacinasPage({
         <section className="rounded-2xl border-2 border-orange-300 bg-orange-50/40 p-4 sm:p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <TituloSecao>Ficha de {petSelecionado?.nome ?? "pet"}</TituloSecao>
-            <Link href="/vacinas" className="text-sm font-bold text-orange-700 underline">
+            <Link
+              href="/vacinas"
+              className="inline-flex min-h-11 items-center text-sm font-bold text-orange-700 underline"
+            >
               Fechar ficha
             </Link>
           </div>
@@ -114,7 +117,7 @@ export default async function VacinasPage({
               </span>
               <Link
                 href={`/vacinas?pet=${v.petId}`}
-                className="text-sm font-bold text-orange-700 underline"
+                className="inline-flex min-h-11 items-center text-sm font-bold text-orange-700 underline"
               >
                 Ver ficha
               </Link>

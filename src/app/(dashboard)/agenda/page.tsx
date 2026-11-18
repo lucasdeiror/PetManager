@@ -8,7 +8,9 @@ import {
   PaginaContainer,
   TituloPagina,
   TituloSecao,
+  botaoSecundario,
   cabecalhoLista,
+  campoInput,
   cartao,
   cartaoForm,
   itemLista,
@@ -35,10 +37,7 @@ export default async function AgendaPage({
   return (
     <PaginaContainer>
       <TituloPagina titulo="Agenda" texto="Agenda diária e estados dos atendimentos">
-        <Link
-          href="/agenda/lista"
-          className="inline-flex h-10 items-center rounded-xl border-2 border-slate-200 bg-white px-4 text-sm font-bold text-slate-800 hover:border-orange-500"
-        >
+        <Link href="/agenda/lista" className={botaoSecundario}>
           Todos os agendamentos
         </Link>
       </TituloPagina>
@@ -54,13 +53,10 @@ export default async function AgendaPage({
             type="date"
             name="data"
             defaultValue={dia}
-            className="h-10 rounded-lg border-2 border-slate-200 px-2 text-sm font-semibold tabular-nums"
+            className={`${campoInput} tabular-nums`}
           />
         </label>
-        <button
-          type="submit"
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-4 text-sm font-bold hover:border-orange-500"
-        >
+        <button type="submit" className={botaoSecundario}>
           Ver
         </button>
         <p className={`pb-2 ${textoMeta}`}>

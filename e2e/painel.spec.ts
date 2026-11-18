@@ -62,6 +62,31 @@ test.describe("tela do painel inicial", () => {
     await expect(pinoSoltar).toHaveAttribute("aria-pressed", "true");
   });
 
+  test("responsividade e alvos de toque: 375px, 768px e 1280px sem scroll horizontal e controles >= 44px (DSG-12, DSG-13)", async ({
+    page,
+  }) => {
+    for (const width of [375, 768, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const rota of ["/painel", "/agenda", "/estoque", "/horario-funcionamento"]) {
+        await page.goto(rota);
+        const semScrollHorizontal = await page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        );
+        expect(semScrollHorizontal, `overflow horizontal em ${rota} @ ${width}px`).toBe(true);
+      }
+    }
+
+    // Verifica alvos de toque >= 44px
+    await page.setViewportSize({ width: 375, height: 900 });
+    await page.goto("/painel");
+    const abrirMenuBox = await page.getByRole("button", { name: "Abrir menu" }).boundingBox();
+    expect(abrirMenuBox?.height).toBeGreaterThanOrEqual(44);
+    expect(abrirMenuBox?.width).toBeGreaterThanOrEqual(44);
+
+    const verAgendaBox = await page.getByRole("link", { name: "Ver agenda" }).boundingBox();
+    expect(verAgendaBox?.height).toBeGreaterThanOrEqual(44);
+  });
+
   test.describe("recepcionista", () => {
     test.use({ storageState: "e2e/.auth/recepcionista.json" });
 

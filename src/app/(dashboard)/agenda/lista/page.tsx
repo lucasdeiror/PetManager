@@ -6,6 +6,7 @@ import { dataHoraSP } from "../../../../shared/data/fuso";
 import {
   PaginaContainer,
   TituloPagina,
+  botaoSecundario,
   cartao,
   itemLista,
   textoMeta,
@@ -32,10 +33,7 @@ export default async function AgendaListaPage({
   return (
     <PaginaContainer>
       <TituloPagina titulo="Todos os agendamentos" texto="Busque por pet ou tutor e filtre por status">
-        <Link
-          href="/agenda"
-          className="inline-flex h-10 items-center rounded-xl border-2 border-slate-200 bg-white px-4 text-sm font-bold text-slate-800 hover:border-orange-500"
-        >
+        <Link href="/agenda" className={botaoSecundario}>
           Voltar para a agenda
         </Link>
       </TituloPagina>
