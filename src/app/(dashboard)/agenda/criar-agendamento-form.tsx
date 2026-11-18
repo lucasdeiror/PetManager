@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { criarAgendamento } from "../../../features/agenda/actions";
 import type { Pet } from "../../../features/pets/queries";
 import type { ServicoParaAgendamento } from "../../../features/servicos/queries";
+import { botaoPrimario, campoInput } from "../../../shared/tela/titulo-pagina";
 
 interface Props {
   pets: Pet[];
@@ -46,7 +47,7 @@ export function CriarAgendamentoForm({ pets, servicos, dia }: Props) {
     <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3">
       <label className="grid gap-1 text-sm font-bold">
         Pet
-        <select name="petId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
+        <select name="petId" required className={campoInput}>
           <option value="">Selecione um pet</option>
           {pets.map((p) => (
             <option key={p.id} value={p.id}>
@@ -57,13 +58,12 @@ export function CriarAgendamentoForm({ pets, servicos, dia }: Props) {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Horário
-        <input name="hora" type="time" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums" />
+        <input name="hora" type="time" required className={`${campoInput} tabular-nums`} />
       </label>
       <fieldset className="grid gap-1">
         <legend className="text-sm font-bold">Serviços</legend>
         {servicos.map((s) => (
-          <label key={s.id} className="flex items-center gap-2 text-sm font-semibold">
-            
+          <label key={s.id} className="flex min-h-11 items-center gap-2 text-sm font-semibold">
             <input type="checkbox" name="servicoIds" value={s.id} className="size-4 accent-orange-600" />
             {s.nome}
           </label>
@@ -77,11 +77,7 @@ export function CriarAgendamentoForm({ pets, servicos, dia }: Props) {
           {error}
         </p>
       )}
-      <button
-        type="submit"
-        disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
-      >
+      <button type="submit" disabled={isPending} className={botaoPrimario}>
         {isPending ? "Salvando..." : "Criar agendamento"}
       </button>
     </form>

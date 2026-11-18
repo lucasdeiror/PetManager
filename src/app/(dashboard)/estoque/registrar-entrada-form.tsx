@@ -3,6 +3,7 @@
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { registrarEntrada } from "../../../features/estoque/actions";
+import { campoInput } from "../../../shared/tela/titulo-pagina";
 
 export function RegistrarEntradaForm({ produtoId }: { produtoId: number }) {
   const router = useRouter();
@@ -37,13 +38,13 @@ export function RegistrarEntradaForm({ produtoId }: { produtoId: number }) {
           type="number"
           min="1"
           required
-          className="h-9 w-20 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
+          className={`w-20 ${campoInput} tabular-nums`}
         />
       </label>
       <button
         type="submit"
         disabled={isPending}
-        className="h-9 rounded-lg border-2 border-orange-600 bg-white px-3 text-sm font-bold text-orange-700 disabled:opacity-60"
+        className="inline-flex min-h-11 items-center justify-center rounded-xl border-2 border-orange-600 bg-white px-3.5 text-sm font-bold text-orange-700 transition-transform duration-150 ease-out active:scale-[0.98] disabled:opacity-60"
       >
         {isPending ? "..." : "Registrar"}
       </button>

@@ -3,6 +3,7 @@
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { criarServico } from "../../../features/servicos/actions";
+import { botaoPrimario, campoInput } from "../../../shared/tela/titulo-pagina";
 
 export function CriarServicoForm() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export function CriarServicoForm() {
     <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3">
       <label className="grid gap-1 text-sm font-bold">
         Nome do serviço
-        <input name="nome" required maxLength={255} className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="nome" required maxLength={255} className={campoInput} />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Preço interno (R$)
@@ -42,7 +43,7 @@ export function CriarServicoForm() {
           type="number"
           step="0.01"
           required
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
+          className={`${campoInput} tabular-nums`}
         />
       </label>
       {error && (
@@ -50,11 +51,7 @@ export function CriarServicoForm() {
           {error}
         </p>
       )}
-      <button
-        type="submit"
-        disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
-      >
+      <button type="submit" disabled={isPending} className={botaoPrimario}>
         {isPending ? "Salvando..." : "Cadastrar serviço"}
       </button>
     </form>

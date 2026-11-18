@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { registrarVacina } from "../../../features/vacinas/actions";
 import type { Pet } from "../../../features/pets/queries";
+import { botaoPrimario, campoInput } from "../../../shared/tela/titulo-pagina";
 
 export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
   const router = useRouter();
@@ -36,7 +37,7 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
     <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3 sm:grid-cols-2">
       <label className="grid gap-1 text-sm font-bold">
         Pet
-        <select name="petId" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold">
+        <select name="petId" required className={campoInput}>
           <option value="">Selecione um pet</option>
           {pets.map((p) => (
             <option key={p.id} value={p.id}>
@@ -47,11 +48,11 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Nome da vacina
-        <input name="nome" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="nome" required className={campoInput} />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Data de aplicação
-        <input name="dataAplicacao" type="date" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums" />
+        <input name="dataAplicacao" type="date" required className={`${campoInput} tabular-nums`} />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Data de retorno prevista
@@ -59,7 +60,7 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
           name="dataRetornoPrevista"
           type="date"
           required
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
+          className={`${campoInput} tabular-nums`}
         />
       </label>
       {error && (
@@ -70,7 +71,7 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
       <button
         type="submit"
         disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60 sm:col-span-2"
+        className={`${botaoPrimario} sm:col-span-2`}
       >
         {isPending ? "Salvando..." : "Registrar vacina"}
       </button>

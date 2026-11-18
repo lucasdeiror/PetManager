@@ -11,7 +11,15 @@ import {
 } from "../../../features/agenda/actions";
 import type { AgendamentoDoDia } from "../../../features/agenda/queries";
 import { partesSP } from "../../../shared/data/fuso";
-import { itemLista, textoMeta, textoPrimario, valorTabela } from "../../../shared/tela/titulo-pagina";
+import {
+  botaoPrimario,
+  botaoSecundario,
+  campoInput,
+  itemLista,
+  textoMeta,
+  textoPrimario,
+  valorTabela,
+} from "../../../shared/tela/titulo-pagina";
 
 const STATUS = {
   agendado: { rotulo: "Agendado", classe: "border-orange-200 bg-orange-50 text-orange-800" },
@@ -77,19 +85,19 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
             type="time"
             defaultValue={hora}
             required
-            className="h-9 rounded-lg border-2 border-slate-200 px-2 text-sm font-semibold tabular-nums"
+            className={`${campoInput} tabular-nums`}
           />
           <button
             type="submit"
             disabled={isPending}
-            className="h-9 rounded-lg bg-orange-600 px-3 text-sm font-bold text-white disabled:opacity-60"
+            className={botaoPrimario}
           >
             Salvar
           </button>
           <button
             type="button"
             onClick={() => setEditando(false)}
-            className="h-9 rounded-lg border-2 border-slate-200 bg-white px-3 text-sm font-bold"
+            className={botaoSecundario}
           >
             Cancelar edição
           </button>
@@ -102,7 +110,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
                 type="button"
                 disabled={isPending}
                 onClick={() => setEditando(true)}
-                className="h-9 rounded-lg border-2 border-slate-200 bg-white px-3 text-sm font-bold disabled:opacity-60"
+                className={botaoSecundario}
               >
                 Editar
               </button>
@@ -110,7 +118,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
                 type="button"
                 disabled={isPending}
                 onClick={() => run(() => cancelarAgendamento(agendamento.id))}
-                className="h-9 rounded-lg border-2 border-slate-200 bg-white px-3 text-sm font-bold disabled:opacity-60"
+                className={botaoSecundario}
               >
                 Cancelar
               </button>
@@ -118,7 +126,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
                 type="button"
                 disabled={isPending}
                 onClick={() => run(() => concluirAgendamento(agendamento.id))}
-                className="h-9 rounded-lg bg-orange-600 px-3 text-sm font-bold text-white disabled:opacity-60"
+                className={botaoPrimario}
               >
                 Concluir
               </button>
@@ -129,7 +137,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
               type="button"
               disabled={isPending}
               onClick={() => run(() => reabrirAgendamento(agendamento.id))}
-              className="h-9 rounded-lg border-2 border-slate-200 bg-white px-3 text-sm font-bold disabled:opacity-60"
+              className={botaoSecundario}
             >
               Reabrir
             </button>
@@ -139,7 +147,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
               type="button"
               disabled={isPending}
               onClick={() => run(() => reabrirAgendamentoConcluido(agendamento.id))}
-              className="h-9 rounded-lg border-2 border-slate-200 bg-white px-3 text-sm font-bold disabled:opacity-60"
+              className={botaoSecundario}
             >
               Reabrir (estorna venda)
             </button>

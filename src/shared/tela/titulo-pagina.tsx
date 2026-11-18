@@ -14,6 +14,14 @@ export const cabecalhoLista =
   "flex flex-wrap items-center justify-between gap-2 border-b-2 border-slate-100 px-4 py-3.5 sm:px-5";
 export const itemLista = "px-4 py-3.5 sm:px-5";
 
+/** Controles e alvos de toque com no mínimo 44px (h-11 / min-h-11) (DSG-12). */
+export const botaoPrimario =
+  "inline-flex min-h-11 items-center justify-center rounded-xl bg-orange-600 px-4 text-sm font-bold text-white transition-[background-color,transform] duration-150 ease-out hover:bg-orange-700 active:scale-[0.98] disabled:opacity-60";
+export const botaoSecundario =
+  "inline-flex min-h-11 items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3.5 text-sm font-semibold text-slate-800 transition-[border-color,transform] duration-150 ease-out hover:border-orange-500 active:scale-[0.98] disabled:opacity-60";
+export const campoInput =
+  "h-11 rounded-xl border-2 border-slate-200 bg-white px-3 text-sm font-semibold text-stone-950 outline-none focus:border-orange-500";
+
 /** Moldura padrão de página interna do dashboard (DSG-10). */
 export function PaginaContainer({
   children,

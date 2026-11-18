@@ -3,6 +3,7 @@
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { criarTutor } from "../../../features/pets/actions";
+import { botaoPrimario, campoInput } from "../../../shared/tela/titulo-pagina";
 
 export function CriarTutorForm() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export function CriarTutorForm() {
     <form ref={formRef} onSubmit={handleSubmit} className="mt-3 grid gap-3">
       <label className="grid gap-1 text-sm font-bold">
         Nome
-        <input name="nome" required maxLength={255} className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="nome" required maxLength={255} className={campoInput} />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Telefone
@@ -41,7 +42,7 @@ export function CriarTutorForm() {
           name="telefone"
           required
           placeholder="(79) 99999-9999"
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
+          className={`${campoInput} tabular-nums`}
         />
       </label>
       {error && (
@@ -49,11 +50,7 @@ export function CriarTutorForm() {
           {error}
         </p>
       )}
-      <button
-        type="submit"
-        disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
-      >
+      <button type="submit" disabled={isPending} className={botaoPrimario}>
         {isPending ? "Salvando..." : "Cadastrar tutor"}
       </button>
     </form>

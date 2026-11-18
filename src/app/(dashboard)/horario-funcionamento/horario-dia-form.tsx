@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { salvarHorario } from "../../../features/horario-funcionamento/actions";
-import { cartaoForm, textoPrimario } from "../../../shared/tela/titulo-pagina";
+import { botaoPrimario, campoInput, cartaoForm, textoPrimario } from "../../../shared/tela/titulo-pagina";
 
 interface HorarioDiaFormProps {
   diaSemana: number;
@@ -39,7 +39,7 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
       onSubmit={handleSubmit}
       className={`${cartaoForm} flex flex-wrap items-end gap-3`}
     >
-      <span className={`w-28 ${textoPrimario}`}>{nomeDia}</span>
+      <span className={`w-full sm:w-28 ${textoPrimario}`}>{nomeDia}</span>
 
       <label className="grid gap-1 text-xs font-bold text-slate-700">
         Abertura
@@ -48,7 +48,7 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
           name="horaAbertura"
           defaultValue={horario?.horaAbertura ?? ""}
           required
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
+          className={`${campoInput} tabular-nums`}
         />
       </label>
 
@@ -59,15 +59,11 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
           name="horaFechamento"
           defaultValue={horario?.horaFechamento ?? ""}
           required
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
+          className={`${campoInput} tabular-nums`}
         />
       </label>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="h-10 rounded-lg bg-orange-600 px-4 text-sm font-bold text-white transition-colors hover:bg-orange-700 disabled:opacity-60"
-      >
+      <button type="submit" disabled={isPending} className={botaoPrimario}>
         {isPending ? "Salvando..." : "Salvar"}
       </button>
 

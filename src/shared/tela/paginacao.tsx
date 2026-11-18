@@ -40,7 +40,8 @@ export function Paginacao({
     q.set(chave, String(n));
     return `?${q}`;
   };
-  const botao = "rounded-lg border-2 border-slate-200 bg-white p-2 text-slate-800";
+  const botao =
+    "inline-flex size-11 items-center justify-center rounded-xl border-2 border-slate-200 bg-white text-slate-800 transition-colors hover:border-orange-500";
 
   return (
     <nav
@@ -50,7 +51,7 @@ export function Paginacao({
       <span>
         {pagina.de}–{pagina.ate} de {pagina.total}
       </span>
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         {pagina.atual > 1 ? (
           <Link href={href(pagina.atual - 1)} aria-label="Página anterior" className={botao}>
             <ChevronLeft className="size-4" aria-hidden />

@@ -6,6 +6,7 @@ import {
   PaginaContainer,
   TituloPagina,
   TituloSecao,
+  botaoSecundario,
   cabecalhoLista,
   cartao,
   cartaoForm,
@@ -60,8 +61,7 @@ export default async function RelatoriosPage({
   const seguinte = proximoMes(ano, mes);
 
   const vendas = paginar(relatorio.vendas, params.pagina);
-  const navegacao =
-    "inline-flex h-10 items-center rounded-xl border-2 border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 hover:border-orange-500";
+  const navegacao = botaoSecundario;
 
   return (
     <PaginaContainer>
