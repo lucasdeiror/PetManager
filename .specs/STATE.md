@@ -147,13 +147,21 @@
 - **Date**: 2026-11-18
 - **Status**: active
 
+### AD-019
+- **Decision**: Adição de modo claro/escuro sem flash (`useTema`, `TemaProvider`, script inline anti-flicker no `<head>` de `RootLayout`, `BotaoTema` no header desktop, cabeçalho mobile e tela de login, e item `Aparelho` na sidebar) e central de notificações (`Notificacoes`, query `getNotificacoes`, badge pulsante `sino-ponto` e popover de alertas de vacinas atrasadas, agendamentos do dia e estoque baixo) inspirados na Gabi Modas.
+- **Reason**: Melhoria de ergonomia e alerta operacional proativo para dono e recepcionista, permitindo alternar tema sem perda de contexto e monitorar pendências do pet shop.
+- **Trade-off**: O painel lê `localStorage` por usuário para controle de lidas sem onerar o banco de dados.
+- **Scope**: Layout `(dashboard)`, tela de login e domínios `notificacoes` e `tela`.
+- **Date**: 2026-11-18
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: `design-geral` — concluída e verificada (`PASS ✅`, 13/13 ACs, T46–T50 mergeadas via PRs #72–#76).
-- **Phase / Task**: T46–T50 concluídas (sidebar recolhível acompanhando a tela ao abrir e fechar igual à Gabi Modas com cookie `sidebar_state` no SSR, escala única de tipografia e `tabular-nums`, escala única de espaçamento com `PaginaContainer`, e responsividade `375px`/`768px`/`1280px` com alvos de toque `>= 44px`).
-- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41, T45), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44), `design-geral` (T46–T50).
+- **Feature**: `notificacoes-e-modo-escuro` — concluída e verificada (`PASS ✅`, T51 mergeada via PR #77).
+- **Phase / Task**: T51 concluída (botão de notificações com sininho, badge de novidades e painel de alertas; modo claro e escuro sem FOUC com `BotaoTema` e item Aparelho no menu lateral).
+- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41, T45), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44), `design-geral` (T46–T50), `notificacoes-e-modo-escuro` (T51).
 - **In-progress**: nenhum arquivo pendente no código.
 - **Next step**: Rodar o 1º piloto com petshop real em Aracaju/Barra dos Coqueiros.
 - **Blockers**: none.
 - **Uncommitted files**: none.
-- **Branch**: `main` (Testes verdes: `unit` 220 com `TZ=UTC` · `test:db` 40 · `e2e` 43/43).
+- **Branch**: `main` (Testes verdes: `unit` 237 com `TZ=UTC` · `test:db` 40 · `e2e` 43/43).
