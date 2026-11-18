@@ -37,7 +37,7 @@ export function RegistrarEntradaForm({ produtoId }: { produtoId: number }) {
           type="number"
           min="1"
           required
-          className="h-9 w-20 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
+          className="h-9 w-20 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
         />
       </label>
       <button

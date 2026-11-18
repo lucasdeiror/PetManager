@@ -5,7 +5,15 @@ import { getVendas } from "../../../features/vendas/queries";
 import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
 import { RegistrarVendaProdutoForm } from "./registrar-venda-produto-form";
 import { dataSP } from "../../../shared/data/fuso";
-import { Metrica, TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import {
+  Metrica,
+  TituloPagina,
+  TituloSecao,
+  cartao,
+  textoMeta,
+  textoPrimario,
+  valorTabela,
+} from "../../../shared/tela/titulo-pagina";
 import { Paginacao, paginar } from "../../../shared/tela/paginacao";
 
 const TIPOS = ["servico", "produto"] as const;
@@ -45,7 +53,7 @@ export default async function VendasPage({
 
       {isDono && (
         <section className={`${cartao} p-4`}>
-          <h2 className="text-lg font-black">Registrar venda de produto</h2>
+          <TituloSecao>Registrar venda de produto</TituloSecao>
           <RegistrarVendaProdutoForm produtos={produtos} />
         </section>
       )}
@@ -70,16 +78,16 @@ export default async function VendasPage({
           {pagina.visiveis.map((v) => (
             <li key={v.id} className="flex flex-wrap items-center justify-between gap-3 p-4 sm:px-5">
               <div>
-                <p className="font-black text-stone-950">{v.itemNome}</p>
-                <p className="text-sm font-semibold text-slate-600">
+                <p className={textoPrimario}>{v.itemNome}</p>
+                <p className={`${textoMeta} tabular-nums`}>
                   {TIPO_LABELS[v.tipo]} · qtd. {v.quantidade} · {dataSP(v.criadoEm)}
                 </p>
               </div>
-              <span className="font-black text-stone-950">{brl(v.valorTotal)}</span>
+              <span className={valorTabela}>{brl(v.valorTotal)}</span>
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className="p-5 text-sm font-semibold text-slate-500">Nenhuma venda encontrada.</li>
+            <li className={`p-5 ${textoMeta}`}>Nenhuma venda encontrada.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />

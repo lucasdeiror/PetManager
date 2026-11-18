@@ -2,7 +2,13 @@ import { Suspense } from "react";
 import { PawPrint, UserRound } from "lucide-react";
 import { getPets, getTutores } from "../../../features/pets/queries";
 import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
-import { TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import {
+  TituloPagina,
+  TituloSecao,
+  cartao,
+  textoMeta,
+  textoPrimario,
+} from "../../../shared/tela/titulo-pagina";
 import { Paginacao, paginar } from "../../../shared/tela/paginacao";
 import { CriarPetForm } from "./criar-pet-form";
 import { CriarTutorForm } from "./criar-tutor-form";
@@ -37,20 +43,20 @@ export default async function PetsPage({
       <div className="grid items-start gap-6 md:grid-cols-2">
         <section className={`${cartao} overflow-hidden`}>
           <div className="border-b-2 border-slate-100 p-4 sm:px-5">
-            <h2 className="flex items-center gap-2 text-lg font-black">
+            <TituloSecao className="flex items-center gap-2">
               <UserRound className="size-5 text-orange-700" aria-hidden /> Tutores
-            </h2>
+            </TituloSecao>
             <CriarTutorForm />
           </div>
           <ul className="divide-y-2 divide-slate-100">
             {tutores.visiveis.map((t) => (
               <li key={t.id} className="p-4 sm:px-5">
-                <p className="font-black text-stone-950">{t.nome}</p>
-                <p className="text-sm font-semibold text-slate-600">{t.telefone}</p>
+                <p className={textoPrimario}>{t.nome}</p>
+                <p className={`${textoMeta} tabular-nums`}>{t.telefone}</p>
               </li>
             ))}
             {tutores.total === 0 && (
-              <li className="p-5 text-sm font-semibold text-slate-500">Nenhum resultado encontrado.</li>
+              <li className={`p-5 ${textoMeta}`}>Nenhum resultado encontrado.</li>
             )}
           </ul>
           <Paginacao pagina={tutores} params={params} chave="pagina_tutores" />
@@ -58,27 +64,27 @@ export default async function PetsPage({
 
         <section className={`${cartao} overflow-hidden`}>
           <div className="border-b-2 border-slate-100 p-4 sm:px-5">
-            <h2 className="flex items-center gap-2 text-lg font-black">
+            <TituloSecao className="flex items-center gap-2">
               <PawPrint className="size-5 text-orange-700" aria-hidden /> Pets
-            </h2>
+            </TituloSecao>
             <CriarPetForm tutores={todosTutores} />
           </div>
           <ul className="divide-y-2 divide-slate-100">
             {petsPagina.visiveis.map((p) => (
               <li key={p.id} className="flex flex-wrap items-center justify-between gap-2 p-4 sm:px-5">
                 <div>
-                  <p className="font-black text-stone-950">{p.nome}</p>
-                  <p className="text-sm font-semibold text-slate-600">
+                  <p className={textoPrimario}>{p.nome}</p>
+                  <p className={textoMeta}>
                     {p.raca} · {nomeTutor.get(p.tutorId) ?? "Tutor removido"}
                   </p>
                 </div>
-                <span className="rounded-lg bg-stone-100 px-2.5 py-1 text-xs font-black text-slate-700">
+                <span className="rounded-lg bg-stone-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
                   {PORTE[p.porte]}
                 </span>
               </li>
             ))}
             {petsPagina.total === 0 && (
-              <li className="p-5 text-sm font-semibold text-slate-500">Nenhum resultado encontrado.</li>
+              <li className={`p-5 ${textoMeta}`}>Nenhum resultado encontrado.</li>
             )}
           </ul>
           <Paginacao pagina={petsPagina} params={params} chave="pagina_pets" />

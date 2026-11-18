@@ -5,7 +5,13 @@ import { getVacinas, getVacinasPorPet } from "../../../features/vacinas/queries"
 import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
 import { RegistrarVacinaForm } from "./registrar-vacina-form";
 import { dataSimples } from "../../../shared/data/fuso";
-import { TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import {
+  TituloPagina,
+  TituloSecao,
+  cartao,
+  textoMeta,
+  textoPrimario,
+} from "../../../shared/tela/titulo-pagina";
 import { Paginacao, paginar } from "../../../shared/tela/paginacao";
 
 const STATUS = ["em-dia", "atrasada"] as const;
@@ -41,23 +47,23 @@ export default async function VacinasPage({
       <TituloPagina titulo="Vacinas" texto="Doses aplicadas e retornos previstos de cada pet" />
 
       <section className={`${cartao} p-4`}>
-        <h2 className="text-lg font-black">Registrar vacina</h2>
+        <TituloSecao>Registrar vacina</TituloSecao>
         <RegistrarVacinaForm pets={pets} />
       </section>
 
       {petId && (
         <section className="rounded-2xl border-2 border-orange-300 bg-orange-50/40 p-4 sm:p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-lg font-black">Ficha de {petSelecionado?.nome ?? "pet"}</h2>
+            <TituloSecao>Ficha de {petSelecionado?.nome ?? "pet"}</TituloSecao>
             <Link href="/vacinas" className="text-sm font-bold text-orange-700 underline">
               Fechar ficha
             </Link>
           </div>
           <ul className="mt-3 grid gap-2">
             {(historicoPet ?? []).map((v) => (
-              <li key={v.id} className="rounded-xl border-2 border-slate-200 bg-white p-3 text-sm">
-                <span className="font-black">{v.nome}</span>
-                <span className="font-semibold text-slate-600">
+              <li key={v.id} className="rounded-xl border-2 border-slate-200 bg-white p-3 text-sm tabular-nums">
+                <span className={textoPrimario}>{v.nome}</span>
+                <span className={textoMeta}>
                   {" "}
                   · aplicada em {dataSimples(v.dataAplicacao)} · retorno previsto{" "}
                   {dataSimples(v.dataRetornoPrevista)}
@@ -65,7 +71,7 @@ export default async function VacinasPage({
               </li>
             ))}
             {(historicoPet ?? []).length === 0 && (
-              <p className="text-sm font-semibold text-slate-500">
+              <p className={textoMeta}>
                 Nenhuma vacina registrada para este pet.
               </p>
             )}
@@ -83,22 +89,22 @@ export default async function VacinasPage({
       </Suspense>
 
       <section className={`${cartao} overflow-hidden`}>
-        <h2 className="border-b-2 border-slate-100 px-4 py-3 text-lg font-black sm:px-5">
+        <TituloSecao className="border-b-2 border-slate-100 px-4 py-3 sm:px-5">
           Todas as vacinas
-        </h2>
+        </TituloSecao>
         <ul className="divide-y-2 divide-slate-100">
           {pagina.visiveis.map((v) => (
             <li key={v.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 p-4 sm:px-5">
               <div className="min-w-40 flex-1">
-                <p className="font-black text-stone-950">
+                <p className={textoPrimario}>
                   {v.nome} <span className="font-medium text-slate-600">· {v.petNome}</span>
                 </p>
-                <p className="text-sm font-semibold text-slate-600">
+                <p className={`${textoMeta} tabular-nums`}>
                   Retorno previsto: {dataSimples(v.dataRetornoPrevista)}
                 </p>
               </div>
               <span
-                className={`rounded-full border-2 px-2.5 py-0.5 text-xs font-black ${STATUS_CLASSE[v.status]}`}
+                className={`rounded-full border-2 px-2.5 py-0.5 text-xs font-semibold ${STATUS_CLASSE[v.status]}`}
               >
                 {STATUS_LABELS[v.status]}
               </span>
@@ -111,7 +117,7 @@ export default async function VacinasPage({
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className="p-5 text-sm font-semibold text-slate-500">Nenhum resultado encontrado.</li>
+            <li className={`p-5 ${textoMeta}`}>Nenhum resultado encontrado.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />

@@ -1,8 +1,15 @@
 import { getServicosComPreco } from "../../../features/servicos/queries";
-import { TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import {
+  TituloPagina,
+  TituloSecao,
+  cartao,
+  textoMeta,
+  textoPrimario,
+  valorTabela,
+} from "../../../shared/tela/titulo-pagina";
 import { CriarServicoForm } from "./criar-servico-form";
 
-export default async function ServicosPage() {
+export default async function ServicosPage({}: Record<string, never>) {
   const servicos = await getServicosComPreco();
 
   return (
@@ -14,7 +21,7 @@ export default async function ServicosPage() {
 
       <div className="grid items-start gap-6 lg:grid-cols-[22rem_1fr]">
         <section className={`${cartao} p-4`}>
-          <h2 className="text-lg font-black">Cadastrar serviço</h2>
+          <TituloSecao>Cadastrar serviço</TituloSecao>
           <CriarServicoForm />
         </section>
 
@@ -23,14 +30,14 @@ export default async function ServicosPage() {
           <ul className="divide-y-2 divide-slate-100">
             {servicos.map((s) => (
               <li key={s.id} className="flex items-center justify-between gap-3 p-4 sm:px-5">
-                <span className="font-black text-stone-950">{s.nome}</span>
-                <span className="text-sm font-bold text-slate-700">
+                <span className={textoPrimario}>{s.nome}</span>
+                <span className={valorTabela}>
                   {s.precoInterno.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                 </span>
               </li>
             ))}
             {servicos.length === 0 && (
-              <li className="p-5 text-sm font-semibold text-slate-500">Nenhum serviço cadastrado.</li>
+              <li className={`p-5 ${textoMeta}`}>Nenhum serviço cadastrado.</li>
             )}
           </ul>
         </section>

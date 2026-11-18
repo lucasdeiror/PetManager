@@ -51,7 +51,7 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Data de aplicação
-        <input name="dataAplicacao" type="date" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="dataAplicacao" type="date" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Data de retorno prevista
@@ -59,7 +59,7 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
           name="dataRetornoPrevista"
           type="date"
           required
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
+          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
         />
       </label>
       {error && (
@@ -70,7 +70,7 @@ export function RegistrarVacinaForm({ pets }: { pets: Pet[] }) {
       <button
         type="submit"
         disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60 sm:col-span-2"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60 sm:col-span-2"
       >
         {isPending ? "Salvando..." : "Registrar vacina"}
       </button>
