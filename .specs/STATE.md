@@ -125,11 +125,11 @@
 
 ## Handoff
 
-- **Feature**: `hardening` / `design-mvp` — concluídas e em produção (`https://petmanager-six.vercel.app`, Supabase `nkqikthojcpirlwaddnh` com migrations `0001`–`0013` e `checagem-implantacao.sql` = `ok`).
-- **Phase / Task**: T41 — sincronização documental de `.specs/` e `README.md` pós-T40.
-- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37).
-- **In-progress**: nenhum arquivo pendente no código; resta o passo 8 do runbook (fumaça em produção com `dono` e criação da conta `recepcionista`) e a especificação do Painel Inicial (`dashboard-inicial`).
-- **Next step**: Executar o passo 8 do runbook na nuvem (`nkqikthojcpirlwaddnh`) e iniciar o Specify do Painel Inicial.
+- **Feature**: `painel-inicial` — concluída e verificada (`PASS ✅`, 11/11 ACs, 3/3 mutantes mortos, `validate_state.py` ok).
+- **Phase / Task**: T42–T44 concluídas (`getResumoPainel`, link `"Painel"` no topo do `MenuLateral`, página `/painel` e testes unit/E2E).
+- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44).
+- **In-progress**: nenhum arquivo pendente no código; resta apenas o passo 8 manual do runbook no painel do Supabase (`nkqikthojcpirlwaddnh`) pelo Lucas.
+- **Next step**: Teste de fumaça em produção com `dono@dev.com` e criação da conta `recepcionista` no painel do Supabase, seguido do 1º piloto.
 - **Blockers**: none.
 - **Uncommitted files**: none.
-- **Branch**: `main` (Testes verdes: `unit` 205 com `TZ=UTC` · `test:db` 40 · `e2e` 38/38).
+- **Branch**: `main` (Testes verdes: `unit` 212 com `TZ=UTC` · `test:db` 40 · `e2e` 41/41).

@@ -210,6 +210,7 @@ src/
   app/
     (auth)/login/
     (dashboard)/
+      painel/
       agenda/
       pets/
       servicos/
@@ -219,6 +220,7 @@ src/
       relatorios/
       horario-funcionamento/
   features/
+    painel/          # resumo operacional do dia e indicadores de gestão
     agenda/          # actions.ts · queries.ts · types.ts · components/
     pets/
     servicos/
@@ -313,8 +315,9 @@ de execução rastreável) → `validation.md` (verificação independente), gua
 | `hardening` | Testes reais de banco (`test:db`), estorno não-destrutivo, trigger de estados, validação Zod em 100% das Server Actions, `proxy.ts`, headers, `0013` (perfil ativo) e runbook SQL | ✅ Concluída e verificada |
 | `fuso-horario` | Datas e horários fixados em `America/Sao_Paulo` (`-03:00`) + regra de lint contra data sem `timeZone` | ✅ Concluída e verificada |
 | `design-mvp` | Identidade visual do MVP, `MenuLateral` responsivo, componentes `src/shared/tela/`, paginação de 10 itens e fonte Inter local | ✅ Concluída e verificada |
+| `painel-inicial` | Visão operacional diária em `/painel` (agendamentos de hoje e vacinas atrasadas para todos; faturamento de hoje/mês e alerta de estoque baixo exclusivos para `dono`) | ✅ Concluída e verificada |
 
-**Suíte de verificação atual:** `205` testes unitários (`TZ=UTC`) · `40` testes de integração no Postgres (`test:db`) · `38/38` testes E2E no Playwright (`test:e2e`).
+**Suíte de verificação atual:** `212` testes unitários (`TZ=UTC`) · `40` testes de integração no Postgres (`test:db`) · `41/41` testes E2E no Playwright (`test:e2e`).
 
 ---
 
@@ -465,6 +468,7 @@ Toda a especificação, o design técnico e o plano de execução vivem em
     hardening/                          # segurança, Zod, máquina de estados, estorno, test:db e runbook
     fuso-horario/                       # padronização em America/Sao_Paulo (-03:00)
     design-mvp/                         # visual do MVP, menu lateral e paginação
+    painel-inicial/                     # resumo operacional do dia (/painel)
 ```
 
 Para entender **o quê** o sistema deve fazer, comece por
