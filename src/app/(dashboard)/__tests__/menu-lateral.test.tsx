@@ -71,20 +71,26 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
   it("inicia recolhida por padrão (collapsible=icon) e respeita defaultFixada=true do servidor (DSG-01)", () => {
     const { unmount } = render(<MenuLateral email="dono@petshop.com" role="dono" />);
     const sidebar = document.querySelector("[data-slot='sidebar']");
+    const gap = document.querySelector("[data-slot='sidebar-gap']");
     expect(sidebar?.getAttribute("data-state")).toBe("collapsed");
     expect(sidebar?.getAttribute("data-collapsible")).toBe("icon");
+    expect(gap?.className).toContain("w-16");
     unmount();
 
     render(<MenuLateral email="dono@petshop.com" role="dono" defaultFixada />);
     const sidebarFixada = document.querySelector("[data-slot='sidebar']");
+    const gapFixada = document.querySelector("[data-slot='sidebar-gap']");
     expect(sidebarFixada?.getAttribute("data-state")).toBe("expanded");
     expect(sidebarFixada?.getAttribute("data-collapsible")).toBe("");
+    expect(gapFixada?.className).toContain("w-64");
   });
 
-  it("abre ao passar o mouse (120ms) e fecha ao sair (220ms), ignorando toque (DSG-02)", () => {
+  it("abre ao passar o mouse (120ms) e fecha ao sair (220ms), acompanhando a largura da tela e ignorando toque (DSG-02)", () => {
     render(<MenuLateral email="dono@petshop.com" role="dono" />);
     const sidebar = document.querySelector("[data-slot='sidebar']") as HTMLElement;
+    const gap = document.querySelector("[data-slot='sidebar-gap']") as HTMLElement;
     expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+    expect(gap.className).toContain("w-16");
 
     // Toque (touch) não deve deixar a barra presa aberta
     fireEvent.pointerEnter(sidebar, { pointerType: "touch" });
@@ -92,28 +98,33 @@ describe("MenuLateral (DES-02, DES-03, PNL-01, DSG-01..DSG-06)", () => {
       vi.advanceTimersByTime(200);
     });
     expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+    expect(gap.className).toContain("w-16");
 
-    // Mouse abre após 120ms
+    // Mouse abre após 120ms e o gap acompanha (w-64)
     fireEvent.pointerEnter(sidebar, { pointerType: "mouse" });
     act(() => {
       vi.advanceTimersByTime(119);
     });
     expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+    expect(gap.className).toContain("w-16");
     act(() => {
       vi.advanceTimersByTime(1);
     });
     expect(sidebar.getAttribute("data-state")).toBe("expanded");
+    expect(gap.className).toContain("w-64");
 
-    // Mouse sai e fecha após 220ms
+    // Mouse sai e fecha após 220ms e o gap acompanha (w-16)
     fireEvent.pointerLeave(sidebar, { pointerType: "mouse" });
     act(() => {
       vi.advanceTimersByTime(219);
     });
     expect(sidebar.getAttribute("data-state")).toBe("expanded");
+    expect(gap.className).toContain("w-64");
     act(() => {
       vi.advanceTimersByTime(1);
     });
     expect(sidebar.getAttribute("data-state")).toBe("collapsed");
+    expect(gap.className).toContain("w-16");
   });
 
   it("botão de fixar aberta alterna aria-pressed, aria-label e grava cookie sidebar_state (DSG-03)", () => {
