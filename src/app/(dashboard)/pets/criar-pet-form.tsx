@@ -69,7 +69,7 @@ export function CriarPetForm({ tutores }: { tutores: Tutor[] }) {
       <button
         type="submit"
         disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Cadastrar pet"}
       </button>

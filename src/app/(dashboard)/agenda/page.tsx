@@ -4,7 +4,7 @@ import { AgendaCalendario } from "../../../features/agenda/components/AgendaCale
 import { getAgendamentosPorDia } from "../../../features/agenda/queries";
 import { getPets } from "../../../features/pets/queries";
 import { getServicosParaAgendamento } from "../../../features/servicos/queries";
-import { TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import { TituloPagina, TituloSecao, cartao, textoMeta } from "../../../shared/tela/titulo-pagina";
 import { AgendamentoAcoes } from "./agendamento-acoes";
 import { CriarAgendamentoForm } from "./criar-agendamento-form";
 
@@ -45,7 +45,7 @@ export default async function AgendaPage({
             type="date"
             name="data"
             defaultValue={dia}
-            className="h-10 rounded-lg border-2 border-slate-200 px-2 text-sm font-semibold"
+            className="h-10 rounded-lg border-2 border-slate-200 px-2 text-sm font-semibold tabular-nums"
           />
         </label>
         <button
@@ -54,9 +54,9 @@ export default async function AgendaPage({
         >
           Ver
         </button>
-        <p className="pb-2 text-sm font-semibold text-slate-600">
+        <p className={`pb-2 ${textoMeta}`}>
           Exibindo atendimentos de{" "}
-          <strong className="text-stone-950">
+          <strong className="font-semibold text-stone-950 tabular-nums">
             {d}/{mes}/{ano}
           </strong>
         </p>
@@ -64,15 +64,15 @@ export default async function AgendaPage({
 
       <div className="grid items-start gap-6 lg:grid-cols-[1fr_22rem]">
         <section className={`${cartao} overflow-hidden`}>
-          <h2 className="border-b-2 border-slate-100 px-4 py-3 text-lg font-black sm:px-5">
+          <TituloSecao className="border-b-2 border-slate-100 px-4 py-3 sm:px-5">
             Agendamentos do dia
-          </h2>
+          </TituloSecao>
           <div className="divide-y-2 divide-slate-100">
             {agendamentosDoDia.map((a) => (
               <AgendamentoAcoes key={a.id} agendamento={a} />
             ))}
             {agendamentosDoDia.length === 0 && (
-              <p className="p-5 text-sm font-semibold text-slate-500">
+              <p className={`p-5 ${textoMeta}`}>
                 Nenhum agendamento neste dia.
               </p>
             )}
@@ -81,11 +81,11 @@ export default async function AgendaPage({
 
         <div className="grid gap-6">
           <section className={`${cartao} p-4`}>
-            <h2 className="text-lg font-black">Novo agendamento</h2>
+            <TituloSecao>Novo agendamento</TituloSecao>
             <CriarAgendamentoForm pets={pets} servicos={servicos} dia={dia} />
           </section>
           <section className={`${cartao} p-4`}>
-            <h2 className="text-lg font-black">Horários do dia</h2>
+            <TituloSecao>Horários do dia</TituloSecao>
             <div className="mt-3">
               <AgendaCalendario data={dia} />
             </div>

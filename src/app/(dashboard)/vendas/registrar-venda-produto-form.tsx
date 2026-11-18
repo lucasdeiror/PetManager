@@ -50,7 +50,7 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
           type="number"
           min="1"
           required
-          className="h-10 w-24 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
+          className="h-10 w-24 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
         />
       </label>
       {error && (
@@ -61,7 +61,7 @@ export function RegistrarVendaProdutoForm({ produtos }: { produtos: Produto[] })
       <button
         type="submit"
         disabled={isPending}
-        className="h-10 rounded-xl bg-orange-600 px-4 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60"
+        className="h-10 rounded-xl bg-orange-600 px-4 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Registrar venda"}
       </button>

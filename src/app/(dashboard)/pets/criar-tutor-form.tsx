@@ -41,7 +41,7 @@ export function CriarTutorForm() {
           name="telefone"
           required
           placeholder="(79) 99999-9999"
-          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold"
+          className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums"
         />
       </label>
       {error && (
@@ -52,7 +52,7 @@ export function CriarTutorForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Cadastrar tutor"}
       </button>

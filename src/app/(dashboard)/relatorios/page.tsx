@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { getRelatorioMensal } from "../../../features/relatorios/queries";
 import { mesEmSaoPaulo } from "../../../shared/data/hoje";
-import { Metrica, TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import {
+  Metrica,
+  TituloPagina,
+  TituloSecao,
+  cartao,
+  textoMeta,
+  textoPrimario,
+  valorTabela,
+} from "../../../shared/tela/titulo-pagina";
 import { Paginacao, paginar } from "../../../shared/tela/paginacao";
 import { ExportarPdfButton } from "./exportar-pdf-button";
 
@@ -61,7 +69,7 @@ export default async function RelatoriosPage({
         <Link href={`/relatorios?ano=${anterior.ano}&mes=${anterior.mes}`} className={navegacao}>
           ← Mês anterior
         </Link>
-        <p className="text-lg font-black text-stone-950">
+        <p className="text-base font-bold text-stone-950 tabular-nums">
           {MESES[mes - 1]} de {ano}
         </p>
         <Link href={`/relatorios?ano=${seguinte.ano}&mes=${seguinte.mes}`} className={navegacao}>
@@ -76,23 +84,23 @@ export default async function RelatoriosPage({
       </div>
 
       <section className={`${cartao} overflow-hidden`}>
-        <h2 className="border-b-2 border-slate-100 px-4 py-3 text-lg font-black sm:px-5">
+        <TituloSecao className="border-b-2 border-slate-100 px-4 py-3 sm:px-5">
           Vendas do período
-        </h2>
+        </TituloSecao>
         <ul className="divide-y-2 divide-slate-100">
           {vendas.visiveis.map((v) => (
             <li key={v.id} className="flex flex-wrap justify-between gap-2 px-4 py-3 text-sm sm:px-5">
-              <span className="font-bold text-stone-950">
+              <span className={textoPrimario}>
                 {v.itemNome}{" "}
-                <span className="font-semibold text-slate-600">
+                <span className={textoMeta}>
                   · {v.tipo === "produto" ? "Produto" : "Serviço"}
                 </span>
               </span>
-              <span className="font-black text-stone-950">{formatarMoeda(v.valorTotal)}</span>
+              <span className={valorTabela}>{formatarMoeda(v.valorTotal)}</span>
             </li>
           ))}
           {vendas.total === 0 && (
-            <li className="p-5 text-sm font-semibold text-slate-500">Nenhuma venda neste período.</li>
+            <li className={`p-5 ${textoMeta}`}>Nenhuma venda neste período.</li>
           )}
         </ul>
         <Paginacao pagina={vendas} params={params} />

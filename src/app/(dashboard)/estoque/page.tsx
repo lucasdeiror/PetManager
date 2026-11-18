@@ -1,7 +1,15 @@
 import { Suspense } from "react";
 import { getProdutos } from "../../../features/estoque/queries";
 import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
-import { Metrica, TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import {
+  Metrica,
+  TituloPagina,
+  TituloSecao,
+  cartao,
+  textoMeta,
+  textoPrimario,
+  valorTabela,
+} from "../../../shared/tela/titulo-pagina";
 import { Paginacao, paginar } from "../../../shared/tela/paginacao";
 import { CriarProdutoForm } from "./criar-produto-form";
 import { RegistrarEntradaForm } from "./registrar-entrada-form";
@@ -37,7 +45,7 @@ export default async function EstoquePage({
       </div>
 
       <section className={`${cartao} p-4`}>
-        <h2 className="text-lg font-black">Cadastrar produto</h2>
+        <TituloSecao>Cadastrar produto</TituloSecao>
         <CriarProdutoForm />
       </section>
 
@@ -55,13 +63,13 @@ export default async function EstoquePage({
           {pagina.visiveis.map((p) => (
             <li key={p.id} className="flex flex-wrap items-center gap-x-4 gap-y-3 p-4 sm:px-5">
               <div className="min-w-40 flex-1">
-                <p className="font-black text-stone-950">{p.nome}</p>
-                <p className="text-sm font-semibold text-slate-600">{p.categoria}</p>
+                <p className={textoPrimario}>{p.nome}</p>
+                <p className={textoMeta}>{p.categoria}</p>
               </div>
               <div className="text-right">
-                <p className="font-black text-stone-950">{p.saldoEstoque} un.</p>
+                <p className={valorTabela}>{p.saldoEstoque} un.</p>
                 {p.estoqueBaixo && (
-                  <p role="status" className="text-xs font-black text-red-700">
+                  <p role="status" className="text-xs font-bold text-red-700">
                     Estoque baixo
                   </p>
                 )}
@@ -70,7 +78,7 @@ export default async function EstoquePage({
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className="p-5 text-sm font-semibold text-slate-500">Nenhum produto encontrado.</li>
+            <li className={`p-5 ${textoMeta}`}>Nenhum produto encontrado.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />

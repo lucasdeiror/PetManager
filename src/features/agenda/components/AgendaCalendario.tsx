@@ -28,12 +28,12 @@ export async function AgendaCalendario({ data }: AgendaCalendarioProps) {
             data-status={a.status}
             className={
               cancelado
-                ? "rounded-xl border-2 border-dashed border-slate-200 px-3 py-2 text-sm text-slate-400 line-through"
-                : "rounded-xl border-2 border-orange-300 bg-orange-50 px-3 py-2 text-sm font-bold text-slate-900"
+                ? "rounded-xl border-2 border-dashed border-slate-200 px-3 py-2 text-sm text-slate-400 line-through tabular-nums"
+                : "rounded-xl border-2 border-orange-300 bg-orange-50 px-3 py-2 text-sm font-semibold text-slate-900 tabular-nums"
             }
           >
             <span>{hora}</span> — <span>{a.petNome}</span>{" "}
-            <span className="ml-1 text-xs font-bold no-underline">
+            <span className="ml-1 text-xs font-semibold no-underline">
               {cancelado ? "Cancelado" : "Ocupado"}
             </span>
           </div>

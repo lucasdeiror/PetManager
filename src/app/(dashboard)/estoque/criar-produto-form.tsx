@@ -44,15 +44,15 @@ export function CriarProdutoForm() {
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Preço unitário (R$)
-        <input name="precoUnitario" type="number" step="0.01" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="precoUnitario" type="number" step="0.01" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Estoque mínimo
-        <input name="estoqueMinimo" type="number" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="estoqueMinimo" type="number" required className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums" />
       </label>
       <label className="grid gap-1 text-sm font-bold">
         Saldo inicial
-        <input name="saldoInicial" type="number" defaultValue={0} className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold" />
+        <input name="saldoInicial" type="number" defaultValue={0} className="h-10 rounded-lg border-2 border-slate-200 bg-white px-2 text-sm font-semibold tabular-nums" />
       </label>
       {error && (
         <p role="alert" className="text-sm font-bold text-red-700 sm:col-span-2">
@@ -62,7 +62,7 @@ export function CriarProdutoForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="h-11 rounded-xl bg-orange-600 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60 sm:col-span-2"
+        className="h-11 rounded-xl bg-orange-600 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60 sm:col-span-2"
       >
         {isPending ? "Salvando..." : "Cadastrar produto"}
       </button>

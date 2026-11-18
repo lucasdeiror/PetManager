@@ -11,6 +11,7 @@ import {
 } from "../../../features/agenda/actions";
 import type { AgendamentoDoDia } from "../../../features/agenda/queries";
 import { partesSP } from "../../../shared/data/fuso";
+import { textoMeta, textoPrimario, valorTabela } from "../../../shared/tela/titulo-pagina";
 
 const STATUS = {
   agendado: { rotulo: "Agendado", classe: "border-orange-200 bg-orange-50 text-orange-800" },
@@ -52,14 +53,14 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
 
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 p-4 sm:px-5" data-status={agendamento.status}>
-      <span className="w-12 text-base font-black text-stone-950">{hora}</span>
+      <span className={`w-12 ${valorTabela}`}>{hora}</span>
       <div className="min-w-40 flex-1">
-        <p className="font-black text-stone-950">{agendamento.petNome}</p>
-        <p className="text-sm font-semibold text-slate-600">
+        <p className={textoPrimario}>{agendamento.petNome}</p>
+        <p className={textoMeta}>
           {agendamento.servicoNomes.join(" + ") || "sem serviço"}
         </p>
       </div>
-      <span className={`rounded-full border-2 px-2.5 py-0.5 text-xs font-black ${STATUS[agendamento.status].classe}`}>
+      <span className={`rounded-full border-2 px-2.5 py-0.5 text-xs font-semibold ${STATUS[agendamento.status].classe}`}>
         {STATUS[agendamento.status].rotulo}
       </span>
 
@@ -76,7 +77,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
             type="time"
             defaultValue={hora}
             required
-            className="h-9 rounded-lg border-2 border-slate-200 px-2 text-sm font-semibold"
+            className="h-9 rounded-lg border-2 border-slate-200 px-2 text-sm font-semibold tabular-nums"
           />
           <button
             type="submit"

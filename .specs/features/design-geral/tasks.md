@@ -69,12 +69,12 @@ T46 (sidebar) → T47 (tipografia) → T48 (espaçamento) → T49 (responsividad
 **Skill**: `design-taste-frontend`, `frontend-ui-engineering`
 
 **Done when**:
-- [ ] `Metrica`, `Paginacao` e todos os valores monetários, quantidades, horários e datas usam `tabular-nums`
-- [ ] Nenhum `text-lg font-black` ou `font-black` solto permanece nas páginas de `(dashboard)`
-- [ ] Lint, tsc, unit, build e E2E passando
-- [ ] PR criado e mergeado na `main`
+- [x] `Metrica`, `Paginacao` e todos os valores monetários, quantidades, horários e datas usam `tabular-nums`
+- [x] Nenhum `text-lg font-black` ou `font-black` solto permanece nas páginas de `(dashboard)`
+- [x] Lint, tsc, unit, build e E2E passando
+- [x] PR criado e mergeado na `main`
 
-**Status**: Pending
+**Status**: Done
 
 ---
 

@@ -3,7 +3,12 @@ import Link from "next/link";
 import { getAgendamentosFiltrados } from "../../../../features/agenda/queries";
 import { SearchFilterBar } from "../../../../shared/filters/search-filter-bar";
 import { dataHoraSP } from "../../../../shared/data/fuso";
-import { TituloPagina, cartao } from "../../../../shared/tela/titulo-pagina";
+import {
+  TituloPagina,
+  cartao,
+  textoMeta,
+  textoPrimario,
+} from "../../../../shared/tela/titulo-pagina";
 import { Paginacao, paginar } from "../../../../shared/tela/paginacao";
 
 const STATUS = ["agendado", "concluido", "cancelado"] as const;
@@ -47,16 +52,16 @@ export default async function AgendaListaPage({
           {pagina.visiveis.map((a) => (
             <li key={a.id} className="flex flex-wrap items-center gap-x-4 gap-y-1 p-4 sm:px-5">
               <div className="min-w-40 flex-1">
-                <p className="font-black text-stone-950">
+                <p className={textoPrimario}>
                   {a.petNome} <span className="font-medium text-slate-600">· {a.tutorNome}</span>
                 </p>
-                <p className="text-sm font-semibold text-slate-600">{dataHoraSP(a.dataHora)}</p>
+                <p className={`${textoMeta} tabular-nums`}>{dataHoraSP(a.dataHora)}</p>
               </div>
-              <span className="text-sm font-bold text-slate-700">{STATUS_LABELS[a.status]}</span>
+              <span className="text-sm font-semibold text-slate-700">{STATUS_LABELS[a.status]}</span>
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className="p-5 text-sm font-semibold text-slate-500">Nenhum resultado encontrado.</li>
+            <li className={`p-5 ${textoMeta}`}>Nenhum resultado encontrado.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />

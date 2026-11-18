@@ -37,7 +37,7 @@ export function ExportarPdfButton({ ano, mes }: { ano: number; mes: number }) {
         type="button"
         onClick={handleClick}
         disabled={isPending}
-        className="h-10 rounded-xl bg-orange-600 px-4 text-sm font-black text-white hover:bg-orange-700 disabled:opacity-60"
+        className="h-10 rounded-xl bg-orange-600 px-4 text-sm font-bold text-white hover:bg-orange-700 disabled:opacity-60"
       >
         {isPending ? "Gerando..." : "Exportar PDF"}
       </button>

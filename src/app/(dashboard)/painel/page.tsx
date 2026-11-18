@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { getResumoPainel } from "../../../features/painel/queries";
 import { dataSimples, partesSP } from "../../../shared/data/fuso";
-import { Metrica, TituloPagina, cartao } from "../../../shared/tela/titulo-pagina";
+import {
+  Metrica,
+  TituloPagina,
+  TituloSecao,
+  cartao,
+  textoMeta,
+  textoPrimario,
+} from "../../../shared/tela/titulo-pagina";
 
 const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
@@ -50,7 +57,7 @@ export default async function PainelPage() {
       <div className="grid gap-6 lg:grid-cols-2">
         <section className={`${cartao} overflow-hidden`}>
           <div className="flex items-center justify-between border-b-2 border-slate-100 px-4 py-3 sm:px-5">
-            <h2 className="text-lg font-black text-stone-950">Próximos atendimentos de hoje</h2>
+            <TituloSecao>Próximos atendimentos de hoje</TituloSecao>
             <Link href="/agenda" className={linkAtalho}>
               Ver agenda
             </Link>
@@ -62,13 +69,13 @@ export default async function PainelPage() {
                 className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm sm:px-5"
               >
                 <div>
-                  <p className="font-black text-stone-950">{a.petNome}</p>
-                  <p className="font-semibold text-slate-600">
+                  <p className={textoPrimario}>{a.petNome}</p>
+                  <p className={`${textoMeta} tabular-nums`}>
                     {partesSP(a.dataHora).hora} · {a.servicoNomes.join(" + ") || "Sem serviço"}
                   </p>
                 </div>
                 <span
-                  className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                  className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                     a.status === "concluido"
                       ? "bg-emerald-100 text-emerald-800"
                       : "bg-amber-100 text-amber-900"
@@ -79,7 +86,7 @@ export default async function PainelPage() {
               </li>
             ))}
             {agendamentosHoje.proximos.length === 0 && (
-              <li className="p-5 text-sm font-semibold text-slate-500">
+              <li className={`p-5 ${textoMeta}`}>
                 Nenhum atendimento previsto para hoje.
               </li>
             )}
@@ -88,7 +95,7 @@ export default async function PainelPage() {
 
         <section className={`${cartao} overflow-hidden`}>
           <div className="flex items-center justify-between border-b-2 border-slate-100 px-4 py-3 sm:px-5">
-            <h2 className="text-lg font-black text-stone-950">Alertas de vacinas atrasadas</h2>
+            <TituloSecao>Alertas de vacinas atrasadas</TituloSecao>
             <Link href="/vacinas?status=atrasada" className={linkAtalho}>
               Ver vacinas atrasadas
             </Link>
@@ -100,18 +107,18 @@ export default async function PainelPage() {
                 className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm sm:px-5"
               >
                 <div>
-                  <p className="font-black text-stone-950">{v.petNome}</p>
-                  <p className="font-semibold text-slate-600">
+                  <p className={textoPrimario}>{v.petNome}</p>
+                  <p className={`${textoMeta} tabular-nums`}>
                     {v.nome} · Retorno: {dataSimples(v.dataRetornoPrevista)}
                   </p>
                 </div>
-                <span className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-800">
+                <span className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800">
                   Atrasada
                 </span>
               </li>
             ))}
             {vacinasAtrasadas.itens.length === 0 && (
-              <li className="p-5 text-sm font-semibold text-slate-500">Nenhuma vacina atrasada.</li>
+              <li className={`p-5 ${textoMeta}`}>Nenhuma vacina atrasada.</li>
             )}
           </ul>
         </section>
