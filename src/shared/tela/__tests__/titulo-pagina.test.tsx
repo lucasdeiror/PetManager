@@ -2,8 +2,13 @@ import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import {
   Metrica,
+  PaginaContainer,
   TituloPagina,
   TituloSecao,
+  cabecalhoLista,
+  cartao,
+  cartaoForm,
+  itemLista,
   textoMeta,
   textoPrimario,
   tituloSecao,
@@ -13,7 +18,7 @@ import { Paginacao, paginar } from "../paginacao";
 
 afterEach(cleanup);
 
-describe("Primitivos de tipografia e tabular-nums (DSG-07..DSG-09)", () => {
+describe("Primitivos de tipografia, tabular-nums e espaçamento (DSG-07..DSG-11)", () => {
   it("TituloPagina aplica escala unificada sem font-black (DSG-07)", () => {
     render(<TituloPagina titulo="Vendas" texto="Resumo de vendas" />);
     const h1 = screen.getByRole("heading", { level: 1, name: "Vendas" });
@@ -55,5 +60,24 @@ describe("Primitivos de tipografia e tabular-nums (DSG-07..DSG-09)", () => {
     expect(textoPrimario).toContain("font-semibold");
     expect(textoMeta).toContain("text-slate-600");
     expect(valorTabela).toContain("tabular-nums");
+  });
+
+  it("PaginaContainer e tokens de espaçamento aplicam a escala única do dashboard (DSG-10, DSG-11)", () => {
+    const { container } = render(
+      <PaginaContainer>
+        <p>Conteúdo</p>
+      </PaginaContainer>,
+    );
+    const wrapper = container.firstElementChild as HTMLElement;
+    expect(wrapper.className).toContain("max-w-6xl");
+    expect(wrapper.className).toContain("gap-6");
+    expect(wrapper.className).toContain("p-4");
+    expect(wrapper.className).toContain("sm:p-6");
+    expect(wrapper.className).toContain("lg:p-8");
+
+    expect(cartao).toContain("rounded-2xl");
+    expect(cartaoForm).toContain("p-4 sm:p-5");
+    expect(cabecalhoLista).toContain("px-4 py-3.5 sm:px-5");
+    expect(itemLista).toContain("px-4 py-3.5 sm:px-5");
   });
 });

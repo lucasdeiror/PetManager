@@ -3,9 +3,13 @@ import { getRelatorioMensal } from "../../../features/relatorios/queries";
 import { mesEmSaoPaulo } from "../../../shared/data/hoje";
 import {
   Metrica,
+  PaginaContainer,
   TituloPagina,
   TituloSecao,
+  cabecalhoLista,
   cartao,
+  cartaoForm,
+  itemLista,
   textoMeta,
   textoPrimario,
   valorTabela,
@@ -60,12 +64,12 @@ export default async function RelatoriosPage({
     "inline-flex h-10 items-center rounded-xl border-2 border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 hover:border-orange-500";
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+    <PaginaContainer>
       <TituloPagina titulo="Relatório mensal" texto="Atendimentos e faturamento do mês">
         <ExportarPdfButton ano={ano} mes={mes} />
       </TituloPagina>
 
-      <div className={`${cartao} flex flex-wrap items-center justify-between gap-3 p-3`}>
+      <div className={`${cartaoForm} flex flex-wrap items-center justify-between gap-3`}>
         <Link href={`/relatorios?ano=${anterior.ano}&mes=${anterior.mes}`} className={navegacao}>
           ← Mês anterior
         </Link>
@@ -84,12 +88,12 @@ export default async function RelatoriosPage({
       </div>
 
       <section className={`${cartao} overflow-hidden`}>
-        <TituloSecao className="border-b-2 border-slate-100 px-4 py-3 sm:px-5">
+        <TituloSecao className={cabecalhoLista}>
           Vendas do período
         </TituloSecao>
         <ul className="divide-y-2 divide-slate-100">
           {vendas.visiveis.map((v) => (
-            <li key={v.id} className="flex flex-wrap justify-between gap-2 px-4 py-3 text-sm sm:px-5">
+            <li key={v.id} className={`flex flex-wrap justify-between gap-2 text-sm ${itemLista}`}>
               <span className={textoPrimario}>
                 {v.itemNome}{" "}
                 <span className={textoMeta}>
@@ -100,11 +104,11 @@ export default async function RelatoriosPage({
             </li>
           ))}
           {vendas.total === 0 && (
-            <li className={`p-5 ${textoMeta}`}>Nenhuma venda neste período.</li>
+            <li className={`${itemLista} ${textoMeta}`}>Nenhuma venda neste período.</li>
           )}
         </ul>
         <Paginacao pagina={vendas} params={params} />
       </section>
-    </div>
+    </PaginaContainer>
   );
 }

@@ -4,7 +4,16 @@ import { AgendaCalendario } from "../../../features/agenda/components/AgendaCale
 import { getAgendamentosPorDia } from "../../../features/agenda/queries";
 import { getPets } from "../../../features/pets/queries";
 import { getServicosParaAgendamento } from "../../../features/servicos/queries";
-import { TituloPagina, TituloSecao, cartao, textoMeta } from "../../../shared/tela/titulo-pagina";
+import {
+  PaginaContainer,
+  TituloPagina,
+  TituloSecao,
+  cabecalhoLista,
+  cartao,
+  cartaoForm,
+  itemLista,
+  textoMeta,
+} from "../../../shared/tela/titulo-pagina";
 import { AgendamentoAcoes } from "./agendamento-acoes";
 import { CriarAgendamentoForm } from "./criar-agendamento-form";
 
@@ -24,7 +33,7 @@ export default async function AgendaPage({
   const [ano, mes, d] = dia.split("-");
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+    <PaginaContainer>
       <TituloPagina titulo="Agenda" texto="Agenda diária e estados dos atendimentos">
         <Link
           href="/agenda/lista"
@@ -35,7 +44,7 @@ export default async function AgendaPage({
       </TituloPagina>
 
       <form
-        className={`${cartao} flex flex-wrap items-end gap-3 p-4`}
+        className={`${cartaoForm} flex flex-wrap items-end gap-3`}
         action="/agenda"
         method="get"
       >
@@ -64,7 +73,7 @@ export default async function AgendaPage({
 
       <div className="grid items-start gap-6 lg:grid-cols-[1fr_22rem]">
         <section className={`${cartao} overflow-hidden`}>
-          <TituloSecao className="border-b-2 border-slate-100 px-4 py-3 sm:px-5">
+          <TituloSecao className={cabecalhoLista}>
             Agendamentos do dia
           </TituloSecao>
           <div className="divide-y-2 divide-slate-100">
@@ -72,7 +81,7 @@ export default async function AgendaPage({
               <AgendamentoAcoes key={a.id} agendamento={a} />
             ))}
             {agendamentosDoDia.length === 0 && (
-              <p className={`p-5 ${textoMeta}`}>
+              <p className={`${itemLista} ${textoMeta}`}>
                 Nenhum agendamento neste dia.
               </p>
             )}
@@ -80,11 +89,11 @@ export default async function AgendaPage({
         </section>
 
         <div className="grid gap-6">
-          <section className={`${cartao} p-4`}>
+          <section className={cartaoForm}>
             <TituloSecao>Novo agendamento</TituloSecao>
             <CriarAgendamentoForm pets={pets} servicos={servicos} dia={dia} />
           </section>
-          <section className={`${cartao} p-4`}>
+          <section className={cartaoForm}>
             <TituloSecao>Horários do dia</TituloSecao>
             <div className="mt-3">
               <AgendaCalendario data={dia} />
@@ -92,6 +101,6 @@ export default async function AgendaPage({
           </section>
         </div>
       </div>
-    </div>
+    </PaginaContainer>
   );
 }

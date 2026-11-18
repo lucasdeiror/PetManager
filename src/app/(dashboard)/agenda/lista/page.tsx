@@ -4,8 +4,10 @@ import { getAgendamentosFiltrados } from "../../../../features/agenda/queries";
 import { SearchFilterBar } from "../../../../shared/filters/search-filter-bar";
 import { dataHoraSP } from "../../../../shared/data/fuso";
 import {
+  PaginaContainer,
   TituloPagina,
   cartao,
+  itemLista,
   textoMeta,
   textoPrimario,
 } from "../../../../shared/tela/titulo-pagina";
@@ -28,7 +30,7 @@ export default async function AgendaListaPage({
   const pagina = paginar(await getAgendamentosFiltrados({ busca, status }), params.pagina);
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+    <PaginaContainer>
       <TituloPagina titulo="Todos os agendamentos" texto="Busque por pet ou tutor e filtre por status">
         <Link
           href="/agenda"
@@ -50,7 +52,7 @@ export default async function AgendaListaPage({
       <section className={`${cartao} overflow-hidden`}>
         <ul className="divide-y-2 divide-slate-100">
           {pagina.visiveis.map((a) => (
-            <li key={a.id} className="flex flex-wrap items-center gap-x-4 gap-y-1 p-4 sm:px-5">
+            <li key={a.id} className={`flex flex-wrap items-center gap-x-4 gap-y-1 ${itemLista}`}>
               <div className="min-w-40 flex-1">
                 <p className={textoPrimario}>
                   {a.petNome} <span className="font-medium text-slate-600">· {a.tutorNome}</span>
@@ -61,11 +63,11 @@ export default async function AgendaListaPage({
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className={`p-5 ${textoMeta}`}>Nenhum resultado encontrado.</li>
+            <li className={`${itemLista} ${textoMeta}`}>Nenhum resultado encontrado.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />
       </section>
-    </div>
+    </PaginaContainer>
   );
 }

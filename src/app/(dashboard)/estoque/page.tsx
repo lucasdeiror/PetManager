@@ -3,9 +3,12 @@ import { getProdutos } from "../../../features/estoque/queries";
 import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
 import {
   Metrica,
+  PaginaContainer,
   TituloPagina,
   TituloSecao,
   cartao,
+  cartaoForm,
+  itemLista,
   textoMeta,
   textoPrimario,
   valorTabela,
@@ -32,7 +35,7 @@ export default async function EstoquePage({
   const pagina = paginar(produtosFiltrados, params.pagina);
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+    <PaginaContainer>
       <TituloPagina
         titulo="Estoque"
         texto="Entradas aqui; toda saída acontece por venda"
@@ -44,7 +47,7 @@ export default async function EstoquePage({
         <Metrica rotulo="Unidades em estoque" valor={String(unidades)} />
       </div>
 
-      <section className={`${cartao} p-4`}>
+      <section className={cartaoForm}>
         <TituloSecao>Cadastrar produto</TituloSecao>
         <CriarProdutoForm />
       </section>
@@ -61,7 +64,7 @@ export default async function EstoquePage({
       <section className={`${cartao} overflow-hidden`}>
         <ul className="divide-y-2 divide-slate-100">
           {pagina.visiveis.map((p) => (
-            <li key={p.id} className="flex flex-wrap items-center gap-x-4 gap-y-3 p-4 sm:px-5">
+            <li key={p.id} className={`flex flex-wrap items-center gap-x-4 gap-y-3 ${itemLista}`}>
               <div className="min-w-40 flex-1">
                 <p className={textoPrimario}>{p.nome}</p>
                 <p className={textoMeta}>{p.categoria}</p>
@@ -78,11 +81,11 @@ export default async function EstoquePage({
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className={`p-5 ${textoMeta}`}>Nenhum produto encontrado.</li>
+            <li className={`${itemLista} ${textoMeta}`}>Nenhum produto encontrado.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />
       </section>
-    </div>
+    </PaginaContainer>
   );
 }

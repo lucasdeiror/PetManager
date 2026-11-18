@@ -89,11 +89,11 @@ T46 (sidebar) → T47 (tipografia) → T48 (espaçamento) → T49 (responsividad
 **Skill**: `design-engineering`, `frontend-ui-engineering`
 
 **Done when**:
-- [ ] Todas as 10 rotas do dashboard e `loading.tsx` usam `PaginaContainer` e os tokens de espaçamento de `src/shared/tela/`
-- [ ] Lint, tsc, unit, build e E2E passando
-- [ ] PR criado e mergeado na `main`
+- [x] Todas as 10 rotas do dashboard e `loading.tsx` usam `PaginaContainer` e os tokens de espaçamento de `src/shared/tela/`
+- [x] Lint, tsc, unit, build e E2E passando
+- [x] PR criado e mergeado na `main`
 
-**Status**: Pending
+**Status**: Done
 
 ---
 

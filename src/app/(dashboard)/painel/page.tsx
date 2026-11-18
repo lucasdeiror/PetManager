@@ -3,9 +3,12 @@ import { getResumoPainel } from "../../../features/painel/queries";
 import { dataSimples, partesSP } from "../../../shared/data/fuso";
 import {
   Metrica,
+  PaginaContainer,
   TituloPagina,
   TituloSecao,
+  cabecalhoLista,
   cartao,
+  itemLista,
   textoMeta,
   textoPrimario,
 } from "../../../shared/tela/titulo-pagina";
@@ -20,7 +23,7 @@ export default async function PainelPage() {
   const { agendamentosHoje, vacinasAtrasadas, dono } = resumo;
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+    <PaginaContainer>
       <TituloPagina
         titulo="Painel"
         texto={`Resumo operacional de hoje (${dataSimples(resumo.hoje)})`}
@@ -56,7 +59,7 @@ export default async function PainelPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section className={`${cartao} overflow-hidden`}>
-          <div className="flex items-center justify-between border-b-2 border-slate-100 px-4 py-3 sm:px-5">
+          <div className={cabecalhoLista}>
             <TituloSecao>Próximos atendimentos de hoje</TituloSecao>
             <Link href="/agenda" className={linkAtalho}>
               Ver agenda
@@ -66,7 +69,7 @@ export default async function PainelPage() {
             {agendamentosHoje.proximos.map((a) => (
               <li
                 key={a.id}
-                className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm sm:px-5"
+                className={`flex flex-wrap items-center justify-between gap-2 text-sm ${itemLista}`}
               >
                 <div>
                   <p className={textoPrimario}>{a.petNome}</p>
@@ -86,7 +89,7 @@ export default async function PainelPage() {
               </li>
             ))}
             {agendamentosHoje.proximos.length === 0 && (
-              <li className={`p-5 ${textoMeta}`}>
+              <li className={`${itemLista} ${textoMeta}`}>
                 Nenhum atendimento previsto para hoje.
               </li>
             )}
@@ -94,7 +97,7 @@ export default async function PainelPage() {
         </section>
 
         <section className={`${cartao} overflow-hidden`}>
-          <div className="flex items-center justify-between border-b-2 border-slate-100 px-4 py-3 sm:px-5">
+          <div className={cabecalhoLista}>
             <TituloSecao>Alertas de vacinas atrasadas</TituloSecao>
             <Link href="/vacinas?status=atrasada" className={linkAtalho}>
               Ver vacinas atrasadas
@@ -104,7 +107,7 @@ export default async function PainelPage() {
             {vacinasAtrasadas.itens.map((v) => (
               <li
                 key={v.id}
-                className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm sm:px-5"
+                className={`flex flex-wrap items-center justify-between gap-2 text-sm ${itemLista}`}
               >
                 <div>
                   <p className={textoPrimario}>{v.petNome}</p>
@@ -118,11 +121,11 @@ export default async function PainelPage() {
               </li>
             ))}
             {vacinasAtrasadas.itens.length === 0 && (
-              <li className={`p-5 ${textoMeta}`}>Nenhuma vacina atrasada.</li>
+              <li className={`${itemLista} ${textoMeta}`}>Nenhuma vacina atrasada.</li>
             )}
           </ul>
         </section>
       </div>
-    </div>
+    </PaginaContainer>
   );
 }

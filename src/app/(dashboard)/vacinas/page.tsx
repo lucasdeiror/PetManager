@@ -6,9 +6,13 @@ import { SearchFilterBar } from "../../../shared/filters/search-filter-bar";
 import { RegistrarVacinaForm } from "./registrar-vacina-form";
 import { dataSimples } from "../../../shared/data/fuso";
 import {
+  PaginaContainer,
   TituloPagina,
   TituloSecao,
+  cabecalhoLista,
   cartao,
+  cartaoForm,
+  itemLista,
   textoMeta,
   textoPrimario,
 } from "../../../shared/tela/titulo-pagina";
@@ -43,10 +47,10 @@ export default async function VacinasPage({
   const pagina = paginar(vacinas, params.pagina);
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+    <PaginaContainer>
       <TituloPagina titulo="Vacinas" texto="Doses aplicadas e retornos previstos de cada pet" />
 
-      <section className={`${cartao} p-4`}>
+      <section className={cartaoForm}>
         <TituloSecao>Registrar vacina</TituloSecao>
         <RegistrarVacinaForm pets={pets} />
       </section>
@@ -89,12 +93,12 @@ export default async function VacinasPage({
       </Suspense>
 
       <section className={`${cartao} overflow-hidden`}>
-        <TituloSecao className="border-b-2 border-slate-100 px-4 py-3 sm:px-5">
+        <TituloSecao className={cabecalhoLista}>
           Todas as vacinas
         </TituloSecao>
         <ul className="divide-y-2 divide-slate-100">
           {pagina.visiveis.map((v) => (
-            <li key={v.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 p-4 sm:px-5">
+            <li key={v.id} className={`flex flex-wrap items-center gap-x-4 gap-y-2 ${itemLista}`}>
               <div className="min-w-40 flex-1">
                 <p className={textoPrimario}>
                   {v.nome} <span className="font-medium text-slate-600">· {v.petNome}</span>
@@ -117,11 +121,11 @@ export default async function VacinasPage({
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className={`p-5 ${textoMeta}`}>Nenhum resultado encontrado.</li>
+            <li className={`${itemLista} ${textoMeta}`}>Nenhum resultado encontrado.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />
       </section>
-    </div>
+    </PaginaContainer>
   );
 }
