@@ -75,12 +75,61 @@
 - **Date**: 2026-11-12
 - **Status**: active
 
+### AD-010
+- **Decision**: Todo horário do sistema usa o fuso `America/Sao_Paulo`, gravado com offset `-03:00` e exibido com `timeZone` explícito via helpers em `src/shared/data/fuso.ts`; colunas `date` são formatadas sem `new Date()`.
+- **Reason**: A Vercel roda em UTC e os clientes estão em Aracaju/Barra dos Coqueiros (sem horário de verão desde 2019); depender do fuso do servidor deslocava agendamentos, relatórios e vendas em 3 horas.
+- **Trade-off**: Fixa o fuso da operação em Brasília (`-03:00`); uma regra de ESLint (`no-restricted-syntax`) bloqueia `toLocale*String` de data sem `timeZone`.
+- **Scope**: Todas as features que lidam com data/hora (`fuso-horario` em diante).
+- **Date**: 2026-11-13
+- **Status**: active
+
+### AD-011
+- **Decision**: O protótipo `MVP-Petmanager` (v0) é a referência visual direta para a feature `design-mvp`, sem passar pelo Paper.
+- **Reason**: Exceção solicitada pelo usuário em 2026-11-13 porque o visual já havia sido validado com donos de petshop no protótipo.
+- **Trade-off**: Adaptação manual para os componentes do repositório mantendo a proibição de sync automático do v0 com o GitHub (AD-007).
+- **Scope**: Feature `design-mvp`.
+- **Date**: 2026-11-13
+- **Status**: active
+
+### AD-012
+- **Decision**: Peças visuais compartilhadas das telas internas vivem em `src/shared/tela/` (`TituloPagina`, `cartao`, `Metrica`, `Paginacao`/`paginar` com 10 itens por página via `?pagina=`, ou `chave` própria quando há duas listas na mesma tela), e qualquer busca ou filtro novo reseta a paginação para a página 1.
+- **Reason**: Padroniza cabeçalho, cartões e paginação URL-first nas 9 telas autenticadas sem duplicar lógica de fatia e navegação.
+- **Trade-off**: Listas paginadas não exibem todos os itens de uma vez; testes E2E que criam registros buscam pelo nome recém-criado.
+- **Scope**: Todas as telas autenticadas (`src/app/(dashboard)/`).
+- **Date**: 2026-11-14
+- **Status**: active
+
+### AD-013
+- **Decision**: `npm run test:unit` roda obrigatoriamente com `TZ=UTC`.
+- **Reason**: Simula o relógio da Vercel localmente para impedir que bugs de fuso horário passem despercebidos em máquinas configuradas em `America/Sao_Paulo`.
+- **Trade-off**: Testes que dependem da hora local precisam fixar o instante explicitamente.
+- **Scope**: Suíte de testes unitários (`package.json`).
+- **Date**: 2026-11-14
+- **Status**: active
+
+### AD-014
+- **Decision**: Adiar a subida na nuvem até abrir vaga no limite de 2 projetos ativos do plano Free do Supabase (`nexo-saas` e `gabi-modas` ocupavam as vagas).
+- **Reason**: Não pausar projetos ativos sem autorização do usuário.
+- **Trade-off**: Validação em nuvem ficou temporariamente bloqueada na organização original.
+- **Scope**: Implantação em nuvem do PetManager.
+- **Date**: 2026-11-14
+- **Status**: superseded by AD-015
+
+### AD-015
+- **Decision**: Produção implantada em outra conta Supabase (projeto `nkqikthojcpirlwaddnh`, gerenciado via MCP `supabase-petmanager`) e no projeto Vercel `petmanager` da conta `lucasdeiror-7602` (`https://petmanager-six.vercel.app`, deploy via Git).
+- **Reason**: Contorna o limite de 2 projetos ativos da organização Free anterior sem desligar `nexo-saas` nem `gabi-modas`.
+- **Trade-off**: A Vercel correta é operada via Vercel CLI (conta `lucasdeiror-7602`), pois o MCP Vercel aponta para a conta antiga (`pet-manager` desativado).
+- **Scope**: Implantação e operação em produção (substitui AD-014).
+- **Date**: 2026-11-16
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: design-mvp — Lote 2 concluído (T27–T33, PRs #54–#60): todas as telas internas no padrão do MVP. Falta só o painel inicial (opcional, fora do escopo atual).
-- **Peças compartilhadas**: `src/shared/tela/` (`TituloPagina`, `cartao`, `Metrica`, `Paginacao`/`paginar`, 10 por página; `chave` própria para duas listas na mesma tela).
-- **Bug corrigido na T32**: mês padrão dos relatórios usava o relógio UTC. `test:unit` agora roda com `TZ=UTC`, como na Vercel.
-- **e2e intermitente (pré-existente)**: `agenda-calendario.spec.ts` e `agenda.spec.ts` sorteiam horário no dia de hoje; com o banco de teste acumulando agendamentos, o sorteio às vezes cai num horário ocupado. Correção sugerida: dia exclusivo por rodada, respeitando o horário de funcionamento.
-- **Nuvem bloqueada**: o Free permite 2 projetos ativos (`nexo-saas` e `gabi-modas`). O Lucas decidiu esperar (2026-11-14). Quando abrir a vaga, avaliar projeto novo em sa-east-1 (sem dados de cliente) em vez de reativar o de ca-central-1; aplicar 0001–0012, desligar signup, `get_advisors`.
-- **Dev local**: `.env.local` tem as chaves do Supabase local; `vercel env pull` sobrescreve.
-- **Testes**: unit 193 (TZ=UTC) · e2e 36/36 (com a intermitência acima).
+- **Feature**: `hardening` / `design-mvp` — concluídas e em produção (`https://petmanager-six.vercel.app`, Supabase `nkqikthojcpirlwaddnh` com migrations `0001`–`0013` e `checagem-implantacao.sql` = `ok`).
+- **Phase / Task**: T41 — sincronização documental de `.specs/` e `README.md` pós-T40.
+- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37).
+- **In-progress**: nenhum arquivo pendente no código; resta o passo 8 do runbook (fumaça em produção com `dono` e criação da conta `recepcionista`) e a especificação do Painel Inicial (`dashboard-inicial`).
+- **Next step**: Executar o passo 8 do runbook na nuvem (`nkqikthojcpirlwaddnh`) e iniciar o Specify do Painel Inicial.
+- **Blockers**: none.
+- **Uncommitted files**: none.
+- **Branch**: `main` (Testes verdes: `unit` 205 com `TZ=UTC` · `test:db` 40 · `e2e` 38/38).
