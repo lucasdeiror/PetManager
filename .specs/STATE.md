@@ -126,8 +126,8 @@
 ## Handoff
 
 - **Feature**: `painel-inicial` — concluída e verificada (`PASS ✅`, 11/11 ACs, 3/3 mutantes mortos, `validate_state.py` ok).
-- **Phase / Task**: T42–T44 concluídas (`getResumoPainel`, link `"Painel"` no topo do `MenuLateral`, página `/painel` e testes unit/E2E).
-- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44).
+- **Phase / Task**: T45 concluída (otimização de performance: `React.cache` em `getUsuarioAtual`/`getAgendamentosPorDia`, paralelização em `getRelatorioMensal`/`VendasPage`/`PetsPage` e `loading.tsx` para partial prefetching no Next.js 16).
+- **Completed**: `petmanager-completo` (41/41), `hardening` (T1–T24, T38–T41, T45), `fuso-horario` (T1–T4, T36), `design-mvp` (T26–T35, T37), `painel-inicial` (T42–T44).
 - **In-progress**: nenhum arquivo pendente no código; resta apenas o passo 8 manual do runbook no painel do Supabase (`nkqikthojcpirlwaddnh`) pelo Lucas.
 - **Next step**: Teste de fumaça em produção com `dono@dev.com` e criação da conta `recepcionista` no painel do Supabase, seguido do 1º piloto.
 - **Blockers**: none.

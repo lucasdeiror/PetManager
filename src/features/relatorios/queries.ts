@@ -47,21 +47,22 @@ export async function getRelatorioMensal(ano: number, mes: number): Promise<Rela
   const { inicio, fim } = limitesDoMes(ano, mes);
   const supabase = await createClient();
 
-  const { count: concluidos } = await supabase
-    .from("agendamentos")
-    .select("id", { count: "exact", head: true })
-    .eq("status", "concluido")
-    .gte("data_hora", inicio)
-    .lt("data_hora", fim);
+  const [{ count: concluidos }, { count: cancelados }, vendas] = await Promise.all([
+    supabase
+      .from("agendamentos")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "concluido")
+      .gte("data_hora", inicio)
+      .lt("data_hora", fim),
+    supabase
+      .from("agendamentos")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "cancelado")
+      .gte("data_hora", inicio)
+      .lt("data_hora", fim),
+    getVendas({ mes: `${ano}-${String(mes).padStart(2, "0")}` }),
+  ]);
 
-  const { count: cancelados } = await supabase
-    .from("agendamentos")
-    .select("id", { count: "exact", head: true })
-    .eq("status", "cancelado")
-    .gte("data_hora", inicio)
-    .lt("data_hora", fim);
-
-  const vendas = await getVendas({ mes: `${ano}-${String(mes).padStart(2, "0")}` });
   const faturamentoTotal = vendas.reduce((soma, v) => soma + v.valorTotal, 0);
 
   return {

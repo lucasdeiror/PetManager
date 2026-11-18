@@ -21,13 +21,12 @@ export default async function VendasPage({
   const { busca, filtro } = params;
   const tipo = filtro === "servico" || filtro === "produto" ? filtro : undefined;
 
-  const role = await getCurrentUserRole();
-  const isDono = role === "dono";
-
-  const [vendas, produtos] = await Promise.all([
+  const [role, vendas] = await Promise.all([
+    getCurrentUserRole(),
     getVendas({ busca, tipo }),
-    isDono ? getProdutos() : Promise.resolve([]),
   ]);
+  const isDono = role === "dono";
+  const produtos = isDono ? await getProdutos() : [];
 
   // Métricas somam a lista filtrada inteira, não só a página visível.
   const total = vendas.reduce((soma, v) => soma + v.valorTotal, 0);

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "../../shared/supabase/server";
 import { instanteSP } from "../../shared/data/fuso";
 
@@ -33,29 +34,31 @@ interface AgendamentoRow {
  * responsabilidade do componente de calendário (T32), não desta
  * query.
  */
-export async function getAgendamentosPorDia(data: string): Promise<AgendamentoDoDia[]> {
-  const supabase = await createClient();
+export const getAgendamentosPorDia = cache(
+  async (data: string): Promise<AgendamentoDoDia[]> => {
+    const supabase = await createClient();
 
-  const { data: rows } = await supabase
-    .from("agendamentos")
-    .select(
-      "id, pet_id, data_hora, status, pets ( nome ), agendamento_servicos ( servicos ( nome ) )",
-    )
-    .gte("data_hora", instanteSP(`${data}T00:00:00`))
-    .lte("data_hora", instanteSP(`${data}T23:59:59.999`))
-    .order("data_hora");
+    const { data: rows } = await supabase
+      .from("agendamentos")
+      .select(
+        "id, pet_id, data_hora, status, pets ( nome ), agendamento_servicos ( servicos ( nome ) )",
+      )
+      .gte("data_hora", instanteSP(`${data}T00:00:00`))
+      .lte("data_hora", instanteSP(`${data}T23:59:59.999`))
+      .order("data_hora");
 
-  return ((rows ?? []) as unknown as AgendamentoRow[]).map((row) => ({
-    id: row.id,
-    petId: row.pet_id,
-    petNome: row.pets?.nome ?? "Pet removido",
-    dataHora: row.data_hora,
-    status: row.status,
-    servicoNomes: (row.agendamento_servicos ?? [])
-      .map((s) => s.servicos?.nome)
-      .filter((nome): nome is string => Boolean(nome)),
-  }));
-}
+    return ((rows ?? []) as unknown as AgendamentoRow[]).map((row) => ({
+      id: row.id,
+      petId: row.pet_id,
+      petNome: row.pets?.nome ?? "Pet removido",
+      dataHora: row.data_hora,
+      status: row.status,
+      servicoNomes: (row.agendamento_servicos ?? [])
+        .map((s) => s.servicos?.nome)
+        .filter((nome): nome is string => Boolean(nome)),
+    }));
+  },
+);
 
 export interface AgendamentoFiltrado {
   id: number;
