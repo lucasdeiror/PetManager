@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { salvarHorario } from "../../../features/horario-funcionamento/actions";
-import { textoPrimario } from "../../../shared/tela/titulo-pagina";
+import { cartaoForm, textoPrimario } from "../../../shared/tela/titulo-pagina";
 
 interface HorarioDiaFormProps {
   diaSemana: number;
@@ -37,7 +37,7 @@ export function HorarioDiaForm({ diaSemana, nomeDia, horario }: HorarioDiaFormPr
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-wrap items-end gap-3 rounded-2xl border-2 border-slate-200 bg-white p-4"
+      className={`${cartaoForm} flex flex-wrap items-end gap-3`}
     >
       <span className={`w-28 ${textoPrimario}`}>{nomeDia}</span>
 

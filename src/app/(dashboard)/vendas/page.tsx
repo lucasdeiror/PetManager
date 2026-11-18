@@ -7,9 +7,12 @@ import { RegistrarVendaProdutoForm } from "./registrar-venda-produto-form";
 import { dataSP } from "../../../shared/data/fuso";
 import {
   Metrica,
+  PaginaContainer,
   TituloPagina,
   TituloSecao,
   cartao,
+  cartaoForm,
+  itemLista,
   textoMeta,
   textoPrimario,
   valorTabela,
@@ -45,14 +48,14 @@ export default async function VendasPage({
   const pagina = paginar(vendas, params.pagina);
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 lg:p-8">
+    <PaginaContainer>
       <TituloPagina
         titulo="Vendas"
         texto="Serviços concluídos entram sozinhos; produtos, pelo registro abaixo"
       />
 
       {isDono && (
-        <section className={`${cartao} p-4`}>
+        <section className={cartaoForm}>
           <TituloSecao>Registrar venda de produto</TituloSecao>
           <RegistrarVendaProdutoForm produtos={produtos} />
         </section>
@@ -76,7 +79,7 @@ export default async function VendasPage({
       <section className={`${cartao} overflow-hidden`}>
         <ul className="divide-y-2 divide-slate-100">
           {pagina.visiveis.map((v) => (
-            <li key={v.id} className="flex flex-wrap items-center justify-between gap-3 p-4 sm:px-5">
+            <li key={v.id} className={`flex flex-wrap items-center justify-between gap-3 ${itemLista}`}>
               <div>
                 <p className={textoPrimario}>{v.itemNome}</p>
                 <p className={`${textoMeta} tabular-nums`}>
@@ -87,11 +90,11 @@ export default async function VendasPage({
             </li>
           ))}
           {pagina.total === 0 && (
-            <li className={`p-5 ${textoMeta}`}>Nenhuma venda encontrada.</li>
+            <li className={`${itemLista} ${textoMeta}`}>Nenhuma venda encontrada.</li>
           )}
         </ul>
         <Paginacao pagina={pagina} params={params} />
       </section>
-    </div>
+    </PaginaContainer>
   );
 }

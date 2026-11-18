@@ -11,7 +11,7 @@ import {
 } from "../../../features/agenda/actions";
 import type { AgendamentoDoDia } from "../../../features/agenda/queries";
 import { partesSP } from "../../../shared/data/fuso";
-import { textoMeta, textoPrimario, valorTabela } from "../../../shared/tela/titulo-pagina";
+import { itemLista, textoMeta, textoPrimario, valorTabela } from "../../../shared/tela/titulo-pagina";
 
 const STATUS = {
   agendado: { rotulo: "Agendado", classe: "border-orange-200 bg-orange-50 text-orange-800" },
@@ -52,7 +52,7 @@ export function AgendamentoAcoes({ agendamento }: { agendamento: AgendamentoDoDi
   const { dia, hora } = partesSP(agendamento.dataHora);
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 p-4 sm:px-5" data-status={agendamento.status}>
+    <div className={`flex flex-wrap items-center gap-x-4 gap-y-2 ${itemLista}`} data-status={agendamento.status}>
       <span className={`w-12 ${valorTabela}`}>{hora}</span>
       <div className="min-w-40 flex-1">
         <p className={textoPrimario}>{agendamento.petNome}</p>
