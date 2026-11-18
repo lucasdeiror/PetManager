@@ -86,4 +86,4 @@ Nenhuma falha de implementação encontrada; nenhum código de produção ou tes
 
 ## Lacunas cobertas (T35, 2026-11-15)
 
-L1–L5 receberam testes (ver `tasks.md`, T35). A volta à página 1 pela **busca** já tinha teste em `use-list-filters.test.ts`. Faltava a volta pelo **filtro**, que foi adicionada. O1 (fonte via rede) segue em aberto.
+L1–L5 receberam testes (ver `tasks.md`, T35). A volta à página 1 pela **busca** já tinha teste em `use-list-filters.test.ts`. Faltava a volta pelo **filtro**, que foi adicionada. O1 (fonte via rede) foi resolvido no T37 (PR #65) com `next/font/local`.

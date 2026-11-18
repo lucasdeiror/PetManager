@@ -9,12 +9,10 @@ planilha solta) hoje usado por petshops de Aracaju/Barra dos Coqueiros,
 com o objetivo de ser **vendido a múltiplos petshops**, cada um com seu
 próprio deploy.
 
-> **Status atual**: em desenvolvimento (spec-driven). A fundação técnica
-> (T1–T8: Next.js, Supabase, migrations, RLS, testes) está completa e
-> validada. As features de negócio da versão completa (Vendas, Agenda
-> integrada, Relatório em PDF, Filtros) estão especificadas e
-> desenhadas, com implementação em andamento — ver [Status do
-> Desenvolvimento](#-status-do-desenvolvimento).
+> **Status atual**: em produção (`https://petmanager-six.vercel.app`). As
+> features `petmanager-completo`, `hardening`, `fuso-horario` e
+> `design-mvp` (T1–T41) estão concluídas, verificadas e implantadas —
+> ver [Status do Desenvolvimento](#-status-do-desenvolvimento).
 
 ---
 
@@ -189,12 +187,13 @@ interface Venda {
 `agendamentoId`/`produtoId` preenchido, de acordo com o `tipo` (`CHECK`
 no banco).
 
-**Migrations:**
+**Migrations (`0001`–`0013`):**
 
 | Migration | Conteúdo |
 |---|---|
-| `0001`–`0003` (herdadas do MVP) | `profiles` (papéis), tabelas de domínio (tutores, pets, serviços, agendamentos, vacinas, produtos), RLS completo |
-| `0004_vendas.sql` (nova, aditiva) | Tabela `vendas`, colunas `estoque_minimo` (produtos) e `venda_id` (movimentações), função Postgres transacional `registrar_venda_produto(produto_id, quantidade)`, RLS de `vendas` |
+| `0001`–`0003` | `profiles` (papéis), tabelas de domínio (tutores, pets, serviços, agendamentos, vacinas, produtos), RLS inicial |
+| `0004`–`0008` | Categorias/estoque mínimo de produtos, tabela `vendas` + `registrar_venda_produto`, RPCs de concluir e reabrir agendamento, nome da vacina |
+| `0009`–`0013` | Estorno não-destrutivo (`estornada_em`), trigger de máquina de estados de agendamento (`trg_agendamento_status`), RPCs como `security invoker`, `registrar_entrada` atômica, exigência de perfil ativo em todas as policies (`0013`) |
 
 Toda policy de RLS usa `(select auth.uid())` — nunca `auth.uid()`
 chamado linha a linha (ver [AD-003](#-decisões-de-arquitetura)).
@@ -216,7 +215,7 @@ src/
       servicos/
       vacinas/
       estoque/
-      vendas/                    # NOVO
+      vendas/
       relatorios/
       horario-funcionamento/
   features/
@@ -225,25 +224,27 @@ src/
     servicos/
     vacinas/
     estoque/          # sem ação de saída direta
-    vendas/            # NOVO — fonte única de faturamento
+    vendas/            # fonte única de faturamento
     relatorios/        # lê de vendas, gera PDF
+    horario-funcionamento/
     auth/
   shared/
     supabase/
       client.ts        # cliente browser-side
       server.ts        # cliente server-side
     ui/                 # componentes shadcn/ui
-    filters/            # NOVO — busca/filtro reutilizável
+    tela/               # TituloPagina, cartao, Metrica, Paginacao (10/página)
+    data/               # fuso.ts e hoje.ts (America/Sao_Paulo, -03:00)
+    validacao/          # helper validar() com Zod
+    filters/            # busca/filtro reutilizável via URL
       use-list-filters.ts
       search-filter-bar.tsx
-    pdf/                 # NOVO — geração de PDF server-side
+    pdf/                 # geração de PDF server-side
       relatorio-pdf.tsx
 supabase/
+  checagem-implantacao.sql
   migrations/
-    0001_profiles.sql
-    0002_dominio.sql
-    0003_rls.sql
-    0004_vendas.sql
+    0001_profiles.sql ... 0013_acesso_exige_perfil_ativo.sql
 e2e/
   *.spec.ts
 ```
@@ -280,21 +281,23 @@ Registradas em `.specs/STATE.md`, resumidas aqui:
 | **AD-004** | Toda task avalia um roster fixo de skills de segurança/qualidade (testes de segurança, pentesting, boas práticas Postgres/TypeScript/React, arquitetura) antes de ser considerada concluída — o software é vendido a clientes reais. |
 | **AD-005** | A partir de T8, nada vai direto para `main`. Cada task roda em branch `task/T<N>-<slug>`, sobe PR, é integrada via **squash merge** só depois do gate (build/test) passar. |
 | **AD-006** | `petmanager-completo` substitui `petmanager-mvp` como fonte da verdade. Escopo confirmado como single-tenant + Área de Vendas unificada + filtros de pesquisa + exportação em PDF, após validação com donos de petshop via protótipo em v0.dev (**nenhum código do protótipo foi reaproveitado** — serviu só de referência visual). |
+| **AD-007** | v0.dev desconectado do GitHub; usado só como referência visual isolada. |
+| **AD-008** | Execução contínua de tasks com gates automáticos e PR por task. |
+| **AD-009** | `preco_interno` oculto na tela de agendamento por UX; RLS de `servicos` permanece aberta para leitura autenticada com perfil ativo. |
+| **AD-010** | Todo horário em `America/Sao_Paulo` (`-03:00`) via `src/shared/data/fuso.ts`, com lint bloqueando formatação de data sem `timeZone`. |
+| **AD-011 / AD-012** | Identidade visual do MVP (`slate-950`, `orange`, `stone-50`, fonte Inter local) e componentes de tela padronizados em `src/shared/tela/` com paginação de 10 itens. |
+| **AD-013** | `npm run test:unit` roda com `TZ=UTC` (mesmo fuso da Vercel). |
+| **AD-015** | Implantação ativa em produção (`https://petmanager-six.vercel.app`) com RLS endurecida exigindo perfil ativo (`0013`). |
 
 **Principais decisões técnicas (`design.md`):**
 
 - **Geração de PDF**: `@react-pdf/renderer`, 100% server-side — leve o
   suficiente para a serverless da Vercel, sem depender de
   Chromium/Puppeteer.
-- **Faturamento**: sempre `SUM(vendas.valor_total)` — nunca dois
+- **Faturamento**: sempre `SUM(vendas.valor_total)` de vendas ativas (`estornada_em is null`) — nunca dois
   cálculos separados (agendamentos + estoque).
-- **Concluir agendamento → cria venda**: feito dentro de uma função
-  Postgres transacional, para nunca deixar um agendamento concluído
-  sem sua venda correspondente (ou vice-versa) por falha de rede no
-  meio do caminho.
-- **Filtros de lista**: estado guardado na URL (`searchParams`), não em
-  estado local — permite recarregar a página (F5) sem perder o filtro
-  e compartilhar um link já filtrado.
+- **Concluir / Reabrir agendamento**: controlado no banco pelo trigger `trg_agendamento_status` (`0010`), que exige transições válidas, cria venda na conclusão e marca estorno não-destrutivo na reabertura.
+- **Filtros e paginação de lista**: estado guardado na URL (`searchParams`), voltando à página 1 quando a busca ou o filtro mudam.
 
 ---
 
@@ -302,35 +305,16 @@ Registradas em `.specs/STATE.md`, resumidas aqui:
 
 O projeto segue um fluxo **spec-driven**: cada feature nasce de um
 `spec.md` (requisitos) → `design.md` (arquitetura) → `tasks.md` (plano
-de execução rastreável), guardados em `.specs/`.
+de execução rastreável) → `validation.md` (verificação independente), guardados em `.specs/`.
 
-### Feature ativa: `petmanager-completo`
-
-| Fase | Conteúdo | Status |
+| Feature | Escopo | Status |
 |---|---|---|
-| Phase 1 | Fundação restante (cliente Supabase browser, `shared/filters`, deploy) | 🔄 Em andamento — próximo passo: **T2** |
-| Phase 2 | Autenticação e Papéis | ⏳ Pendente |
-| Phase 3 | Cadastros base (horário, tutores/pets, serviços) | ⏳ Pendente |
-| Phase 4 | Estoque + migration `0004_vendas.sql` | ⏳ Pendente |
-| Phase 5 | Vendas | ⏳ Pendente |
-| Phase 6 | Agenda (integrada a Vendas) | ⏳ Pendente |
-| Phase 7 | Vacinas | ⏳ Pendente |
-| Phase 8 | Relatórios + PDF | ⏳ Pendente |
+| `petmanager-completo` | Todas as 8 fases funcionais (Auth, Cadastros, Estoque, Vendas, Agenda, Vacinas, Relatórios + PDF, Filtros) — 41 tasks | ✅ Concluída e verificada |
+| `hardening` | Testes reais de banco (`test:db`), estorno não-destrutivo, trigger de estados, validação Zod em 100% das Server Actions, `proxy.ts`, headers, `0013` (perfil ativo) e runbook SQL | ✅ Concluída e verificada |
+| `fuso-horario` | Datas e horários fixados em `America/Sao_Paulo` (`-03:00`) + regra de lint contra data sem `timeZone` | ✅ Concluída e verificada |
+| `design-mvp` | Identidade visual do MVP, `MenuLateral` responsivo, componentes `src/shared/tela/`, paginação de 10 itens e fonte Inter local | ✅ Concluída e verificada |
 
-**Já entregue e reaproveitado integralmente** (herdado da fase MVP,
-T1–T8): projeto Next.js + TypeScript + Tailwind + shadcn/ui, projeto
-Supabase configurado, migrations `0001`–`0003` (profiles, tabelas de
-domínio, RLS completo), Vitest, Playwright e cliente Supabase
-server-side.
-
-**Requisitos rastreados**: 43 requisitos funcionais (`AUTH-*`,
-`HOR-*`, `CAD-*`, `SERV-*`, `AGD-*`, `VAC-*`, `EST-*`, `VEN-*`,
-`REL-*`, `FILT-*`) mapeados 1:1 com as tasks de `tasks.md` — 3 já
-satisfeitos (herdados do MVP), 40 aguardando execução.
-
-> ⚠️ Pendência conhecida: rodar `npx playwright install --with-deps &&
-> npm run test:e2e` fora do sandbox de desenvolvimento para confirmar o
-> e2e de ponta a ponta.
+**Suíte de verificação atual:** `205` testes unitários (`TZ=UTC`) · `40` testes de integração no Postgres (`test:db`) · `38/38` testes E2E no Playwright (`test:e2e`).
 
 ---
 
@@ -473,17 +457,14 @@ Toda a especificação, o design técnico e o plano de execução vivem em
 
 ```
 .specs/
-  STATE.md                              # decisões de arquitetura + handoff atual
+  STATE.md                              # decisões de arquitetura (AD-001..AD-015) + handoff atual
   LESSONS.md / lessons.json             # lições aprendidas entre features
   features/
-    petmanager-mvp/                     # versão inicial — histórico, T1-T8 reaproveitados
-      spec.md
-      design.md
-      tasks.md
-    petmanager-completo/                # fonte da verdade atual
-      spec.md                           # requisitos e user stories
-      design.md                         # arquitetura, modelo de dados, decisões técnicas
-      tasks.md                          # plano de execução (41 tasks, 8 fases)
+    petmanager-mvp/                     # versão inicial — histórico (T1-T8 reaproveitados)
+    petmanager-completo/                # escopo funcional completo (41 tasks, 8 fases)
+    hardening/                          # segurança, Zod, máquina de estados, estorno, test:db e runbook
+    fuso-horario/                       # padronização em America/Sao_Paulo (-03:00)
+    design-mvp/                         # visual do MVP, menu lateral e paginação
 ```
 
 Para entender **o quê** o sistema deve fazer, comece por

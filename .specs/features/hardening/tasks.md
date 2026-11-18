@@ -706,3 +706,31 @@ Phase 6:  T20 → T21 → T22 → T23
 **Commit**: `docs(implantacao): roteiro por petshop com checagem sql (T39)`
 
 **Status**: Done
+
+### T40: Login sem perfil ativo avisa em vez de voltar mudo
+
+**What**: `signIn` em `src/features/auth/actions.ts` consulta `profiles` (`ativo = true`) após autenticar; se não houver perfil ativo, chama `auth.signOut()` e retorna `{ error: "Usuário sem acesso ao sistema. Fale com o administrador." }` em vez de redirecionar para `/agenda` e cair de volta em `/login` sem mensagem.
+**Where**: `src/features/auth/actions.ts`, `src/features/auth/__tests__/signin.test.ts`
+**Requirement**: SEG-07
+
+**Done when**:
+- [x] Unit: login válido sem perfil ativo chama `signOut` e retorna a mensagem de bloqueio
+- [x] lint · tsc · unit 205 · build · e2e login 4/4
+
+**Commit**: `fix(auth): login sem perfil ativo avisa em vez de voltar mudo (T40)`
+
+**Status**: Done
+
+### T41: Sincronização documental do SDD e README
+
+**What**: Atualizar `.specs/STATE.md` (`AD-010`–`AD-015` e `Handoff`), registrar `T40`/`T41` em `hardening/tasks.md`, atualizar status de `O1` em `design-mvp/validation.md` e alinhar `README.md` com as 13 migrations e o estado real de produção.
+**Where**: `.specs/STATE.md`, `.specs/features/hardening/tasks.md`, `.specs/features/design-mvp/validation.md`, `README.md`
+**Requirement**: CAD-03
+
+**Done when**:
+- [x] `.specs/STATE.md`, `hardening/tasks.md`, `design-mvp/validation.md` e `README.md` refletem T1–T41 e as migrations `0001`–`0013`
+- [x] Gate build (`npm run lint && npm run build && npm run test:unit`) passa
+
+**Commit**: `docs(specs): sincroniza state, tasks e readme com producao (T41)`
+
+**Status**: Done
