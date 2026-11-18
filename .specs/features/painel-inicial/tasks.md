@@ -121,17 +121,19 @@ T1 → T2 → T3
 
 **Done when**:
 
-- [ ] `/painel` exibe título `"Painel"`, métricas operacionais do dia, próximos agendamentos com link para `/agenda` e alerta de vacinas atrasadas com link para `/vacinas?status=atrasada`
-- [ ] Logado como `dono`, `/painel` exibe Faturamento (hoje e mês) e Estoque baixo com links para `/vendas`, `/relatorios` e `/estoque`
-- [ ] Logado como `recepcionista`, `/painel` não exibe blocos de Faturamento nem Estoque baixo
-- [ ] Sem sessão, `/painel` redireciona para `/login`; `/` continua redirecionando para `/agenda`
-- [ ] Gate check passes: `npm run lint && npx tsc --noEmit && npm run test:unit && npm run build && npm run test:e2e`
-- [ ] Test count: unit >= 211, e2e >= 41 pass
+- [x] `/painel` exibe título `"Painel"`, métricas operacionais do dia, próximos agendamentos com link para `/agenda` e alerta de vacinas atrasadas com link para `/vacinas?status=atrasada`
+- [x] Logado como `dono`, `/painel` exibe Faturamento (hoje e mês) e Estoque baixo com links para `/vendas`, `/relatorios` e `/estoque`
+- [x] Logado como `recepcionista`, `/painel` não exibe blocos de Faturamento nem Estoque baixo
+- [x] Sem sessão, `/painel` redireciona para `/login`; `/` continua redirecionando para `/agenda`
+- [x] Gate check passes: `npm run lint && npx tsc --noEmit && npm run test:unit && npm run build && npm run test:e2e`
+- [x] Test count: unit >= 211 (212), e2e >= 41 (41) pass
 
 **Tests**: e2e
 **Gate**: build
 
 **Commit**: `feat(painel): cria pagina do painel inicial e testes e2e (T44)`
+
+**Status**: Done
 
 ---
 

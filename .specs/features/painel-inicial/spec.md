@@ -86,17 +86,17 @@ Every ambiguity is resolved or recorded here - nothing is left silently unclear.
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| PNL-01 | P1: Visão Operacional do Dia | Phase 1 (T2, T3) | In Tasks |
-| PNL-02 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | In Tasks |
-| PNL-03 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | In Tasks |
-| PNL-04 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | In Tasks |
-| PNL-05 | P1: Visão Operacional do Dia | Phase 1 (T3) | In Tasks |
-| PNL-06 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | In Tasks |
-| PNL-07 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | In Tasks |
-| PNL-08 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | In Tasks |
-| PNL-09 | Edge Cases | Phase 1 (T1, T3) | In Tasks |
+| PNL-01 | P1: Visão Operacional do Dia | Phase 1 (T2, T3) | Implementing |
+| PNL-02 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Implementing |
+| PNL-03 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Implementing |
+| PNL-04 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Implementing |
+| PNL-05 | P1: Visão Operacional do Dia | Phase 1 (T3) | Implementing |
+| PNL-06 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Implementing |
+| PNL-07 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Implementing |
+| PNL-08 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Implementing |
+| PNL-09 | Edge Cases | Phase 1 (T1, T3) | Implementing |
 | PNL-10 | Edge Cases | Phase 1 (T1) | Implementing |
-| PNL-11 | Edge Cases | Phase 1 (T3) | In Tasks |
+| PNL-11 | Edge Cases | Phase 1 (T3) | Implementing |
 
 **Coverage:** 11 total, 11 mapped to tasks, 0 unmapped ✅
 
