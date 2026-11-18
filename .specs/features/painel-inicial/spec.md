@@ -6,8 +6,8 @@ O dono e a recepcionista precisam consultar até quatro telas diferentes (`/agen
 
 ## Goals
 
-- [ ] Consolidar em `/painel` os indicadores operacionais do dia (agendamentos de hoje e vacinas atrasadas) para `dono` e `recepcionista`, no fuso `America/Sao_Paulo`.
-- [ ] Exibir indicadores financeiros (faturamento de hoje e do mês) e de estoque baixo exclusivamente para o papel `dono`, ocultando esses blocos para `recepcionista`.
+- [x] Consolidar em `/painel` os indicadores operacionais do dia (agendamentos de hoje e vacinas atrasadas) para `dono` e `recepcionista`, no fuso `America/Sao_Paulo`.
+- [x] Exibir indicadores financeiros (faturamento de hoje e do mês) e de estoque baixo exclusivamente para o papel `dono`, ocultando esses blocos para `recepcionista`.
 
 ## Out of Scope
 
@@ -86,17 +86,17 @@ Every ambiguity is resolved or recorded here - nothing is left silently unclear.
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| PNL-01 | P1: Visão Operacional do Dia | Phase 1 (T2, T3) | Implementing |
-| PNL-02 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Implementing |
-| PNL-03 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Implementing |
-| PNL-04 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Implementing |
-| PNL-05 | P1: Visão Operacional do Dia | Phase 1 (T3) | Implementing |
-| PNL-06 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Implementing |
-| PNL-07 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Implementing |
-| PNL-08 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Implementing |
-| PNL-09 | Edge Cases | Phase 1 (T1, T3) | Implementing |
-| PNL-10 | Edge Cases | Phase 1 (T1) | Implementing |
-| PNL-11 | Edge Cases | Phase 1 (T3) | Implementing |
+| PNL-01 | P1: Visão Operacional do Dia | Phase 1 (T2, T3) | Verified |
+| PNL-02 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Verified |
+| PNL-03 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Verified |
+| PNL-04 | P1: Visão Operacional do Dia | Phase 1 (T1, T3) | Verified |
+| PNL-05 | P1: Visão Operacional do Dia | Phase 1 (T3) | Verified |
+| PNL-06 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Verified |
+| PNL-07 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Verified |
+| PNL-08 | P1: Indicadores de Gestão e Estoque Crítico | Phase 1 (T1, T3) | Verified |
+| PNL-09 | Edge Cases | Phase 1 (T1, T3) | Verified |
+| PNL-10 | Edge Cases | Phase 1 (T1) | Verified |
+| PNL-11 | Edge Cases | Phase 1 (T3) | Verified |
 
 **Coverage:** 11 total, 11 mapped to tasks, 0 unmapped ✅
 
@@ -104,6 +104,6 @@ Every ambiguity is resolved or recorded here - nothing is left silently unclear.
 
 ## Success Criteria
 
-- [ ] `/painel` carrega com todos os indicadores do papel logado em uma única renderização server-side (`Promise.all`), mantendo `/` → `/agenda`.
-- [ ] `recepcionista` não vê números de faturamento nem de estoque em `/painel` (validado em teste unitário e E2E).
-- [ ] Todos os cálculos de "hoje" e "mês atual" em `/painel` passam com `TZ=UTC` às 22h–23h59 BRT.
+- [x] `/painel` carrega com todos os indicadores do papel logado em uma única renderização server-side (`Promise.all`), mantendo `/` → `/agenda`.
+- [x] `recepcionista` não vê números de faturamento nem de estoque em `/painel` (validado em teste unitário e E2E).
+- [x] Todos os cálculos de "hoje" e "mês atual" em `/painel` passam com `TZ=UTC` às 22h–23h59 BRT.
