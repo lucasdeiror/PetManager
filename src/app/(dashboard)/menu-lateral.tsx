@@ -128,7 +128,7 @@ export function MenuLateral({ email, role, defaultFixada = false, notificacoes =
         />
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-30 hidden h-svh flex-col bg-slate-950 py-4 text-white transition-[width] duration-200 ease-out motion-reduce:transition-none md:flex",
+            "no-scrollbar fixed inset-y-0 left-0 z-30 hidden h-svh flex-col bg-slate-950 py-4 text-white transition-[width] duration-200 ease-out motion-reduce:transition-none md:flex",
             expandida ? "w-64 px-4" : "w-16 items-center px-2",
           )}
         >
@@ -164,7 +164,7 @@ export function MenuLateral({ email, role, defaultFixada = false, notificacoes =
 
           <nav
             aria-label="Navegação principal"
-            className="mt-4 flex w-full flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden"
+            className="no-scrollbar mt-4 flex w-full flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden"
           >
             {itensVisiveis.map(({ href, label, icon: Icon }) => {
               const ativo = pathname.startsWith(href);
@@ -235,7 +235,7 @@ export function MenuLateral({ email, role, defaultFixada = false, notificacoes =
             onClick={() => setAberto(false)}
             className="absolute inset-0 bg-slate-950/60"
           />
-          <aside className="relative flex h-full w-[min(86vw,320px)] flex-col bg-slate-950 p-5 text-white">
+          <aside className="no-scrollbar relative flex h-full w-[min(86vw,320px)] flex-col bg-slate-950 p-5 text-white">
             <button
               type="button"
               aria-label="Fechar menu"
@@ -245,7 +245,7 @@ export function MenuLateral({ email, role, defaultFixada = false, notificacoes =
               <X aria-hidden />
             </button>
             <Marca />
-            <nav aria-label="Navegação principal" className="mt-8 flex flex-1 flex-col gap-1.5">
+            <nav aria-label="Navegação principal" className="no-scrollbar mt-8 flex flex-1 flex-col gap-1.5 overflow-y-auto overflow-x-hidden">
               {itensVisiveis.map(({ href, label, icon: Icon }) => {
                 const ativo = pathname.startsWith(href);
                 return (
